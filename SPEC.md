@@ -28,3 +28,7 @@ div             // Divide top two values on the stack
 mod             // Modulo top two values on the stack
 ```
 
+# Resources
+- https://dev.to/lexplt/understanding-bytecode-interpreters-eig
+- https://dev.to/lexplt/parallelizing-a-bytecode-interpreter-58m8
+- https://craftinginterpreters.com/
