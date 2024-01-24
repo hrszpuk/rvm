@@ -1,4 +1,4 @@
-# RVM
+# rvm
 A simple, stack-based virtual machine for the Bytespace community.
 
 ## Goals
