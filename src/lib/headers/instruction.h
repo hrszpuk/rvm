@@ -8,11 +8,16 @@
 typedef enum {
     HALT,
     PUSH,
-    ADD
-} InstructionCode; // Opcode
     ADD,
     OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
 } Opcode;
+
+// TODO this should be a hashmap/dictionary
+static const char* OpcodeStringMap[OPCODE_ENUM_LENGTH] = {
+    [HALT] = "halt",
+    [PUSH] = "push",
+    [ADD] = "add",
+};
 
 typedef struct {
     InstructionCode code;
