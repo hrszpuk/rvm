@@ -3,4 +3,4 @@ project(rvm)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 
-add_executable(rvm src/main.c)
+add_executable(rvm src/cli/main.c)
