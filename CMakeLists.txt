@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.9.1)
 project(rvm)
 
 set(CMAKE_C_STANDARD 23)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -L./src/lib/headers -lrvmlib")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -L./src/lib/headers")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/lib)
 
-file(GLOB_RECURSE RVM_SOURCES "./src/cli/*.c")
-file(GLOB_RECURSE RVM_LIB_SOURCES "./src/lib/*.c")
+add_executable(rvm_cli "src/cli/main.c")
 
-add_executable(rvm ${RVM_SOURCES})
+add_library(rvm_lib STATIC "src/lib/stack.c")
 
-add_library(lib STATIC ${RVM_LIB_SOURCES})
+set_target_properties(rvm_cli PROPERTIES OUTPUT_NAME "rvm")
+set_target_properties(rvm_lib PROPERTIES OUTPUT_NAME "rvm")
 
-target_link_libraries(rvm lib)
+target_link_libraries(rvm_cli rvm_lib)
