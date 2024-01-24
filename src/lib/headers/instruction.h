@@ -4,6 +4,7 @@
 
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
+#define OPCODE_ERROR OPCODE_ENUM_LENGTH
 
 typedef enum {
     HALT,
@@ -20,13 +21,10 @@ static const char* OpcodeStringMap[OPCODE_ENUM_LENGTH] = {
 };
 
 typedef struct {
-    InstructionCode code;
+    Opcode code;
     int argument_count;
 } Instruction;
 
-InstructionCode* BytecodeToOpcode(char*);
-char* OpcodeToBytecode(InstructionCode);
-
-
+Opcode BytecodeToOpcode(const char*);
 
 #endif //INSTRUCTION_H
