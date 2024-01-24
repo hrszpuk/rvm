@@ -10,6 +10,9 @@ typedef enum {
     PUSH,
     ADD
 } InstructionCode; // Opcode
+    ADD,
+    OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
+} Opcode;
 
 typedef struct {
     InstructionCode code;
