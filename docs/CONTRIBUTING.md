@@ -9,3 +9,30 @@
 - `lib/` contains third-party libraries.
 - `docs/` contains documentation :).
 - `test/` contains tests.
+
+## Sub-projects
+
+### rvm - rvm cli
+A cli tool for interacting with the rvm library.
+
+Features:
+- [ ] Run rvm bytecode files
+- [ ] Run rvm readable bytecode files
+- [ ] Run rvm bytecode from stdin
+- [ ] Run rvm readable bytecode from stdin
+- [ ] Translate rvm readable bytecode to rvm bytecode
+- [ ] Translate rvm bytecode to rvm readable bytecode
+
+### librvm - rvm library
+The library for running rvm bytecode.
+
+Features:
+- [ ] Run rvm bytecode
+
+### librvmgen - rvm bytecode generation library
+A library for generating rvm bytecode.
+This is used by compilers to generate rvm bytecode.
+
+Features:
+- [ ] API for generating rvm bytecode
+- [ ] Option to generate rvm readable bytecode
