@@ -36,3 +36,10 @@ This is used by compilers to generate rvm bytecode.
 Features:
 - [ ] API for generating rvm bytecode
 - [ ] Option to generate rvm readable bytecode
+
+## File extensions
+These are the standard file extensions for rvm files:
+- `.rvm` is the extension for rvm bytecode files. 
+- `.rvmt` is the extension for rvm readable bytecode files. 
+
+The file extensions are optional, but they are recommended for clarity.
