@@ -91,6 +91,56 @@ The following are the native types that the VM will support:
 - `char` - [0-9a-zA-Z] - 1 byte
 - `array` - [type\[size\]] - (size * sizeof(type)) bytes
 
+### Macros
+Macros are a way to extend the VM's instruction set. 
+They are defined in the VM's bytecode and are translated into bytecode instructions by the translation library.
+These instructions are not directly supported by the VM.
+
+**Defining a macro**
+``` 
+macro <name> <args> {
+    <instructions>
+}
+
+// Example
+macro add3 {
+    const 3
+    addi
+}
+
+// Example with arguments
+macro add {
+    const <arg1>
+    const <arg2>
+    addi
+}
+```
+
+**Using a macro**
+``` 
+<name>! <args>
+
+// Example
+add3!
+add! 1 2
+```
+
+**Built-in macros**
+``` 
+repeat! <count> <instruction>
+comment! <comment>
+alias! <name> <instruction>
+repeat_gen! <var> <count> <instruction> // Generates a repeat macro but replaces <var> with the current iteration
+```
+
+**Examples of built-in macros**
+```
+repeat! 2 const 1 // const 1 const 1
+comment! "Hello World" // Does nothing
+alias! add addi // add 1 2 -> addi 1 2, NOTE: this cannot override macros or instructions
+repeat_gen! i 10 const <i> // const 0 const 1 const 2 const 3 const 4 const 5 const 6 const 7 const 8 const 9
+```
+
 ## Using external rvm libraries
 External rvm libraries provide pre-defined subroutines that can be utilised within your rvm program.
 These libraries may be provided by the VM (via standard VM library) or by the user (via custom VM library).
