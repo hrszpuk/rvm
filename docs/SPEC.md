@@ -10,7 +10,7 @@ RVM is a stack-based virtual machine.
 ### Call stack
 
 ## Instruction set
-The instruction set will be 2 bytes large. This will be more than enough room for all the instructions we want.
+The instruction set will be 1 bytes large. This will be more than enough room for all the instructions we want.
 
 The following are examples of instructions the VM may interpret:
 ``` 
