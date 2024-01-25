@@ -90,6 +90,13 @@ The following are the native types that the VM will support:
 - `bool` - [0-1] - 1 byte
 - `char` - [0-9a-zA-Z] - 1 byte
 - `array` - [type\[size\]] - (size * sizeof(type)) bytes
+
+## Using external rvm libraries
+External rvm libraries provide pre-defined subroutines that can be utilised within your rvm program.
+These libraries may be provided by the VM (via standard VM library) or by the user (via custom VM library).
+This allows for libraries to be shared between programming languages.
+
+
 # Resources
 - https://dev.to/lexplt/understanding-bytecode-interpreters-eig
 - https://dev.to/lexplt/parallelizing-a-bytecode-interpreter-58m8
