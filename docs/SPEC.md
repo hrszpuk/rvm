@@ -79,6 +79,17 @@ end             // End subroutine
 preload <path>  // Load rvm script, NOTE: the order of the preload instructions is important
 ```
 
+### Native types
+The following are the native types that the VM will support:
+- `i8` - [0-9] - 1 byte
+- `i16` - [0-9] - 2 bytes
+- `i32` - [0-9] - 4 bytes
+- `i64` - [0-9] - 8 bytes
+- `f32` - [0-9.] - 4 bytes
+- `f64` - [0-9.] - 8 bytes
+- `bool` - [0-1] - 1 byte
+- `char` - [0-9a-zA-Z] - 1 byte
+- `array` - [type\[size\]] - (size * sizeof(type)) bytes
 # Resources
 - https://dev.to/lexplt/understanding-bytecode-interpreters-eig
 - https://dev.to/lexplt/parallelizing-a-bytecode-interpreter-58m8
