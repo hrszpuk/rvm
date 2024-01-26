@@ -35,7 +35,7 @@ TranslationResult TranslateInstruction(char* instruction) {
     bool success = false;
 
     for (int i = 0; i < BYTECODE_INSTRUCTION_COUNT; i++) {
-        if (strcmp(instr, BytecodeMap[i]) == 0) {
+        if (strcasecmp(instr, BytecodeMap[i]) == 0) {
             opcode = i;
             success = true;
             break;
