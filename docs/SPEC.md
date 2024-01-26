@@ -135,8 +135,12 @@ begin foo
 end
 ```
 
-// Loading other rvm scripts
-preload <path>  // Load rvm script, NOTE: the order of the preload instructions is important
+### Instruction Value Consumptions
+Some instructions consume values from the stack.
+The values consumed are no longer available on the stack after the instruction is executed.
+Some instructions consume values from the stack and push a result onto the stack.
+
+The following is a list of instructions, the number of values they consume from the stack and the number of values they push onto the stack:
 ```
 
 ### Native types
