@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <strings.h>
 
-void HelpBasic(); // displays a basic help menu (similar to #11)
-void HelpRun(); // displays a help menu for the run command
-void HelpBuild(); // displays a help menu for the build command
-void HelpCheck(); // displays a help menu for the check command
-void HelpHelp(); // displays a help menu for the help command
-
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
                         "  run   <file> [arguments]  Run a rvm file\n"
