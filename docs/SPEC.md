@@ -81,6 +81,59 @@ in            // Read single value
 // Subroutines
 begin <name>    // Begin subroutine
 end             // End subroutine
+call <name>     // Call subroutine
+ret             // Return from subroutine
+```
+
+### Idioms
+
+**Idiom 1: loops**
+```
+// for i in range(0, 10):
+//     print(i)
+push 0
+store i
+push 10
+store n
+loop:
+    load i
+    load n
+    lt
+    jmpc end
+    load i
+    out
+    push 1
+    load i
+    add
+    store i
+    jmp loop
+end:
+```
+
+**Idiom 2: subroutines**
+```
+// def foo():
+//     print("foo")
+//     x = bar()
+//     if x: return
+//     print("foo")
+begin foo
+    push 'f'
+    out
+    push 'o'
+    out
+    push 'o'
+    out
+    call bar
+    jmpc end
+    push 'f'
+    out
+    push 'o'
+    out
+    push 'o'
+    out
+end
+```
 
 // Loading other rvm scripts
 preload <path>  // Load rvm script, NOTE: the order of the preload instructions is important
