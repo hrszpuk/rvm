@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <strings.h>
+#include "../lib/headers/translator.h"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
