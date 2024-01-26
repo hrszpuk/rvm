@@ -8,7 +8,7 @@
 
 
 Buffer* TranslateInstructions(char* instructions) {
-    const char* line = strtok(instructions, "\n");
+    char* line = strtok(instructions, "\n");
     Buffer* instr_buffer = CreateBuffer(1);
 
     while (line != NULL) {
