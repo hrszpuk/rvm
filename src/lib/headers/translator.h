@@ -74,6 +74,6 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
 typedef struct { char* bytecode; int length; bool success; } TranslationResult;
 Buffer* TranslateInstructions(char* instructions);
 TranslationResult TranslateInstruction(char* instruction);
-void TranslateFile(char* filename, char* outputFilename);
+void TranslateFile(const char* filename, const char* outputFilename);
 
 #endif //TRANSLATOR_H
