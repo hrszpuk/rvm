@@ -142,67 +142,46 @@ Some instructions consume values from the stack and push a result onto the stack
 
 The following is a list of instructions, the number of values they consume from the stack and the number of values they push onto the stack:
 ```
-
-### Native types
-The following are the native types that the VM will support:
-- `i8` - [0-9] - 1 byte
-- `i16` - [0-9] - 2 bytes
-- `i32` - [0-9] - 4 bytes
-- `i64` - [0-9] - 8 bytes
-- `f32` - [0-9.] - 4 bytes
-- `f64` - [0-9.] - 8 bytes
-- `bool` - [0-1] - 1 byte
-- `char` - [0-9a-zA-Z] - 1 byte
-- `array` - [type\[size\]] - (size * sizeof(type)) bytes
-
-### Macros
-Macros are a way to extend the VM's instruction set. 
-They are defined in the VM's bytecode and are translated into bytecode instructions by the translation library.
-These instructions are not directly supported by the VM.
-
-**Defining a macro**
-``` 
-macro <name> <args> {
-    <instructions>
-}
-
-// Example
-macro add3 {
-    const 3
-    addi
-}
-
-// Example with arguments
-macro add {
-    const <arg1>
-    const <arg2>
-    addi
-}
-```
-
-**Using a macro**
-``` 
-<name>! <args>
-
-// Example
-add3!
-add! 1 2
-```
-
-**Built-in macros**
-``` 
-repeat! <count> <instruction>
-comment! <comment>
-alias! <name> <instruction>
-repeat_gen! <var> <count> <instruction> // Generates a repeat macro but replaces <var> with the current iteration
-```
-
-**Examples of built-in macros**
-```
-repeat! 2 const 1 // const 1 const 1
-comment! "Hello World" // Does nothing
-alias! add addi // add 1 2 -> addi 1 2, NOTE: this cannot override macros or instructions
-repeat_gen! i 10 const <i> // const 0 const 1 const 2 const 3 const 4 const 5 const 6 const 7 const 8 const 9
+halt            // 0, 0
+noop            // 0, 0
+load            // 0, 1
+store           // 1, 0
+vload           // 0, 1
+vstore          // 1, 0
+local           // 0, 0
+global          // 0, 0
+push            // 0, 1
+pop             // 1, 0
+dup             // 1, 2
+swap            // 2, 2
+add             // 2, 1
+sub             // 2, 1
+mul             // 2, 1
+div             // 2, 1
+mod             // 2, 1
+and             // 2, 1
+or              // 2, 1
+xor             // 2, 1
+not             // 1, 1
+shl             // 2, 1
+shr             // 2, 1
+land            // 2, 1
+lor             // 2, 1
+lnot            // 1, 1
+eq              // 2, 1
+ne              // 2, 1
+lt              // 2, 1
+le              // 2, 1
+gt              // 2, 1
+ge              // 2, 1
+jmp             // 0, 0
+jmpc            // 1, 0
+out             // 1, 0
+in              // 0, 1
+begin           // 0, 0
+end             // 0, 0
+call            // 0, 0
+ret             // 0, 0
 ```
 
 ## Using external rvm libraries
