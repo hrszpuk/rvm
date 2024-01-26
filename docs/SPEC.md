@@ -10,7 +10,7 @@ RVM is a stack-based virtual machine.
 ### Call stack
 
 ## Instruction set
-The instruction set will be 1 bytes large. This will be more than enough room for all the instructions we want.
+The instruction set will be 1 byte large. This will be more than enough room for all the instructions we want.
 
 The following are examples of instructions the VM may interpret:
 ``` 
@@ -27,10 +27,9 @@ push            // Push data onto stack
 pop             // Pop data off stack
 dup             // Duplicate top value on stack
 swap            // Swap top two values on stack
-const           // Push constant onto stack
 
 // Arithmetric
-// The following instructions pop two values off the stack and push the result onto the stack
+// The following instructions pop two values off the stack and push the result onto the stack 
 add             // Add
 sub             // Subtract
 mul             // Multiply
@@ -38,7 +37,7 @@ div             // Divide
 mod             // Modulo
 
 // Bitwise
-// The following instructions pop two values off the stack and push the result onto the stack
+// The following instructions pop two values off the stack and push the result onto the stack (except not)
 and             // Bitwise and
 or              // Bitwise or
 xor             // Bitwise xor
@@ -47,7 +46,7 @@ shl             // Bitwise shift left
 shr             // Bitwise shift right
 
 // Logicial
-// The following instructions pop two values off the stack and push the result onto the stack
+// The following instructions pop two values off the stack and push the result onto the stack (except lnot)
 land            // Logical and
 lor             // Logical or
 lnot            // Logical not
@@ -64,8 +63,6 @@ ge              // Greater than or equal
 // Control flow
 jmp             // Jump
 jmpc            // Jump if condition (top of stack) is true or 1
-call <name>     // Call subroutine
-ret             // Return from function
 
 // I/O
 out           // Print single value
