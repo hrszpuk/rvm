@@ -18,10 +18,20 @@ halt            // Stop program
 noop            // No operation
 
 // Data operations
-load            // Load data from local heap
-gload           // Load data from global heap
-store           // Store data onto local heap
-gstore          // Store data onto global heap
+// Loading using an index is faster than loading using an id
+load <index>    // Load data from heap
+store <index>   // Store data in heap
+
+// Loading using an id is more convenient than loading using an index
+// The id is a string that is mapped to an index
+// This is better for debugging
+vload <id>      // Load data from heap
+vstore <id>     // Store data in heap
+
+// The local heap is a stack that is local to the current subroutine
+// The global heap is a stack that is global to the entire program
+local           // Switch to local heap
+global          // Switch to global heap
 
 push            // Push data onto stack
 pop             // Pop data off stack
