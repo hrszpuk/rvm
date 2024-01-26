@@ -5,7 +5,7 @@
 #ifndef TRANSLATOR_H
 #define TRANSLATOR_H
 #define BYTECODE_INSTRUCTION_COUNT 40
-#include "headers/buffer.h"
+#include "buffer.h"
 
 
 const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
