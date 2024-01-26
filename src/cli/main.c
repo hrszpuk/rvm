@@ -22,7 +22,7 @@ const char* arguments = "Arguments:\n"
 const char* helpRun = "Usage: rvm run <file> [arguments]\n\n";
 const char* helpBuild = "Usage: rvm build <file1> <file2> ... [output]\n\n";
 const char* helpCheck = "Usage: rvm check <file>\n\n";
-const char* helpHelp = "Usage: rvm help <command>\n\n";
+const char* helpHelp = "Usage: rvm help <command>\nReplace <command> with run, build, check, or help.\n";
 
 int main(int argc, char** argv) {
     if (argc < 2) {
