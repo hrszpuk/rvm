@@ -8,6 +8,28 @@ void HelpBuild(); // displays a help menu for the build command
 void HelpCheck(); // displays a help menu for the check command
 void HelpHelp(); // displays a help menu for the help command
 
+const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
+                        "Commands:\n"
+                        "  run   <file> [arguments]  Run a rvm file\n"
+                        "  build <file> [output]     Build a rvm file\n"
+                        "  check <file>              Check a rvm file for errors\n"
+                        "  help  <command>           Display help for a command\n";
+
+const char* arguments = "Arguments:\n"
+                        "  -h, --help                Display this help menu\n"
+                        "  -v, --version             Display the version of rvm\n"
+                        "  -d, --debug               Run in debug mode\n"
+                        "  -l, --log                 Log the output to a file\n"
+                        "  -o, --output <file>       Output to a file\n"
+                        "  -i, --input <file>        Input from a file\n"
+                        "  -s, --stdin               Input from stdin\n"
+                        "  -a, --args <args>         Set the arguments\n";
+
+const char* helpRun = "Usage: rvm run <file> [arguments]\n\n";
+const char* helpBuild = "Usage: rvm build <file1> <file2> ... [output]\n\n";
+const char* helpCheck = "Usage: rvm check <file>\n\n";
+const char* helpHelp = "Usage: rvm help <command>\n\n";
+
 int main(int argc, char** argv) {
     if (argc < 2) {
         printf("Not enough arguments\n\n");
