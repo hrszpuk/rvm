@@ -48,3 +48,26 @@ void AddBufferData(Buffer* buffer, void* element) {
     buffer->data[buffer->count] = element;
     buffer->count++;
 }
+
+void RemoveBufferData(const Buffer* buffer, const int index) {
+    if (index < 0 || index >= buffer->count) {
+        return;
+    }
+
+    for (int i = index; i < buffer->count - 1; i++) {
+        buffer->data[i] = buffer->data[i + 1];
+    }
+}
+
+void RemoveAllBufferData(Buffer* buffer) {
+    buffer->count = 0;
+}
+
+void ClearBufferData(Buffer* buffer) {
+    for (int i = 0; i < buffer->count; i++) {
+        free(buffer->data[i]);
+    }
+
+    buffer->count = 0;
+}
+
