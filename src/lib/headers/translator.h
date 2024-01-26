@@ -71,5 +71,6 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     "out",
 };
 
+typedef struct { char* bytecode; int length; bool success; } TranslationResult;
 
 #endif //TRANSLATOR_H
