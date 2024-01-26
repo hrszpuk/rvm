@@ -184,12 +184,6 @@ call            // 0, 0
 ret             // 0, 0
 ```
 
-## Using external rvm libraries
-External rvm libraries provide pre-defined subroutines that can be utilised within your rvm program.
-These libraries may be provided by the VM (via standard VM library) or by the user (via custom VM library).
-This allows for libraries to be shared between programming languages.
-
-
 # Resources
 - https://dev.to/lexplt/understanding-bytecode-interpreters-eig
 - https://dev.to/lexplt/parallelizing-a-bytecode-interpreter-58m8
