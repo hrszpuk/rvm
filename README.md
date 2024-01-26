@@ -1,5 +1,5 @@
-# RVM
-A simple, register-based virtual machine for the Bytespace community.
+# rvm
+A simple, stack-based virtual machine for the Bytespace community.
 
 ## Goals
 - [ ] High-performance
