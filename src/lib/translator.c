@@ -1,11 +1,71 @@
 #include "headers/translator.h"
-
-
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
+    // Misc
+    "halt",
+    "noop",
+
+    // Data operations
+    "load",
+    "store",
+    "vload",
+    "vstore",
+
+    // Stack operations
+    "push",
+    "pop",
+    "dup",
+    "swap",
+
+    // Arithmetic operations
+    "add",
+    "sub",
+    "div",
+    "mul",
+    "mod",
+    "inc",
+    "dec",
+
+    // Comparison operations
+    "eq",
+    "ne",
+    "lt",
+    "gt",
+    "le",
+    "ge",
+
+    // Logical operations
+    "land",
+    "lor",
+    "lnot",
+
+    // Bitwise operations
+    "and",
+    "or",
+    "xor",
+    "not",
+    "shl",
+    "shr",
+
+    // Control flow operations
+    // NOTE: labels are defined as "<name>:" in the source code. The translator will convert these to numbers.
+    "jmp",
+    "jmpc",
+
+    // Function operations
+    "call",
+    "ret",
+    "begin",
+    "end",
+
+    // I/O operations
+    "in",
+    "out",
+};
 
 Buffer* TranslateInstructions(char* instructions) {
     char* line = strtok(instructions, "\n");
