@@ -37,5 +37,14 @@ void StopVM(VM* vm) {
     ClearBufferData(vm->buffer);
 }
 
-
+void DumpVM(VM* vm) {
+    PrintStack(vm->stack);
+    printf("Buffer dump:\n");
+    for (int i = 0; i < vm->buffer->count; i++) {
+        printf("%d: %p\n", i, GetBufferData(vm->buffer, i));
+    }
+    printf("Instruction Pointer: %d\n", vm->ip);
+    printf("State: %d\n", vm->state);
+    printf("Debug: %d\n", vm->debug);
+}
 
