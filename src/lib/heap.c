@@ -51,7 +51,12 @@ void* ExtractMin(Heap* heap) {
     return min;
 }
 
-void* PeekHeap(Heap* heap);
+void* PeekHeap(Heap* heap) {
+    if (heap->size == 0) {
+        return NULL;
+    }
+    return heap->data[0];
+}
 
 void Heapify(Heap* heap, int index);
 
