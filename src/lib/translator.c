@@ -16,6 +16,11 @@ Instruction* CreateInstruction(const unsigned char opcode, const char* arg, cons
     return instruction;
 }
 
+void DestroyInstruction(Instruction* instruction) {
+    free(instruction->arg);
+    free(instruction);
+}
+
 BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
     BytecodeTranslator* translator = malloc(sizeof(BytecodeTranslator));
     translator->file_contents = file_contents;
