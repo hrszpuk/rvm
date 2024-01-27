@@ -5,6 +5,7 @@
 #include "headers/dictionary.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 DictEntry* CreateDictEntry(char* key, char* value) {
     DictEntry* entry = malloc(sizeof(DictEntry));
@@ -58,3 +59,19 @@ void DictionaryInsert(Dictionary* dict, char* key, char* value) {
     dict->size++;
 }
 
+char* DictionaryGet(Dictionary* dict, char* key) {
+    int hash = 0;
+    for (int i = 0; key[i] != '\0'; i++) {
+        hash += key[i];
+    }
+    hash %= dict->capacity;
+
+    DictEntry* entry = &dict->entries[hash];
+    while (entry != NULL) {
+        if (entry->key != NULL && strcmp(entry->key, key) == 0) {
+            return entry->value;
+        }
+        entry = (DictEntry*) entry->next;
+    }
+    return NULL;
+}
