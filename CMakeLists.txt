@@ -10,8 +10,6 @@ set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/lib)
 add_executable(rvm_cli src/cli/main.c)
 
 add_library(rvm_lib STATIC src/lib/stack.c
-        src/lib/instruction.c
-        src/lib/headers/instruction.h
         src/lib/translator.c
         src/lib/headers/translator.h
         src/lib/buffer.c
