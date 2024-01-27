@@ -29,4 +29,10 @@ void PushStack(Stack* stack, void* data) {
     stack->data[stack->count] = data;
     stack->count++;
 }
+
+void FreeStack(Stack* stack) {
+    free(stack->data);
+    free(stack);
+}
+
 }
