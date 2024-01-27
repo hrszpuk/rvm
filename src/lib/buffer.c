@@ -16,9 +16,7 @@ Buffer* CreateBuffer(const int capacity) {
 }
 
 void DestroyBuffer(Buffer* buffer) {
-    for (int i = 0; i < buffer->count; i++) {
-        free(buffer->data[i]);
-    }
+    free(buffer->data);
     free(buffer);
 }
 
