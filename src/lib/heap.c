@@ -58,7 +58,26 @@ void* PeekHeap(Heap* heap) {
     return heap->data[0];
 }
 
-void Heapify(Heap* heap, int index);
+void Heapify(Heap* heap, int index) {
+    if (index >= heap->size || index < 0) {
+        return;
+    }
+    int left = index * 2 + 1;
+    int right = index * 2 + 2;
+    int smallest = index;
+    if (left < heap->size && heap->data[left] < heap->data[smallest]) {
+        smallest = left;
+    }
+    if (right < heap->size && heap->data[right] < heap->data[smallest]) {
+        smallest = right;
+    }
+    if (smallest != index) {
+        void* temp = heap->data[index];
+        heap->data[index] = heap->data[smallest];
+        heap->data[smallest] = temp;
+        Heapify(heap, smallest);
+    }
+}
 
 void HeapSort(Heap* heap);
 
