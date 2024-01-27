@@ -21,4 +21,11 @@ void FreeDictEntry(DictEntry* entry) {
     free(entry);
 }
 
+Dictionary* CreateDictionary(int capacity) {
+    Dictionary* dict = malloc(sizeof(Dictionary));
+    dict->entries = malloc(sizeof(DictEntry) * capacity);
+    dict->size = 0;
+    dict->capacity = capacity;
+    return dict;
+}
 
