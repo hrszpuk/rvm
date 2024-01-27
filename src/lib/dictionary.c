@@ -75,3 +75,23 @@ char* DictionaryGet(Dictionary* dict, char* key) {
     }
     return NULL;
 }
+
+void DictionaryRemove(Dictionary* dict, char* key) {
+    int hash = 0;
+    for (int i = 0; key[i] != '\0'; i++) {
+        hash += key[i];
+    }
+    hash %= dict->capacity;
+
+    DictEntry* entry = &dict->entries[hash];
+    while (entry->next != NULL) {
+        if (entry->next->key != NULL && strcmp(entry->next->key, key) == 0) {
+            DictEntry* next = (DictEntry*) entry->next->next;
+            FreeDictEntry((DictEntry*) entry->next);
+            entry->next = (DictEntry*) next;
+            dict->size--;
+            return;
+        }
+        entry = (DictEntry*) entry->next;
+    }
+}
