@@ -4,7 +4,15 @@
 
 #include "headers/heap.h"
 
-Heap* CreateHeap(int capacity);
+#include <stdlib.h>
+
+Heap* CreateHeap(int capacity) {
+    Heap* heap = malloc(sizeof(Heap) * capacity);
+    heap->data = malloc(sizeof(void*) * capacity);
+    heap->size = 0;
+    heap->capacity = capacity;
+    return heap;
+}
 
 void DestroyHeap(Heap* heap);
 
