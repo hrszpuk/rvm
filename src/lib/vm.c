@@ -41,8 +41,8 @@ void RunVM(VM* vm) {
         }
 
         // Fetch instruction, apply it, and increment instruction pointer.
-        TranslationResult* instruction = GetBufferData(vm->buffer, vm->ip);
-        switch (instruction->bytecode[0]) {
+        Instruction* instruction = GetBufferData(vm->buffer, vm->ip);
+        switch (instruction->opcode) {
             case HALT: {
                 vm->state = 2;
                 break;
@@ -51,7 +51,8 @@ void RunVM(VM* vm) {
                 break;
             }
             case PUSH: {
-                int value = atoi(instruction->bytecode + 1);
+                // TODO: support other types
+                int value = atoi(instruction->arg);
                 PushStack(vm->stack, &value);
                 break;
             }
