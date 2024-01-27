@@ -83,7 +83,18 @@ Buffer* TranslateInstructions(char* instructions) {
         buffer = realloc(buffer, sizeof(char) * ++*buffer_size);
 
         if (c == '\n' || c == '\0') {
-            Instruction instruction = ConstructInstruction(instr, arg);
+            Instruction instruction;
+            instruction.opcode = 1;
+            instruction.arg = arg;
+            instruction.type = 0;
+
+            for (int k = 0; k < BYTECODE_INSTRUCTION_COUNT; k++) {
+                if (strcmp(instr, BytecodeMap[k]) == 0) {
+                    instruction.opcode = k;
+                    break;
+                }
+            }
+
             AddBufferData(result, &instruction);
         } else if (c == ' ') {
             arg = malloc(sizeof(char));
