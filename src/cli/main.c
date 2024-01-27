@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
 
 #include "../lib/headers/translator.h"
@@ -55,12 +56,24 @@ int main(int argc, char** argv) {
         }
         printf("Checking \"%s\" for errors.\n", argv[2]);
     } else if (strcasecmp(argv[1], "devtest") == 0) {
+        printf("Reading file \"%s\".\n", argv[2]);
+        FILE* file = fopen(argv[2], "r");
+        fseek(file, 0, SEEK_END);
+        long size = ftell(file);
+        rewind(file);
+        char* buffer = malloc(sizeof(char) * size + 1);
+        fread(buffer, sizeof(char), size, file);
+        buffer[size] = '\0';
+        fclose(file);
+
         printf("Running quick opcode test\n");
         VM* vm = CreateVM(10, 10);
-        Buffer* bytecode = TranslateInstructions(argv[2]);
-        LoadBytecode(vm, bytecode);
-        RunVM(vm);
+        BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
+        Buffer* bytecode = Translate(translator);
+        //LoadBytecode(vm, bytecode);
+        //RunVM(vm);
         DestroyVM(vm);
+        DestroyBytecodeTranslator(translator);
 
         return 0;
     } else if (strcasecmp(argv[1], "help") == 0 || strcasecmp(argv[1], "-h") == 0 || strcasecmp(argv[1], "--help") == 0) {
