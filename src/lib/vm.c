@@ -9,10 +9,11 @@
 
 #include "headers/translator.h"
 
+// NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see LoadBytecode).
 VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
     VM* vm = malloc(sizeof(VM));
     vm->stack = CreateStack(stackCapacity);
-    vm->buffer = CreateBuffer(bufferCapacity);
+    vm->buffer = NULL;
     vm->ip = 0;
     vm->state = 0;
     vm->debug = 0;
@@ -21,11 +22,13 @@ VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
 
 // NOTE(hrs): bytecode buffer must contain TranslationResult data
 void LoadBytecode(VM* vm, Buffer* bytecode) {
-    DestroyBuffer(vm->buffer);
     vm->buffer = bytecode;
 }
 
 void DestroyVM(VM* vm) {
+    for (int i = 0; i < vm->buffer->count; i++) {
+        DestroyInstruction(GetBufferData(vm->buffer, i));
+    }
     DestroyBuffer(vm->buffer);
     FreeStack(vm->stack);
     free(vm);
@@ -41,8 +44,8 @@ void RunVM(VM* vm) {
         }
 
         // Fetch instruction, apply it, and increment instruction pointer.
-        TranslationResult* instruction = GetBufferData(vm->buffer, vm->ip);
-        switch (instruction->bytecode[0]) {
+        Instruction* instruction = GetBufferData(vm->buffer, vm->ip);
+        switch (instruction->opcode) {
             case HALT: {
                 vm->state = 2;
                 break;
@@ -51,8 +54,10 @@ void RunVM(VM* vm) {
                 break;
             }
             case PUSH: {
-                int value = atoi(instruction->bytecode + 1);
-                PushStack(vm->stack, &value);
+                // TODO: support other types
+                int* value = malloc(sizeof(int));
+                *value = atoi(instruction->arg);
+                PushStack(vm->stack, value);
                 break;
             }
             case POP: {
@@ -62,9 +67,8 @@ void RunVM(VM* vm) {
             case ADD: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a + *b;
-                PushStack(vm->stack, result);
+                *a = *a + *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -72,9 +76,8 @@ void RunVM(VM* vm) {
             case SUB: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a - *b;
-                PushStack(vm->stack, result);
+                *a = *a - *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -82,9 +85,8 @@ void RunVM(VM* vm) {
             case DIV: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a / *b;
-                PushStack(vm->stack, result);
+                *a = *a / *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -92,9 +94,8 @@ void RunVM(VM* vm) {
             case MUL: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a * *b;
-                PushStack(vm->stack, result);
+                *a = *a * *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -102,15 +103,14 @@ void RunVM(VM* vm) {
             case MOD: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a % *b;
-                PushStack(vm->stack, result);
+                *a = *a % *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
             }
             default: {
-                printf("Unknown instruction: %d\n", instruction->bytecode[0]);
+                printf("Unknown instruction!\n");
                 break;
             }
         }

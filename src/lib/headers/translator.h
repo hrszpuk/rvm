@@ -7,11 +7,25 @@
 #define BYTECODE_INSTRUCTION_COUNT 40
 #include "buffer.h"
 
-extern const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT];
-typedef struct { char* bytecode; int length; bool success; } TranslationResult;
+// BytecodeMap is a map of all human readable bytecode strings to their opcode values (single byte instructions).
+extern const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT]; // see translator.c
 
-Buffer* TranslateInstructions(char* instructions);
-TranslationResult TranslateInstruction(char* instruction);
-void TranslateFile(const char* filename, const char* outputFilename);
+typedef struct {
+    unsigned char opcode;
+    char* arg;
+    int type;
+} Instruction;
+
+Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type);
+void DestroyInstruction(Instruction* instruction);
+
+typedef struct {
+    char* file_contents;
+    Buffer* instructions;
+} BytecodeTranslator;
+
+BytecodeTranslator* CreateBytecodeTranslator(char* file_contents);
+void DestroyBytecodeTranslator(BytecodeTranslator* translator);
+Buffer* Translate(BytecodeTranslator* translator);
 
 #endif //TRANSLATOR_H
