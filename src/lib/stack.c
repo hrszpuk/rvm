@@ -15,4 +15,10 @@ Stack* CreateStack(int capacity) {
     stack->growthFactor = 2;
     return stack;
 }
+
+void* PopStack(Stack* stack) {
+    void* data = TopStack(stack);
+    stack->count--;
+    return data;
+}
 }
