@@ -13,13 +13,19 @@ extern const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT]; // see translator.c
 typedef struct {
     unsigned char opcode;
     char* arg;
-    int type; // 0 = no arg, 1 = int, 2 = char, 3 = string, 4 = label
+    int type;
 } Instruction;
 
-// TranslateInstructions takes a string of human readable instructions and returns a buffer of Instruction data.
-// The last value of the buffer is a NULL pointer.
-Buffer* TranslateInstructions(char*);
-Instruction ConstructInstruction(char*, char*);
+Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type);
+void DestroyInstruction(Instruction* instruction);
 
+typedef struct {
+    char* file_contents;
+    Buffer* instructions;
+} BytecodeTranslator;
+
+BytecodeTranslator* CreateBytecodeTranslator(char* file_contents);
+void DestroyBytecodeTranslator(BytecodeTranslator* translator);
+Buffer* Translate(BytecodeTranslator* translator);
 
 #endif //TRANSLATOR_H
