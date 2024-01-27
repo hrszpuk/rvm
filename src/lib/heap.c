@@ -79,5 +79,13 @@ void Heapify(Heap* heap, int index) {
     }
 }
 
-void HeapSort(Heap* heap);
+// Basic implementation of HeapSort
+// TODO: Implement a more efficient version of HeapSort
+void HeapSort(Heap* heap) {
+    int size = heap->size;
+    for (int i = 0; i < size; i++) {
+        heap->data[i] = ExtractMin(heap);
+    }
+    heap->size = size;
+}
 
