@@ -29,7 +29,16 @@ void InsertHeap(Heap* heap, void* data) {
     Heapify(heap, heap->size - 1);
 }
 
-void RemoveHeap(Heap* heap, void* data);
+void RemoveHeap(Heap* heap, void* data) {
+    for (int i = 0; i < heap->size; i++) {
+        if (heap->data[i] == data) {
+            heap->data[i] = heap->data[heap->size - 1];
+            heap->size--;
+            Heapify(heap, i);
+            return;
+        }
+    }
+}
 
 void* ExtractMin(Heap* heap);
 
