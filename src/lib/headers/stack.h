@@ -5,7 +5,12 @@
 #ifndef STACK_H
 #define STACK_H
 
-typedef struct {} Stack;
+typedef struct {
+    void** data;
+    int capacity;
+    int count;
+    int growthFactor;     // Default to 2 (NOTE: growth rate is always 1 * growthFactor)
+} Stack;
 
 Stack* CreateStack();
 void* PopStack();
