@@ -37,6 +37,97 @@ void DestroyBytecodeTranslator(BytecodeTranslator* translator) {
     free(translator);
 }
 
+Buffer* Translate(BytecodeTranslator* translator) {
+    char* file_contents = translator->file_contents;
+    Buffer* instructions = translator->instructions;
+
+    int instruction_count = 0;
+    int line_size = 1;
+    char* line = malloc(sizeof(char) * line_size);
+
+    int i = 0;
+    const int length = strlen(file_contents);
+    while (i < length) {
+        line[line_size - 1] = file_contents[i];
+        line_size++;
+        line = realloc(line, sizeof(char) * line_size);
+        line[line_size - 1] = '\0';
+
+        if (file_contents[i] == '\n') {
+            // Remove new line character
+            line[line_size - 2] = '\0';
+            line_size--;
+            line = realloc(line, sizeof(char) * line_size);
+
+            printf("line: \"%s\"\n", line);
+
+            // Split line into tokens
+            char** tokens = split(line, ' ');
+            int token_count = 0;
+
+            while (tokens[token_count] != NULL) {
+                printf("\"%s\"\n", tokens[token_count]);
+                token_count++;
+            }
+
+            printf("Token count: %d\n", token_count);
+
+            switch (token_count) {
+                case 0: {
+                    // Empty line
+                    break;
+                }
+                case 1: {
+                    // Instruction with no arguments
+                    for (int j = 0; j < BYTECODE_INSTRUCTION_COUNT; j++) {
+                        if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
+                            AddBufferData(instructions, CreateInstruction(j, NULL, 0));
+                            instruction_count++;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 2: {
+                    // Instruction with one argument
+                    for (int j = 0; j < BYTECODE_INSTRUCTION_COUNT; j++) {
+                        if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
+                            AddBufferData(instructions, CreateInstruction(j, tokens[1], 1));
+                            instruction_count++;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    printf("Parse error: too many tokens on line %d\n", instruction_count);
+                }
+            }
+            free(line);
+            line_size = 1;
+            line = malloc(sizeof(char) * line_size);
+        }
+        i++;
+    }
+
+    if (line_size > 1) {
+        printf("Parse error: line %d is not terminated with a new line character\n", instruction_count);
+    }
+
+    printf("Found %d instructions:\n", instructions->count);
+    for (int i = 0; i < instructions->count; i++) {
+        Instruction* instruction = GetBufferData(instructions, i);
+        if (instruction->arg == NULL) {
+            printf("%d (%d): %s\n", i, instruction->opcode, BytecodeMap[instruction->opcode]);
+        } else {
+            printf("%d (%d): %s %s\n", i, instruction->opcode, BytecodeMap[instruction->opcode], instruction->arg);
+        }
+    }
+
+    return instructions;
+}
+
+
 char** split(char* str, char delim) {
     int count = 0;
     char* temp = str;
