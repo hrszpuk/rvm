@@ -5,6 +5,8 @@
 #ifndef STACK_H
 #define STACK_H
 
+#include <stdbool.h>
+
 typedef struct {
     void** data;
     int capacity;
