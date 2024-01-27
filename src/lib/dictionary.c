@@ -42,3 +42,19 @@ void FreeDictionary(Dictionary* dict) {
     free(dict->entries);
     free(dict);
 }
+
+void DictionaryInsert(Dictionary* dict, char* key, char* value) {
+    int hash = 0;
+    for (int i = 0; key[i] != '\0'; i++) {
+        hash += key[i];
+    }
+    hash %= dict->capacity;
+
+    DictEntry* entry = &dict->entries[hash];
+    while (entry->next != NULL) {
+        entry = (DictEntry*) entry->next;
+    }
+    entry->next = (struct DictEntry*) CreateDictEntry(key, value);
+    dict->size++;
+}
+
