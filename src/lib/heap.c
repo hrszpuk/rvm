@@ -19,7 +19,15 @@ void DestroyHeap(Heap* heap) {
     free(heap);
 }
 
-void InsertHeap(Heap* heap, void* data);
+void InsertHeap(Heap* heap, void* data) {
+    if (heap->size == heap->capacity) {
+        heap->capacity *= 2;
+        heap->data = realloc(heap->data, sizeof(void*) * heap->capacity);
+    }
+    heap->data[heap->size] = data;
+    heap->size++;
+    Heapify(heap, heap->size - 1);
+}
 
 void RemoveHeap(Heap* heap, void* data);
 
