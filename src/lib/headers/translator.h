@@ -18,8 +18,8 @@ typedef struct {
 
 // TranslateInstructions takes a string of human readable instructions and returns a buffer of Instruction data.
 // The last value of the buffer is a NULL pointer.
-Buffer* TranslateInstructions(char* instructions);
-Instruction ParseInstruction(char* instruction);
+Buffer* TranslateInstructions(char*);
+Instruction ConstructInstruction(char*, char*);
 
 
 #endif //TRANSLATOR_H
