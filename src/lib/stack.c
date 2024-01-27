@@ -52,4 +52,13 @@ void ClearStack(Stack* stack) {
     stack->count = 0;
 }
 
+bool IsEmptyStack(Stack* stack) {
+    return stack->count == 0;
+}
+
+void* TopStack(Stack* stack) {
+    if (stack->count == 0) {
+        return NULL;
+    }
+    return stack->data[stack->count - 1];
 }
