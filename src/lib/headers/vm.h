@@ -20,13 +20,25 @@ typedef struct {
 typedef enum {
     HALT,
     NOOP,
+
+    LOAD,
+    STORE,
+    VLOAD,
+    VSTORE,
+
     PUSH,
     POP,
+    DUP,
+    SWAP,
+
     ADD,
     SUB,
     DIV,
     MUL,
     MOD,
+    INC,
+    DEC,
+
     OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
 } Opcode;
 
