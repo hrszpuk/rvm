@@ -40,7 +40,16 @@ void RemoveHeap(Heap* heap, void* data) {
     }
 }
 
-void* ExtractMin(Heap* heap);
+void* ExtractMin(Heap* heap) {
+    if (heap->size == 0) {
+        return NULL;
+    }
+    void* min = heap->data[0];
+    heap->data[0] = heap->data[heap->size - 1];
+    heap->size--;
+    Heapify(heap, 0);
+    return min;
+}
 
 void* PeekHeap(Heap* heap);
 
