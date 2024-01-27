@@ -21,4 +21,12 @@ void* PopStack(Stack* stack) {
     stack->count--;
     return data;
 }
+
+void PushStack(Stack* stack, void* data) {
+    if (stack->count == stack->capacity) {
+        GrowStack(stack);
+    }
+    stack->data[stack->count] = data;
+    stack->count++;
+}
 }
