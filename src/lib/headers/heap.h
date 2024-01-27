@@ -11,13 +11,14 @@ typedef struct {
     int capacity;
 } Heap;
 
-Heap* CreateHeap(int capacity);
-void DestroyHeap(Heap* heap);
-void InsertHeap(Heap* heap, void* data);
-void RemoveHeap(Heap* heap, void* data);
-void* ExtractMin(Heap* heap);
-void* PeekHeap(Heap* heap);
-void Heapify(Heap* heap, int index);
-void HeapSort(Heap* heap);
+Heap* CreateHeap(int capacity);             // Creates a heap with the given capacity
+void DestroyHeap(Heap* heap);               // Destroys the heap
+void InsertHeap(Heap* heap, void* data);    // Inserts data into the heap
+void RemoveHeap(Heap* heap, void* data);    // Removes data from the heap
+void* ExtractMin(Heap* heap);               // Extracts the minimum value from the heap
+void* PeekHeap(Heap* heap);                 // Returns the minimum value from the heap
+void Heapify(Heap* heap, int index);        // Heapifies the heap from the given index
+void HeapSort(Heap* heap);                  // Sorts the heap
+void PrintHeap(Heap* heap);                 // Prints the heap
 
 #endif //HEAP_H
