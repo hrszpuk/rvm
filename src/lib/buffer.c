@@ -19,7 +19,6 @@ void DestroyBuffer(Buffer* buffer) {
     for (int i = 0; i < buffer->count; i++) {
         free(buffer->data[i]);
     }
-
     free(buffer);
 }
 
