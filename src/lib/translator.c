@@ -12,7 +12,7 @@ Instruction* CreateInstruction(const unsigned char opcode, const char* arg, cons
     instruction->opcode = opcode;
     instruction->arg = NULL;
     if (arg != NULL) {
-        instruction->arg = malloc(sizeof(char) * strlen(arg));
+        instruction->arg = malloc(sizeof(char) * strlen(arg) + 1);
         strcpy(instruction->arg, arg);
     }
     instruction->type = type;
@@ -75,6 +75,7 @@ Buffer* Translate(BytecodeTranslator* translator) {
             switch (token_count) {
                 case 0: {
                     // Empty line
+                    free(tokens);
                     break;
                 }
                 case 1: {
@@ -83,6 +84,8 @@ Buffer* Translate(BytecodeTranslator* translator) {
                         if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
                             AddBufferData(instructions, CreateInstruction(j, NULL, 0));
                             instruction_count++;
+                            free(tokens[0]);
+                            free(tokens);
                             break;
                         }
                     }
@@ -94,6 +97,8 @@ Buffer* Translate(BytecodeTranslator* translator) {
                         if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
                             AddBufferData(instructions, CreateInstruction(j, tokens[1], 1));
                             instruction_count++;
+                            free(tokens[0]);
+                            free(tokens); // NOTE(hrs): tokens[1] is copied into the instruction, so it can be freed here.
                             break;
                         }
                     }
@@ -101,9 +106,12 @@ Buffer* Translate(BytecodeTranslator* translator) {
                 }
                 default: {
                     printf("Parse error: too many tokens on line %d\n", instruction_count);
+                    for (int j = 0; j < token_count; j++) {
+                        free(tokens[j]);
+                    }
+                    free(tokens);
                 }
             }
-            free(line);
             line_size = 1;
             line = malloc(sizeof(char) * line_size);
         }
@@ -113,6 +121,8 @@ Buffer* Translate(BytecodeTranslator* translator) {
     if (line_size > 1) {
         printf("Parse error: line %d is not terminated with a new line character\n", instruction_count);
     }
+
+    free(line);
 
     printf("Found %d instructions:\n", instructions->count);
     for (int i = 0; i < instructions->count; i++) {
@@ -217,81 +227,3 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     "in",
     "out",
 };
-
-Buffer* TranslateInstructions(char* instructions) {
-    Buffer* result = CreateBuffer(10);
-    int i = 0;
-    const int length = strlen(instructions);
-
-    char* arg = NULL, *instr = malloc(sizeof(char));
-    int instr_size = 1, arg_size = 1;
-    char* buffer = instr;
-    int* buffer_size = &instr_size;
-
-    while (i < length) {
-        char c = instructions[i];
-        buffer[*buffer_size - 1] = c;
-        buffer = realloc(buffer, sizeof(char) * ++*buffer_size);
-
-        if (c == '\n' || c == '\0') {
-            Instruction instruction;
-            instruction.opcode = 1;
-            instruction.arg = arg;
-            instruction.type = 0;
-
-            for (int k = 0; k < BYTECODE_INSTRUCTION_COUNT; k++) {
-                if (strcmp(instr, BytecodeMap[k]) == 0) {
-                    instruction.opcode = k;
-                    break;
-                }
-            }
-
-            AddBufferData(result, &instruction);
-        } else if (c == ' ') {
-            arg = malloc(sizeof(char));
-            buffer = arg;
-            buffer_size = &arg_size;
-        }
-        i++;
-    }
-
-    printf("Buffer:\n");
-    for (int k = 0; k < result->count; k++) {
-        Instruction* instruction = GetBufferData(result, k);
-        printf("%d %s\n", instruction->opcode, instruction->arg);
-    }
-    return result;
-}
-
-// This function assumes that instruction is a single line of code.
-// It will return an Instruction struct with the opcode, argument, and type.
-Instruction ConstructInstruction(char* instr_literal, char* arg) {
-    Instruction result;
-    result.opcode = 1;
-    result.arg = arg;
-    result.type = 0;
-
-    for (int i = 0; i < BYTECODE_INSTRUCTION_COUNT; i++) {
-        if (strcmp(instr_literal, BytecodeMap[i]) == 0) {
-            result.opcode = i;
-            break;
-        }
-    }
-
-    if (arg == NULL) {
-        return result;
-    }
-
-    // TODO: this type parsing can be improved.
-    if (isdigit(arg[0])) {
-        result.type = 1;
-    } else if (arg[0] == '\'') {
-        result.type = 2;
-    } else if (arg[0] == '"') {
-        result.type = 3;
-    } else {
-        result.type = 4;
-    }
-
-    return result;
-}
