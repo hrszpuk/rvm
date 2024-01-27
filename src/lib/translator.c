@@ -3,6 +3,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+// NOTE(hrs): arg data is copied into the instruction, so it can be freed after the instruction is created.
+Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type) {
+    Instruction* instruction = malloc(sizeof(Instruction));
+    instruction->opcode = opcode;
+    instruction->arg = NULL;
+    if (arg != NULL) {
+        instruction->arg = malloc(sizeof(char) * strlen(arg));
+        strcpy(instruction->arg, arg);
+    }
+    instruction->type = type;
+    return instruction;
+}
+
 
 const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // Misc
