@@ -17,6 +17,19 @@ typedef struct {
     int debug;          // Debug mode: 0 = Off, 1 = On
 } VM;
 
+typedef enum {
+    HALT,
+    NOOP,
+    PUSH,
+    POP,
+    ADD,
+    SUB,
+    DIV,
+    MUL,
+    MOD,
+    OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
+} Opcode;
+
 VM* CreateVM(const int stackCapacity, const int bufferCapacity);    // Create a new VM with the specified stack and buffer capacity.
 void DestroyVM(VM* vm);     // Destroy the VM and free all memory associated with it.
 void RunVM(VM* vm);         // Set the VM's state to running. (NOTE: This is the default state)
