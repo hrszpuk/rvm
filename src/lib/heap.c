@@ -14,7 +14,10 @@ Heap* CreateHeap(int capacity) {
     return heap;
 }
 
-void DestroyHeap(Heap* heap);
+void DestroyHeap(Heap* heap) {
+    free(heap->data);
+    free(heap);
+}
 
 void InsertHeap(Heap* heap, void* data);
 
