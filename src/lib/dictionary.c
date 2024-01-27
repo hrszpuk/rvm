@@ -29,3 +29,16 @@ Dictionary* CreateDictionary(int capacity) {
     return dict;
 }
 
+// Free the Dictionary and all its entries.
+void FreeDictionary(Dictionary* dict) {
+    for (int i = 0; i < dict->capacity; i++) {
+        DictEntry* entry = (DictEntry*) dict->entries[i].next;
+        while (entry != NULL) {
+            DictEntry* next = (DictEntry*) entry->next;
+            FreeDictEntry(entry);
+            entry = next;
+        }
+    }
+    free(dict->entries);
+    free(dict);
+}
