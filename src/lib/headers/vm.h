@@ -5,8 +5,8 @@
 #ifndef VM_H
 #define VM_H
 
-#include "headers/stack.h"
-#include "headers/buffer.h"
+#include "stack.h"
+#include "buffer.h"
 
 // The VM is the main data structure of the interpreter.
 typedef struct {
