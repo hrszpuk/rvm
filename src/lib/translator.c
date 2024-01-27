@@ -68,87 +68,56 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
 };
 
 Buffer* TranslateInstructions(char* instructions) {
+    Buffer* result = CreateBuffer(10);
     char* line = strtok(instructions, "\n");
-    Buffer* instr_buffer = CreateBuffer(1);
-
     while (line != NULL) {
-        if (isalpha(line[0])) {
-            TranslationResult result = TranslateInstruction(line);
-            AddBufferData(instr_buffer, &result);
-        }
-
+        Instruction parsed = ParseInstruction(line);
+        AddBufferData(result, &parsed);
         line = strtok(NULL, "\n");
     }
 
-    return instr_buffer;
+    printf("Buffer:\n");
+    for (int i = 0; i < result->count; i++) {
+        Instruction* instruction = GetBufferData(result, i);
+        printf("%d %s\n", instruction->opcode, instruction->arg);
+    }
+    return result;
 }
 
-// NOTE: instructions are in the form "<instruction> <arg>". Addional arguments are stored on the stack.
-// i.e. "push 5" will push 5 onto the stack, "add" will add the top two values on the stack.
-// Return format: first character is the opcode, the rest are the arguments, if any. End with a \n terminator.
-TranslationResult TranslateInstruction(char* instruction) {
-    const char* instr = strtok(instruction, " ");
-    unsigned char opcode = 0;
-    char* args = malloc(sizeof(char) * 1);
-    int args_size = 1;
+Instruction ParseInstruction(char* instruction) {
+    Instruction result;
+    result.opcode = 1;
+    result.arg = NULL;
+    result.type = 0;
+
+    char* token = strtok(instruction, " ");
+    if (token == NULL) {
+        return result;
+    }
 
     bool success = false;
-
     for (int i = 0; i < BYTECODE_INSTRUCTION_COUNT; i++) {
-        if (strcasecmp(instr, BytecodeMap[i]) == 0) {
-            opcode = i;
+        if (strcasecmp(token, BytecodeMap[i]) == 0) {
+            result.opcode = i;
             success = true;
             break;
         }
     }
+    printf("Found: %d (%d)\n", result.opcode, success);
 
-    instr = strtok(NULL, " ");
-    while (instr != NULL) {
-        args_size++;
-        args = realloc(args, sizeof(char) * args_size);
-        args[args_size - 1] = atoi(instr);
-        instr = strtok(NULL, " ");
+    if (!success) {
+        return result;
     }
 
-    args_size++;
-    args = realloc(args, sizeof(char) * args_size);
-    args[args_size - 1] = '\n';
-
-    char* result = malloc(sizeof(char) * args_size + 1);
-    result[0] = opcode;
-
-    memcpy(result + 1, args, args_size);
-    free(args);
-
-    return (TranslationResult) { result, args_size + 1, success };
-}
-
-
-void TranslateFile(const char* filename, const char* output_filename) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error: could not open file %s\n", filename);
-        return;
+    token = strtok(NULL, " ");
+    if (token == NULL) {
+        return result;
     }
 
-    fseek(file, 0, SEEK_END);
-    const long file_size = ftell(file);
-    rewind(file);
+    result.arg = token;
+    printf("Result: %d %s\n", result.opcode, result.arg);
 
-    char* file_contents = malloc(sizeof(char) * file_size + 1);
-    fread(file_contents, sizeof(char), file_size, file);
-    file_contents[file_size] = '\0';
+    result.type = 1;
 
-    const Buffer* buffer = TranslateInstructions(file_contents);
-
-    free(file_contents);
-    fclose(file);
-    file = fopen(output_filename, "w");
-
-    for (int i = 0; i < buffer->count; i++) {
-        const TranslationResult* result = GetBufferData(buffer, i);
-        fwrite(result->bytecode, sizeof(char), result->length, file);
-    }
-
-    printf("Translation complete.\n");
+    return result;
 }
