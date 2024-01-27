@@ -35,4 +35,12 @@ void FreeStack(Stack* stack) {
     free(stack);
 }
 
+void PrintStack(Stack* stack) {
+    printf("Stack dump:\n");
+    for (int i = 0; i < stack->count; i++) {
+        printf("%d: %p", i, stack->data[i]);
+    }
+    printf("Total stack size: %d (capacity %d)\n", stack->count, stack->capacity);
+}
+
 }
