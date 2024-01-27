@@ -16,6 +16,13 @@ Instruction* CreateInstruction(const unsigned char opcode, const char* arg, cons
     return instruction;
 }
 
+BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
+    BytecodeTranslator* translator = malloc(sizeof(BytecodeTranslator));
+    translator->file_contents = file_contents;
+    translator->instructions = CreateBuffer(10);
+    return translator;
+}
+
 
 const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // Misc
