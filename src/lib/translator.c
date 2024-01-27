@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+char** split(char* str, char c);
+
 // NOTE(hrs): arg data is copied into the instruction, so it can be freed after the instruction is created.
 Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type) {
     Instruction* instruction = malloc(sizeof(Instruction));
@@ -34,6 +37,32 @@ void DestroyBytecodeTranslator(BytecodeTranslator* translator) {
     free(translator);
 }
 
+char** split(char* str, char delim) {
+    int count = 0;
+    char* temp = str;
+    while (*temp) {
+        if (*temp == delim) {
+            count++;
+        }
+        temp++;
+    }
+    count += 2; // One extra for the last element and one for the NULL pointer
+
+    char** result = malloc(sizeof(char *) * count);
+    if (result == NULL) {
+        return NULL;
+    }
+
+    char* token = strtok(str, &delim);
+    int i = 0;
+    while (token != NULL) {
+        result[i++] = token;
+        token = strtok(NULL, &delim);
+    }
+    result[i] = NULL; // Last element is the NULL pointer
+
+    return result;
+}
 
 const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // Misc
