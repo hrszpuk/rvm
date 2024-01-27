@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <strings.h>
+
 #include "../lib/headers/translator.h"
+#include "../lib/headers/vm.h"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
@@ -52,6 +54,15 @@ int main(int argc, char** argv) {
             return 1;
         }
         printf("Checking \"%s\" for errors.\n", argv[2]);
+    } else if (strcasecmp(argv[1], "devtest") == 0) {
+        printf("Running quick opcode test");
+        VM* vm = CreateVM(10, 10);
+        Buffer* bytecode = TranslateInstructions("PUSH 1\nPUSH 2\nADD\nHALT");
+        LoadBytecode(vm, bytecode);
+        RunVM(vm);
+        DumpVM(vm);
+        DestroyVM(vm);
+        return 0;
     } else if (strcasecmp(argv[1], "help") == 0 || strcasecmp(argv[1], "-h") == 0 || strcasecmp(argv[1], "--help") == 0) {
         if (argc < 3) {
             printf(helpBasic);
