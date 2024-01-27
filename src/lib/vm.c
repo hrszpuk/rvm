@@ -23,5 +23,19 @@ void DestroyVM(VM* vm) {
     free(vm);
 }
 
+void RunVM(VM* vm) {
+    vm->state = 0;
+}
+
+void PauseVM(VM* vm) {
+    vm->state = 1;
+}
+
+void StopVM(VM* vm) {
+    vm->state = 2;
+    ClearStack(vm->stack);
+    ClearBufferData(vm->buffer);
+}
+
 
 
