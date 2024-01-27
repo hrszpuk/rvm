@@ -6,10 +6,10 @@
 #define DICTIONARY_H
 
 // NOTE(hrs): Value may need to be a union of different types, or a void*, in the future.
-typedef struct {
+typedef struct DICT_ENTRY {
     char* key;
     char* value;
-    struct DictEntry* next;
+    struct DICT_ENTRY* next;
 
     int hash;
     int used;
