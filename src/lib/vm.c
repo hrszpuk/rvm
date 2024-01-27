@@ -62,9 +62,8 @@ void RunVM(VM* vm) {
             case ADD: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a + *b;
-                PushStack(vm->stack, result);
+                *a = *a + *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -72,9 +71,8 @@ void RunVM(VM* vm) {
             case SUB: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a - *b;
-                PushStack(vm->stack, result);
+                *a = *a - *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -82,9 +80,8 @@ void RunVM(VM* vm) {
             case DIV: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a / *b;
-                PushStack(vm->stack, result);
+                *a = *a / *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -92,9 +89,8 @@ void RunVM(VM* vm) {
             case MUL: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a * *b;
-                PushStack(vm->stack, result);
+                *a = *a * *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
@@ -102,15 +98,14 @@ void RunVM(VM* vm) {
             case MOD: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
-                int* result = malloc(sizeof(int));
-                *result = *a % *b;
-                PushStack(vm->stack, result);
+                *a = *a % *b;
+                PushStack(vm->stack, a);
                 free(a);
                 free(b);
                 break;
             }
             default: {
-                printf("Unknown instruction: %d\n", instruction->bytecode[0]);
+                printf("Unknown instruction!\n");
                 break;
             }
         }
