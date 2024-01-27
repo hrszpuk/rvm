@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "headers/translator.h"
+
 VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
     VM* vm = malloc(sizeof(VM));
     vm->stack = CreateStack(stackCapacity);
@@ -15,6 +17,12 @@ VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
     vm->state = 0;
     vm->debug = 0;
     return vm;
+}
+
+// NOTE(hrs): bytecode buffer must contain TranslationResult data
+void LoadBytecode(VM* vm, Buffer* bytecode) {
+    DestroyBuffer(vm->buffer);
+    vm->buffer = bytecode;
 }
 
 void DestroyVM(VM* vm) {
