@@ -17,7 +17,9 @@ add_library(rvm_lib STATIC src/lib/stack.c
         src/lib/buffer.c
         src/lib/headers/buffer.h
         src/lib/dictionary.c
-        src/lib/headers/dictionary.h)
+        src/lib/headers/dictionary.h
+        src/lib/heap.c
+        src/lib/headers/heap.h)
 
 set_target_properties(rvm_cli PROPERTIES OUTPUT_NAME "rvm")
 set_target_properties(rvm_lib PROPERTIES OUTPUT_NAME "rvm")
