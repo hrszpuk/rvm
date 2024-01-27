@@ -47,4 +47,9 @@ void GrowStack(Stack* stack) {
     stack->capacity *= stack->growthFactor;
     stack->data = realloc(stack->data, sizeof(void*) * stack->capacity);
 }
+
+void ClearStack(Stack* stack) {
+    stack->count = 0;
+}
+
 }
