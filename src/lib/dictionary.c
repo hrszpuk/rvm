@@ -121,3 +121,17 @@ char** DictionaryGetKeys(Dictionary* dict) {
     }
     return keys;
 }
+
+// NOTE(hrs): return-value must be freed.
+char** DictionaryGetValues(Dictionary* dict) {
+    char** values = malloc(sizeof(char*) * dict->size);
+    int index = 0;
+    for (int i = 0; i < dict->capacity; i++) {
+        DictEntry* entry = (DictEntry*) dict->entries[i].next;
+        while (entry != NULL) {
+            values[index++] = entry->value;
+            entry = (DictEntry*) entry->next;
+        }
+    }
+    return values;
+}
