@@ -56,7 +56,7 @@ void DictionaryInsert(Dictionary* dict, char* key, char* value) {
     while (entry->next != NULL) {
         entry = (DictEntry*) entry->next;
     }
-    entry->next = (struct DictEntry*) CreateDictEntry(key, value);
+    entry->next = (DictEntry*) CreateDictEntry(key, value);
     dict->size++;
 }
 
