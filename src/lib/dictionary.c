@@ -107,3 +107,17 @@ void DictionaryPrint(Dictionary* dict) {
         }
     }
 }
+
+// NOTE(hrs): return-value must be freed.
+char** DictionaryGetKeys(Dictionary* dict) {
+    char** keys = malloc(sizeof(char*) * dict->size);
+    int index = 0;
+    for (int i = 0; i < dict->capacity; i++) {
+        DictEntry* entry = (DictEntry*) dict->entries[i].next;
+        while (entry != NULL) {
+            keys[index++] = entry->key;
+            entry = (DictEntry*) entry->next;
+        }
+    }
+    return keys;
+}
