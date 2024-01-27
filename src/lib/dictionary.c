@@ -4,6 +4,7 @@
 
 #include "headers/dictionary.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -93,5 +94,16 @@ void DictionaryRemove(Dictionary* dict, char* key) {
             return;
         }
         entry = (DictEntry*) entry->next;
+    }
+}
+
+void DictionaryPrint(Dictionary* dict) {
+    printf("Dictionary dump:\n");
+    for (int i = 0; i < dict->capacity; i++) {
+        DictEntry* entry = (DictEntry*) dict->entries[i].next;
+        while (entry != NULL) {
+            printf("%s: %s\n", entry->key, entry->value);
+            entry = (DictEntry*) entry->next;
+        }
     }
 }
