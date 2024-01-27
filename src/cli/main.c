@@ -70,10 +70,12 @@ int main(int argc, char** argv) {
         VM* vm = CreateVM(10, 10);
         BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
         Buffer* bytecode = Translate(translator);
-        //LoadBytecode(vm, bytecode);
-        //RunVM(vm);
+        LoadBytecode(vm, bytecode);
+        RunVM(vm);
+
         DestroyVM(vm);
-        DestroyBytecodeTranslator(translator);
+        free(translator);
+        free(buffer);
 
         return 0;
     } else if (strcasecmp(argv[1], "help") == 0 || strcasecmp(argv[1], "-h") == 0 || strcasecmp(argv[1], "--help") == 0) {
