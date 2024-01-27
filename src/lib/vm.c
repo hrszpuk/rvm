@@ -17,6 +17,11 @@ VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
     return vm;
 }
 
+void DestroyVM(VM* vm) {
+    DestroyBuffer(vm->buffer);
+    FreeStack(vm->stack);
+    free(vm);
+}
 
 
 
