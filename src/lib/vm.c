@@ -9,10 +9,11 @@
 
 #include "headers/translator.h"
 
+// NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see LoadBytecode).
 VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
     VM* vm = malloc(sizeof(VM));
     vm->stack = CreateStack(stackCapacity);
-    vm->buffer = CreateBuffer(bufferCapacity);
+    vm->buffer = NULL;
     vm->ip = 0;
     vm->state = 0;
     vm->debug = 0;
@@ -21,11 +22,13 @@ VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
 
 // NOTE(hrs): bytecode buffer must contain TranslationResult data
 void LoadBytecode(VM* vm, Buffer* bytecode) {
-    DestroyBuffer(vm->buffer);
     vm->buffer = bytecode;
 }
 
 void DestroyVM(VM* vm) {
+    for (int i = 0; i < vm->buffer->count; i++) {
+        DestroyInstruction(GetBufferData(vm->buffer, i));
+    }
     DestroyBuffer(vm->buffer);
     FreeStack(vm->stack);
     free(vm);
@@ -52,8 +55,9 @@ void RunVM(VM* vm) {
             }
             case PUSH: {
                 // TODO: support other types
-                int value = atoi(instruction->arg);
-                PushStack(vm->stack, &value);
+                int* value = malloc(sizeof(int));
+                *value = atoi(instruction->arg);
+                PushStack(vm->stack, value);
                 break;
             }
             case POP: {
