@@ -28,6 +28,12 @@ BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
     return translator;
 }
 
+void DestroyBytecodeTranslator(BytecodeTranslator* translator) {
+    free(translator->file_contents);
+    DestroyBuffer(translator->instructions);
+    free(translator);
+}
+
 
 const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // Misc
