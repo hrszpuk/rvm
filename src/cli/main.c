@@ -55,13 +55,13 @@ int main(int argc, char** argv) {
         }
         printf("Checking \"%s\" for errors.\n", argv[2]);
     } else if (strcasecmp(argv[1], "devtest") == 0) {
-        printf("Running quick opcode test");
+        printf("Running quick opcode test\n");
         VM* vm = CreateVM(10, 10);
-        Buffer* bytecode = TranslateInstructions("PUSH 1\nPUSH 2\nADD\nHALT");
+        Buffer* bytecode = TranslateInstructions(argv[2]);
         LoadBytecode(vm, bytecode);
         RunVM(vm);
-        DumpVM(vm);
         DestroyVM(vm);
+
         return 0;
     } else if (strcasecmp(argv[1], "help") == 0 || strcasecmp(argv[1], "-h") == 0 || strcasecmp(argv[1], "--help") == 0) {
         if (argc < 3) {
