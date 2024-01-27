@@ -43,4 +43,8 @@ void PrintStack(Stack* stack) {
     printf("Total stack size: %d (capacity %d)\n", stack->count, stack->capacity);
 }
 
+void GrowStack(Stack* stack) {
+    stack->capacity *= stack->growthFactor;
+    stack->data = realloc(stack->data, sizeof(void*) * stack->capacity);
+}
 }
