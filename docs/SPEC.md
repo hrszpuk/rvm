@@ -113,6 +113,14 @@ Values stored in r8 and r9 may be overwritten or manipulate the behavior of the 
 - 14: exception handler failed
 
 ## Variable Pool
+The variable pool is a pool of variables. Each variable has a name, a type, and a value.
+The variable pool is used to store global variables and local variables.
+
+Each call frame has its own variable pool. When a function is called, a new variable pool is created.
+When a function returns, the variable pool is destroyed.
+
+Each local variable pool has a pointer to the global variable pool.
+This allows instructions in the current call frame to access global variables.
 
 ## Multi-threading
 
