@@ -578,7 +578,10 @@ It is used by the rvm cli to compile rvm assembly into bytecode.
 
 More information about the rvm assembler can be found in the [Instruction Set](#instruction-set) section.
 
-### Common Data Structures
+## rvm assembly generator
+This is a library available to compiler developers to generate rvm assembly.
+
+The generation API has not been decided yet.
 
 ## rvm cli
 
