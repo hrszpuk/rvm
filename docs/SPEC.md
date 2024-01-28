@@ -584,4 +584,11 @@ This is a library available to compiler developers to generate rvm assembly.
 The generation API has not been decided yet.
 
 ## rvm cli
+The rvm command line interface allows you to run rvm programs from the command line.
+It also allows you to compile rvm assembly into bytecode/opcode.
+
+### rvm cli commands
+- `rvm run <file>`: run rvm program
+- `rvm build <file>`: compile rvm assembly into bytecode/opcode (this may also conduct linking)
+- `rvm help`: print help message
 
