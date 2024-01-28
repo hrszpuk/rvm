@@ -231,7 +231,18 @@ The format of the assembly language is as follows:
 
 .data ; data block
 
-## Human-readable bytecode (Assembly)
+.code ; code block
+
+halt ; end of program (must be last instruction)
+```
+
+Assembly instructions (found in the code block) are written in the following format:
+```asm
+<instruction> [arg]
+
+```
+It is important to note that an instruction may have 0 or 1 arguments.
+Instructions that require more than one argument will use the stack to get the other arguments.
 
 ### Bytecode format
 
