@@ -440,6 +440,36 @@ call main
 halt
 ```
 
+### Structures
+Structures are used to store a collection of values.
+Structures are stored in the variable pool.
+
+Internally, structures are stored as pointers to the first element in the structure.
+The index after the last element in the structure is a null pointer.
+
+The structure index can be incremented and decremented using the `inc` and `dec` instructions (or `add`/`sub`).
+To get a value from a structure, you must use `deref` to dereference the pointer.
+
+```asm
+.data
+.struct Point i32 i32 string ; define structure
+.var point Point 1 2 "Hello, World!" ; create structure
+
+.code
+load point ; load address to point.x
+push 1 ; push value to store
+store point ; store value at point.x
+load point ; load address to point.x
+deref ; dereference pointer (1)
+pop ; pop value off stack
+load point ; load address to point.x
+inc
+inc
+inc ; DO NOT DEFERENCE THE POINTER
+push 0
+eq ; this will be true as null is 0
+halt
+```
 
 ## Data Block
 
