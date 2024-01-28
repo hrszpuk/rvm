@@ -558,9 +558,6 @@ func ; local variable pool is created when function is called
 halt ; local variable pool is destroyed when function returns
 ```
 
-
-### Structures
-
 ## Metadata block
 
 # Code base
