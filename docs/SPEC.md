@@ -217,6 +217,19 @@ This means that most instructions operate on the stack.
 There are two main blocks in the virtual machine: the code block and the data block.
 The code block contains instructions and the data block contains data.
 
+## Assembly
+The assembly language is a human-readable bytecode.
+It is used to write programs for the virtual machine.
+It is designed to be high-level, expressive, and easy to use.
+This means that assembly code may not directly translate to bytecode.
+The translation module will translate the assembly code into bytecode.
+
+### Assembly format
+The format of the assembly language is as follows:
+```asm
+.meta ; metadata block
+
+.data ; data block
 
 ## Human-readable bytecode (Assembly)
 
