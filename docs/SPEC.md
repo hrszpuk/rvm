@@ -54,6 +54,8 @@ The architecture described in this document is the architecture of the virtual m
 The virtual machine can be found in the rvm library (src/lib).
 
 ## Overview
+The RVM's architecture is split into 6 main components: the call stack, the instruction buffer, the registers, the variable pool, the opcode stream, and the dynamic library loader.
+The virtual machine only understands bytecode/opcodes, so the translation module is used to translate the human-readable bytecode (assembly) into the machine-readable bytecode.
 
 ## Call Stack
 
