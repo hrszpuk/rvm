@@ -440,6 +440,46 @@ call main
 halt
 ```
 
+### Arrays
+Arrays are used to store a collection of values.
+Arrays are stored in the variable pool.
+
+Internally, arrays are stored as pointers to the first element in the array.
+This means that arrays are passed by reference.
+
+The array index can be incremented and decremented using the `inc` and `dec` instructions (or `add`/`sub`).
+To get a value from an array, you must use `deref` to dereference the pointer.
+
+```asm
+.data
+; Arrays stored in .data block are global arrays (accessible from all functions)
+.var arr [i32:5]
+.const arr2 [i32:5] 1 2 3 4 5
+
+.code
+load arr    ; load address to arr[0]
+push 1      ; push value to store
+store arr   ; store value at arr[0] 
+load arr    ; load address to arr[0]
+deref       ; dereference pointer (1)
+pop         ; pop value off stack
+load arr    ; load address to arr[0]
+inc         ; increment address (arr[1])
+push 2      ; push value to store
+store arr   ; store value at arr[1]
+
+push [i32:10] ; push array onto stack
+store arr3
+
+halt
+```
+If you increment the array index past the end of the array, the virtual machine will throw an exception.
+To prevent this, you must check the array index before incrementing it.
+
+The virtual machine will always check array bounds when using the `store` instruction.
+This worsens performance, but it prevents the virtual machine from crashing.
+You may disable array bounds by modifying the vm flag register (r8).
+
 ### Structures
 Structures are used to store a collection of values.
 Structures are stored in the variable pool.
