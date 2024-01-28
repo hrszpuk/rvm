@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 
 #include "../lib/headers/translator.h"
 #include "../lib/headers/vm.h"
@@ -30,32 +30,32 @@ const char* helpHelp = "Usage: rvm help <command>\nReplace <command> with run, b
 int main(int argc, char** argv) {
     if (argc < 2) {
         printf("Not enough arguments\n\n");
-        printf(helpBasic);
+        printf("%s", helpBasic);
         return 1;
     }
 
-    if (strcasecmp(argv[1], "run") == 0) {
+    if (strcmp(argv[1], "run") == 0) {
         if (argc < 3) {
             printf("Not enough arguments.\n\n");
-            printf(helpRun);
+            printf("%s", helpRun);
             return 1;
         }
         printf("Attempting to run \"%s\".\n", argv[2]);
-    } else if (strcasecmp(argv[1], "build") == 0) {
+    } else if (strcmp(argv[1], "build") == 0) {
         if (argc < 4) {
             printf("Building requires at least 2 arguments (rvm files).\n\n");
-            printf(helpBuild);
+            printf("%s", helpBuild);
             return 1;
         }
         printf("Building \"%s\".\n", argv[2]);
-    } else if (strcasecmp(argv[1], "check") == 0) {
+    } else if (strcmp(argv[1], "check") == 0) {
         if (argc < 3) {
             printf("Checking requires at least 1 argument.\n\n");
-            printf(helpCheck);
+            printf("%s", helpCheck);
             return 1;
         }
         printf("Checking \"%s\" for errors.\n", argv[2]);
-    } else if (strcasecmp(argv[1], "devtest") == 0) {
+    } else if (strcmp(argv[1], "devtest") == 0) {
         printf("Reading file \"%s\".\n", argv[2]);
         FILE* file = fopen(argv[2], "r");
         fseek(file, 0, SEEK_END);
@@ -78,19 +78,19 @@ int main(int argc, char** argv) {
         free(buffer);
 
         return 0;
-    } else if (strcasecmp(argv[1], "help") == 0 || strcasecmp(argv[1], "-h") == 0 || strcasecmp(argv[1], "--help") == 0) {
+    } else if (strcmp(argv[1], "help") == 0 || strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
         if (argc < 3) {
-            printf(helpBasic);
+            printf("%s", helpBasic);
             return 1;
         }
-        if (strcasecmp(argv[2], "run") == 0) {
-            printf(helpRun, arguments);
-        } else if (strcasecmp(argv[2], "build") == 0) {
-            printf(helpBuild, arguments);
-        } else if (strcasecmp(argv[2], "check") == 0) {
-            printf(helpCheck, arguments);
-        } else if (strcasecmp(argv[2], "help") == 0) {
-            printf(helpHelp, arguments);
+        if (strcmp(argv[2], "run") == 0) {
+            printf("%s%s", helpRun, arguments);
+        } else if (strcmp(argv[2], "build") == 0) {
+            printf("%s%s", helpBuild, arguments);
+        } else if (strcmp(argv[2], "check") == 0) {
+            printf("%s%s", helpCheck, arguments);
+        } else if (strcmp(argv[2], "help") == 0) {
+            printf("%s%s", helpHelp, arguments);
         } else {
             printf("Invalid command \"%s\".\n", argv[2]);
             printf("Usage: rvm help <command>\nReplace <command> with run, build, check, or help.\n");
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
         }
     } else {
         printf("Invalid command \"%s\".\n\n", argv[1]);
-        printf(helpBasic);
+        printf("%s", helpBasic);
         return 1;
     }
 
