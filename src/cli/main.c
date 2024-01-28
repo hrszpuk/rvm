@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 
 #include "../lib/headers/translator.h"
 #include "../lib/headers/vm.h"
