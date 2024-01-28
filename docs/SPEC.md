@@ -566,8 +566,11 @@ halt ; local variable pool is destroyed when function returns
 The code base is split into four main components: the rvm library, the rvm cli, the rvm assembler, and the rvm generator.
 
 ## rvm library
+The rvm library is the core of the virtual machine.
+It contains the call stack, the instruction buffer, the registers, the variable pool, the opcode stream, and the dynamic library loader.
+This is what is used to actually run rvm programs.
 
-### Translation Module
+More information about what is in the rvm library can be found in the [architecture](#architecture) section.
 
 ### Generation Module
 
