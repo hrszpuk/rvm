@@ -190,6 +190,23 @@ halt
 The ldex library utilies the `dlopen`, `dlsym`, and `dlclose` functions from the `dlfcn.h` header file.
 
 ## Error Handler
+The error handler is used to handle errors that occur during the execution of the virtual machine.
+The error handler will set the error flag in r8 and the error code in r9.
+Depending on the error flag, the virtual machine will either halt or return from the current function.
+
+If the virtual machine halts, it will return error information.
+The `rvm cli` will print the error information to the console.
+
+## Exception Stack
+The exception stack is a stack of exception frames.
+Each exception frame contains the origin call frame, the origin instruction pointer, and the exception handler.
+The origin call frame is the call frame that threw the exception.
+
+The exception stack is used to keep track of the current state of the program when an exception is thrown.
+When an exception is thrown, the virtual machine will jump to the exception handler.
+The exception handler will then handle the exception and return to the origin call frame.
+
+The exception stack is only used when the virtual machine encounters an exception.
 
 # Instruction Set
 
