@@ -212,6 +212,11 @@ The exception stack is only used when the virtual machine encounters an exceptio
 This section will describe the instruction set of the virtual machine and the assembly language.
 
 ## Overview
+The virtual machine uses a stack-based architecture.
+This means that most instructions operate on the stack.
+There are two main blocks in the virtual machine: the code block and the data block.
+The code block contains instructions and the data block contains data.
+
 
 ## Human-readable bytecode (Assembly)
 
