@@ -244,7 +244,16 @@ Assembly instructions (found in the code block) are written in the following for
 It is important to note that an instruction may have 0 or 1 arguments.
 Instructions that require more than one argument will use the stack to get the other arguments.
 
-### Bytecode format
+Example:
+```asm 
+.code
+push 1
+push 2
+add
+halt
+```
+
+Instructions consume arguments. This means that the arguments will be popped off the stack when the instruction is executed.
 
 ## Opcode
 
