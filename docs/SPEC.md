@@ -123,6 +123,12 @@ Each local variable pool has a pointer to the global variable pool.
 This allows instructions in the current call frame to access global variables.
 
 ## Multi-threading
+The virtual machine is multithreaded.
+This allows the virtual machine to run multiple threads at the same time.
+Each thread has its own call stack, registers, and variable pool.
+
+The global variable pool is shared between all threads.
+This allows threads to share data.
 
 ## Opcode Stream
 
