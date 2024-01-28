@@ -58,6 +58,9 @@ The RVM's architecture is split into 6 main components: the call stack, the inst
 The virtual machine only understands bytecode/opcodes, so the translation module is used to translate the human-readable bytecode (assembly) into the machine-readable bytecode.
 
 ## Call Stack
+The call stack is a stack of call frames. Each call frame contains the instruction pointer, the base pointer, and the stack pointer.
+The instruction pointer points to the next instruction to be executed. The base pointer points to the base of the stack frame.
+The stack pointer points to the top of the stack frame. The call stack is used to keep track of the current state of the program.
 
 ## Instruction Buffer
 
