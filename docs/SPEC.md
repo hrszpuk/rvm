@@ -63,6 +63,8 @@ The instruction pointer points to the next instruction to be executed. The base 
 The stack pointer points to the top of the stack frame. The call stack is used to keep track of the current state of the program.
 
 ## Instruction Buffer
+The instruction buffer stores all the instructions in the program.
+This makes it easy to jump to a specific instruction in the program.
 
 ## Registers
 
