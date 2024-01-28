@@ -512,6 +512,8 @@ halt
 ```
 
 ## Data Block
+The data block contains data. The data block starts with a data block header (`.data`).
+All instructions in the data block a prefixed with a `.`.
 
 ### Constants
 
