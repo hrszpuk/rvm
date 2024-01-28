@@ -592,3 +592,77 @@ It also allows you to compile rvm assembly into bytecode/opcode.
 - `rvm build <file>`: compile rvm assembly into bytecode/opcode (this may also conduct linking)
 - `rvm help`: print help message
 
+# Assembly reference
+This section is a list of every instruction in the assembly language along with a description of what it does, its arguments, and its opcode.
+
+| Instruction | Opcode | Arguments                      | Description                                                                |
+|-------------|--------|--------------------------------|----------------------------------------------------------------------------|
+| halt        | 0      |                                | Halts the virtual machine                                                  |
+| noop        | 1      |                                | No operation                                                               |
+| load        | 2      | \<id\>                         | Loads the value of a variable with the id \<id\> onto the top of the stack |
+| store       | 3      | \<id\>                         | Stores the top value on the stack in a variable with the id \<id\>         |
+| push        | 4      | \<value\>                      | Pushes a value onto the stack                                              |
+| pop         | 5      |                                | Pops a value off the stack                                                 |
+| dup         | 6      |                                | Duplicates the top value on the stack                                      |
+| swap        | 7      |                                | Swaps the top two values on the stack                                      |
+| rot         | 8      |                                | Rotates the top three values on the stack                                  |
+| add         | 9      |                                | Adds the top two values on the stack                                       |
+| sub         | 10     |                                | Subtracts the top two values on the stack                                  |
+| mul         | 11     |                                | Multiplies the top two values on the stack                                 |
+| div         | 12     |                                | Divides the top two values on the stack                                    |
+| mod         | 13     |                                | Modulus the top two values on the stack                                    |
+| and         | 14     |                                | Bitwise and the top two values on the stack                                |
+| or          | 15     |                                | Bitwise or the top two values on the stack                                 |
+| xor         | 16     |                                | Bitwise xor the top two values on the stack                                |
+| not         | 17     |                                | Bitwise not the top value on the stack                                     |
+| shl         | 18     |                                | Bitwise shift left the top two values on the stack                         |
+| shr         | 19     |                                | Bitwise shift right the top two values on the stack                        |
+| eq          | 20     |                                | Compares the top two values on the stack for equality                      |
+| neq         | 21     |                                | Compares the top two values on the stack for inequality                    |
+| gt          | 22     |                                | Compares the top two values on the stack for greater than                  |
+| gte         | 23     |                                | Compares the top two values on the stack for greater than or equal to      |
+| lt          | 24     |                                | Compares the top two values on the stack for less than                     |
+| lte         | 25     |                                | Compares the top two values on the stack for less than or equal to         |
+| land        | 26     |                                | Logical and the top two values on the stack                                |
+| lor         | 27     |                                | Logical or the top two values on the stack                                 |
+| lnot        | 28     |                                | Logical not the top value on the stack                                     |
+| inc         | 29     |                                | Increments the top value on the stack                                      |
+| dec         | 30     |                                | Decrements the top value on the stack                                      |
+| neg         | 31     |                                | Negates the top value on the stack                                         |
+| jmp         | 32     | \<label\>                      | Jumps to a label                                                           |
+| jmpc        | 33     | \<label\>                      | Jumps to a label if the top value on the stack is true                     |
+| call        | 34     | \<id\>                         | Calls a subroutine with the id \<id\>                                      |
+| ret         | 35     |                                | Returns from the current subroutine                                        |
+| begin       | 36     | \<type\>\ <id\>                | Begins a subroutine with the id \<id\>                                     |
+| end         | 37     |                                | Ends the current subroutine                                                |
+| typeof      | 38     |                                | Pushes the type of the top value on the stack onto the stack               |
+| deref       | 39     |                                | Dereferences the top value on the stack                                    |
+| itof        | 40     |                                | Converts an integer to a float                                             |
+| itos        | 41     |                                | Converts an integer to a string                                            |
+| itob        | 42     |                                | Converts an integer to a boolean                                           |
+| itoc        | 43     |                                | Converts an integer to a character                                         |
+| itop        | 44     |                                | Converts an integer to a pointer                                           |
+| ftoi        | 45     |                                | Converts a float to an integer                                             |
+| ftos        | 46     |                                | Converts a float to a string                                               |
+| ftob        | 47     |                                | Converts a float to a boolean                                              |
+| ftoc        | 48     |                                | Converts a float to a character                                            |
+| stoi        | 49     |                                | Converts a string to an integer                                            |
+| stof        | 50     |                                | Converts a string to a float                                               |
+| stob        | 51     |                                | Converts a string to a boolean                                             |
+| stoc        | 52     |                                | Converts a string to a character                                           |
+| ctos        | 53     |                                | Converts a character to a string                                           |
+| ctob        | 54     |                                | Converts a character to a boolean                                          |
+| ptoi        | 55     |                                | Converts a pointer to an integer                                           |
+| ptos        | 56     |                                | Converts a pointer to a string                                             |
+| ctof        | 57     |                                | Converts a character to a float                                            |
+| ctoi        | 58     |                                | Converts a character to an integer                                         |
+| .const      | 59     | \<id\> \<type\> \<value\>      | Defines a constant with the id \<id\> and the value \<value\>              |
+| .var        | 60     | \<id\> \<type\> \<value\>      | Defines a variable with the id \<id\> and the value \<value\>              |
+| .struct     | 61     | \<id\> \<type\>                | Defines a structure with the id \<id\> and the type \<type\>               |
+| .extern     | 62     | \<\"id\" \| \<id\>\>  \"name\" | Defines a link with an external library                                    |
+| .code       | 63     |                                | Starts the code block                                                      |
+| .data       | 64     |                                | Starts the data block                                                      |
+| .meta       | 65     |                                | Starts the metadata block                                                  |
+
+
+[Back to top](#specification-for-rvm)
