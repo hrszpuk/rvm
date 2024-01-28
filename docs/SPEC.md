@@ -533,6 +533,31 @@ Constants are stored in the variable pool.
 ```
 
 ### Variables
+Variables are used to store values.
+Variables are stored in the variable pool.
+
+```asm
+.data
+; Variables stored in .data block are global variables (accessible from all functions)
+
+.var <id> <type> <value>; <id> is the id of the variable, <type> is the type of the variable, <value> is the value of the variable
+.var x i32 100
+.var msg [char] "Hello, World!"
+
+; with type inference
+.var x 100
+.var msg "Hello, World!"
+
+.code 
+; Variables stored in .code block are local variables (accessible from the current function)
+begin func
+push 100
+store y ; stored in local variable pool
+end
+func ; local variable pool is created when function is called
+halt ; local variable pool is destroyed when function returns
+```
+
 
 ### Structures
 
