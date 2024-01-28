@@ -572,9 +572,11 @@ This is what is used to actually run rvm programs.
 
 More information about what is in the rvm library can be found in the [architecture](#architecture) section.
 
-### Generation Module
+## rvm assembler
+The rvm assembler is used to translate human-readable bytecode (assembly) into machine-readable bytecode.
+It is used by the rvm cli to compile rvm assembly into bytecode.
 
-### VM Module
+More information about the rvm assembler can be found in the [Instruction Set](#instruction-set) section.
 
 ### Common Data Structures
 
