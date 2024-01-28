@@ -67,6 +67,50 @@ The instruction buffer stores all the instructions in the program.
 This makes it easy to jump to a specific instruction in the program.
 
 ## Registers
+There are a total of 10 registers, all of which are 64-bit. The registers are used to store temporary values.
+A call frame has its own set of registers, so registers are not shared between call frames.
+
+Registers are directly accessible by the assembly language.
+They are accessed using the load and store instructions.
+```asm 
+.code
+
+push 10
+store r0 ; 'r' prefix + register number (0-9)
+```
+
+Not all registers are general-purpose. Some registers have a specific purpose.
+The registers are as follows:
+- r0-r7: general-purpose registers
+- r8: vm flag register - controls the behavior of the virtual machine
+- r9: vm error register - stores the error code of the last error
+
+Although you may use r8 and r9 as general-purpose registers, it is not recommended.
+Values stored in r8 and r9 may be overwritten or manipulate the behavior of the virtual machine.
+
+**r8 flags:**
+- 0: no flags
+- 1: halt - halts the virtual machine
+- 2: error - sets the error code in r9
+- 3: halt and error - halts the virtual machine and sets the error code in r9
+- 4: return - returns from the current function
+
+**r9 error codes:**
+- 0: no error
+- 1: stack overflow
+- 2: stack underflow
+- 3: invalid opcode
+- 4: invalid memory address
+- 5: invalid memory access
+- 6: memory allocation failed
+- 7: thread creation failed
+- 8: thread join failed
+- 9: thread detach failed
+- 10: thread cancellation failed
+- 11: thread exit failed
+- 12: exception thrown
+- 13: exception handler not found
+- 14: exception handler failed
 
 ## Variable Pool
 
