@@ -516,6 +516,21 @@ The data block contains data. The data block starts with a data block header (`.
 All instructions in the data block a prefixed with a `.`.
 
 ### Constants
+Constants are used to store constant values.
+Constants are stored in the variable pool.
+
+```asm 
+.data
+.const <id> <value> ; <id> is the id of the constant, <value> is the value of the constant
+
+; Examples with type inference
+.const x 100
+.const msg "Hello, World!"
+
+; Examples with explicit types
+.const x i32 100
+.const msg [char] "Hello, World!"
+```
 
 ### Variables
 
