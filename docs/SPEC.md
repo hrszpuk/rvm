@@ -309,6 +309,7 @@ Null pointers are represented by the value 0.
 The standard library includes a macro for null pointers (`null`).
 
 ## Code Block
+The code block contains instructions. The code block starts with a code block header (`.code`).
 
 ### Stack Management
 
