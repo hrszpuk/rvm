@@ -262,6 +262,21 @@ This means it is not designed to be human-readable.
 The translation module will translate the assembly code into bytecode.
 
 ### Opcode format
+Opcode is written in a binary format.
+The first byte is the opcode, the second byte is the argument type, and the following bytes are the arguments.
+The number of arguments depends on the opcode. However, most opcodes have 0 or 1 arguments.
+If an opcode requires more than one argument, the arguments will be pushed onto the stack.
+
+Example:
+```asm
+6312345 ; push 12345 onto the stack
+0 ; halt
+```
+
+Code blocks and labels are also written in a binary format.
+The first byte is the label/code block byte, and the following bytes are a 64-bit integer representing the address of the label/code block.
+This means that the real name of a label is the address of the label.
+
 
 ## Code Block
 
