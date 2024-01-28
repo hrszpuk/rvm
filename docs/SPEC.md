@@ -1,7 +1,36 @@
 # Specification for RVM
 
 ### Table of Contents
-
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Architecture](#architecture)
+  - [Overview](#overview)
+  - [Call Stack](#call-stack)
+  - [Instruction Buffer](#instruction-buffer)
+  - [Registers](#registers)
+  - [Variable Pool](#variable-pool)
+  - [Multi-threading](#multi-threading)
+  - [Opcode Stream](#opcode-stream)
+  - [Dynamic Library Loading](#dynamic-library-loading)
+  - [Error Handler](#error-handler)
+- [Instruction Set](#instruction-set)
+  - [Overview](#overview-1)
+  - [Human-readable bytecode (Assembly)](#human-readable-bytecode-assembly)
+    - [Bytecode format](#bytecode-format)
+  - [Opcode](#opcode)
+    - [Opcode format](#opcode-format)
+  - [Code Block](#code-block)
+    - [Stack Management](#stack-management)
+    - [Arithmetic, Bitwise and Logical Operations](#arithmetic-bitwise-and-logical-operations)
+    - [Control Flow](#control-flow)
+    - [Store/Load](#storeload)
+    - [Type Conversion](#type-conversion)
+    - [Subroutines](#subroutines)
+  - [Data Block](#data-block)
+    - [Constants](#constants)
+    - [Variables](#variables)
+    - [Structures](#structures)
+  - [Metadata block](#metadata-block)
 
 # Introduction
 
