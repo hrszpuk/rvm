@@ -81,7 +81,7 @@ Buffer* Translate(BytecodeTranslator* translator) {
                 case 1: {
                     // Instruction with no arguments
                     for (int j = 0; j < BYTECODE_INSTRUCTION_COUNT; j++) {
-                        if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
+                        if (strcmp(tokens[0], BytecodeMap[j]) == 0) {
                             AddBufferData(instructions, CreateInstruction(j, NULL, 0));
                             instruction_count++;
                             free(tokens[0]);
@@ -94,7 +94,7 @@ Buffer* Translate(BytecodeTranslator* translator) {
                 case 2: {
                     // Instruction with one argument
                     for (int j = 0; j < BYTECODE_INSTRUCTION_COUNT; j++) {
-                        if (strcasecmp(tokens[0], BytecodeMap[j]) == 0) {
+                        if (strcmp(tokens[0], BytecodeMap[j]) == 0) {
                             AddBufferData(instructions, CreateInstruction(j, tokens[1], 1));
                             instruction_count++;
                             free(tokens[0]);
