@@ -323,6 +323,33 @@ The stack management instructions are used to manage the stack.
 | rot            | Rotates the top three values on the stack |
 
 ### Arithmetic, Bitwise and Logical Operations
+The arithmetic, bitwise and logical operations are used to perform arithmetic, bitwise and logical operations.
+
+| Instruction | Description                                                           |
+|-------------|-----------------------------------------------------------------------|
+| add         | Adds the top two values on the stack                                  |
+| sub         | Subtracts the top two values on the stack                             |
+| mul         | Multiplies the top two values on the stack                            |
+| div         | Divides the top two values on the stack                               |
+| mod         | Modulus the top two values on the stack                               |
+| and         | Bitwise and the top two values on the stack                           |
+| or          | Bitwise or the top two values on the stack                            |
+| xor         | Bitwise xor the top two values on the stack                           |
+| not         | Bitwise not the top value on the stack                                |
+| shl         | Bitwise shift left the top two values on the stack                    |
+| shr         | Bitwise shift right the top two values on the stack                   |
+| eq          | Compares the top two values on the stack for equality                 |
+| neq         | Compares the top two values on the stack for inequality               |
+| gt          | Compares the top two values on the stack for greater than             |
+| gte         | Compares the top two values on the stack for greater than or equal to |
+| lt          | Compares the top two values on the stack for less than                |
+| lte         | Compares the top two values on the stack for less than or equal to    |
+| land        | Logical and the top two values on the stack                           |
+| lor         | Logical or the top two values on the stack                            |
+| lnot        | Logical not the top value on the stack                                |
+| inc         | Increments the top value on the stack                                 |
+| dec         | Decrements the top value on the stack                                 |
+| neg         | Negates the top value on the stack                                    |
 
 ### Control Flow
 
