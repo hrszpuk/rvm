@@ -130,7 +130,23 @@ Each thread has its own call stack, registers, and variable pool.
 The global variable pool is shared between all threads.
 This allows threads to share data.
 
-## Opcode Stream
+The instruction buffer is shared between all threads.
+This allows threads to share code.
+
+### Multithreading API
+Multithreading is accessible through the virtual machine standard library.
+The virtual machine standard library provides functions for creating, joining, detaching, and canceling threads.
+
+## Block Handler
+The block handler is used to read and categorise different blocks in the assembly.
+This means it will read `.meta`, `.code`, and `.data` block headers and read the contents of the block.
+
+The raw string data is then passed to the translation module to be translated into opcode instructions.
+If the translation module encounters a `.extern` instruction (for static linking), it will pass the instruction back to the block handler.
+In this case, the process will begin again, with the block handler reading the library and sending it back.
+
+It is important to note that, when the block handler is sent to read a library, the translation module will give it all libraries that have already been processed.
+This is to prevent infinite loops of reading the same library over and over again, or reading a library that has already been read.
 
 ## Dynamic Library Loading
 
