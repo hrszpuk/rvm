@@ -563,6 +563,7 @@ halt ; local variable pool is destroyed when function returns
 # Code base
 
 ## Overview
+The code base is split into four main components: the rvm library, the rvm cli, the rvm assembler, and the rvm generator.
 
 ## rvm library
 
