@@ -312,6 +312,15 @@ The standard library includes a macro for null pointers (`null`).
 The code block contains instructions. The code block starts with a code block header (`.code`).
 
 ### Stack Management
+The stack management instructions are used to manage the stack.
+
+| Instruction    | Description                               |
+|----------------|-------------------------------------------|
+| push \<value\> | Pushes a value onto the stack             |
+| pop            | Pops a value off the stack                |
+| dup            | Duplicates the top value on the stack     |
+| swap           | Swaps the top two values on the stack     |
+| rot            | Rotates the top three values on the stack |
 
 ### Arithmetic, Bitwise and Logical Operations
 
