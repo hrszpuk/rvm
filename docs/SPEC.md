@@ -370,6 +370,41 @@ The store/load instructions are used to store and load values.
 | load \<id\>  | Loads the value of a variable with the id \<id\> onto the top of the stack |
 
 ### Type Conversion
+The type conversion instructions are used to convert values from one type to another.
+
+| Instruction | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| itof        | Converts an integer to a float                                              |
+| itos        | Converts an integer to a string                                             |
+| itob        | Converts an integer to a boolean                                            |
+| itoc        | Converts an integer to a character                                          |
+| itop        | Converts an integer to a pointer                                            |
+| ftoi        | Converts a float to an integer                                              |
+| ftos        | Converts a float to a string                                                |
+| ftob        | Converts a float to a boolean                                               |
+| ftoc        | Converts a float to a character                                             |
+| stoi        | Converts a string to an integer                                             |
+| stof        | Converts a string to a float                                                |
+| stob        | Converts a string to a boolean                                              |
+| stoc        | Converts a string to a character                                            |
+| ctos        | Converts a character to a string                                            |
+| ctob        | Converts a character to a boolean                                           |
+| ptoi        | Converts a pointer to an integer                                            |
+| ptos        | Converts a pointer to a string                                              |
+| ctof        | Converts a character to a float                                             |
+| ctoi        | Converts a character to an integer                                          |
+
+Example:
+```asm
+.code
+push 1
+itos
+push "1"
+eq
+btos
+call [io]print
+halt
+```
 
 ### Subroutines
 
