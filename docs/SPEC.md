@@ -33,6 +33,9 @@
   - [Metadata block](#metadata-block)
 
 # Introduction
+RVM is a virtual machine designed to be a simplistic and easy to use virtual machine for programming languages. 
+It is designed to be a simple stack-based virtual machine with a high-performance opcode and a high-level expressive assembly language.
+This document will describe the architecture of the virtual machine, the instruction set, and the code base.
 
 # Architecture
 
