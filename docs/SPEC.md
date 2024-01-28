@@ -256,6 +256,10 @@ halt
 Instructions consume arguments. This means that the arguments will be popped off the stack when the instruction is executed.
 
 ## Opcode
+The opcode is the machine-readable bytecode.
+It is designed to be simple, lean, and fast.
+This means it is not designed to be human-readable.
+The translation module will translate the assembly code into bytecode.
 
 ### Opcode format
 
