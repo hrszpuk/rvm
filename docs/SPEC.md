@@ -352,6 +352,14 @@ The arithmetic, bitwise and logical operations are used to perform arithmetic, b
 | neg         | Negates the top value on the stack                                    |
 
 ### Control Flow
+The control flow instructions are used to control the flow of the program.
+
+| Instruction    | Description                                            |
+|----------------|--------------------------------------------------------|
+| jmp \<label\>  | Jumps to a label                                       |
+| jmpc \<label\> | Jumps to a label if the top value on the stack is true |
+
+Labels are defined as `<label_name>:` (colon on the end).
 
 ### Store/Load
 
