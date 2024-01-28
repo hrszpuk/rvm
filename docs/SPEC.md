@@ -362,6 +362,12 @@ The control flow instructions are used to control the flow of the program.
 Labels are defined as `<label_name>:` (colon on the end).
 
 ### Store/Load
+The store/load instructions are used to store and load values.
+
+| Instruction | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| store \<id\> | Stores the top value on the stack in a variable with the id \<id\>          |
+| load \<id\>  | Loads the value of a variable with the id \<id\> onto the top of the stack |
 
 ### Type Conversion
 
