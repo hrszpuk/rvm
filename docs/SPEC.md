@@ -277,6 +277,36 @@ Code blocks and labels are also written in a binary format.
 The first byte is the label/code block byte, and the following bytes are a 64-bit integer representing the address of the label/code block.
 This means that the real name of a label is the address of the label.
 
+## Types
+The virtual machine supports the following types:
+
+| Type   | Description                  | Opcode byte value |
+|--------|------------------------------|-------------------|
+| void   | no type                      | 0                 |
+| i8     | 8-bit signed integer         | 1                 |
+| i16    | 16-bit signed integer        | 2                 |
+| i32    | 32-bit signed integer        | 3                 |
+| i64    | 64-bit signed integer        | 4                 |
+| u8     | 8-bit unsigned integer       | 5                 |
+| u16    | 16-bit unsigned integer      | 6                 |
+| u32    | 32-bit unsigned integer      | 7                 |
+| u64    | 64-bit unsigned integer      | 8                 |
+| f32    | 32-bit floating point number | 9                 |
+| f64    | 64-bit floating point number | 10                |
+| char   | 8-bit character              | 11                |
+| bool   | boolean                      | 12                |
+| ptr    | pointer                      | 13                |
+
+Arrays and structures are not types. They are just a collection of types.
+Array/structure types are represented by a pointer to the first element in the array/structure.
+You must use the `deref` instruction to get the value of the pointer.
+
+Pointers are special. When the virtual machine encounters a pointer, it will push the address of the pointer onto the stack.
+To get the value of a pointer, you must use the `load` instruction.
+To get the type of pointer, you must use the `typeof` instruction.
+The `typeof` instruction will push the type of the pointer onto the stack (i.e. i32 would be 3).
+Null pointers are represented by the value 0.
+The standard library includes a macro for null pointers (`null`).
 
 ## Code Block
 
