@@ -407,6 +407,39 @@ halt
 ```
 
 ### Subroutines
+The subroutine instructions are used to create and call subroutines.
+Subroutines are always called, and created, in the code block.
+
+It is best practice to create a subroutines at the top of the code block, and call them at the bottom of the code block.
+
+| Instruction  | Description                            |
+|--------------|----------------------------------------|
+| call \<id\>  | Calls a subroutine with the id \<id\>  |
+| ret          | Returns from the current subroutine    |
+| begin \<id\> | Begins a subroutine with the id \<id\> |
+| end          | Ends the current subroutine            |
+
+When a subroutine is called, a new call frame is created.
+Every call frame has its own variable pool.
+This means that variables created in a subroutine are not accessible outside the subroutine.
+
+Void type subroutines do not need a type annotation.
+
+Example:
+```asm
+; begin <type> <id>
+; // code
+; end
+.code
+begin void main
+push "Hello, World!"
+call [io]print
+end
+
+call main
+halt
+```
+
 
 ## Data Block
 
