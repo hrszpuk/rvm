@@ -38,6 +38,8 @@ It is designed to be a simple stack-based virtual machine with a high-performanc
 This document will describe the architecture of the virtual machine, the instruction set, and the code base.
 
 # Architecture
+The architecture described in this document is the architecture of the virtual machine.
+The virtual machine can be found in the rvm library (src/lib).
 
 ## Overview
 
