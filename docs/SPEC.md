@@ -149,6 +149,45 @@ It is important to note that, when the block handler is sent to read a library, 
 This is to prevent infinite loops of reading the same library over and over again, or reading a library that has already been read.
 
 ## Dynamic Library Loading
+The virtual machine supports dynamic library loading.
+This allows the virtual machine to load libraries at runtime.
+Dynamic library loading is usually used for calling C code from the virtual machine.
+
+The virtual machine standard library (`ldx`) provides functions for loading dynamic libraries.
+NOTE(hrs): The virtual machine standard library is not implemented yet. This is just an example. This code may be changed in the future.
+```asm 
+.meta
+.extern <ldex> ldex ; load standard library for dynamic library loading
+
+.data
+.const lib "libtest.so" ; library name
+.var handle [ldex]handle ; handle to library
+.var function [ldex]function ; function pointer
+
+.code
+push "libtest.so"
+push handle
+call [ldex]load ; load library and get handle
+push handle
+push null
+eq
+jmpc error ; if handle is null, jump to error
+push function
+push handle
+call [ldex]loadfunc 
+push function
+push null
+eq
+jmpc error ; if function is null, jump to error
+push function
+call [ldex]callfunc ; call function
+push handle
+call [ldex]unload ; dlclose(handle)
+error:
+halt
+```
+
+The ldex library utilies the `dlopen`, `dlsym`, and `dlclose` functions from the `dlfcn.h` header file.
 
 ## Error Handler
 
