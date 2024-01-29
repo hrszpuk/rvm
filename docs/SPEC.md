@@ -20,7 +20,7 @@
     - [Assembly format](#assembly-format)
   - [Opcode](#opcode)
     - [Opcode format](#opcode-format)
-  - [Types](#types)
+    - [Types](#types)
   - [Code Block](#code-block)
     - [Stack Management](#stack-management)
     - [Arithmetic, Bitwise and Logical Operations](#arithmetic-bitwise-and-logical-operations)
@@ -269,7 +269,7 @@ If an opcode requires more than one argument, the arguments will be pushed onto 
 
 Example:
 ```asm
-6312345 ; push 12345 onto the stack
+6312345 ; push i32 12345 onto the stack
 0 ; halt
 ```
 
@@ -277,7 +277,10 @@ Code blocks and labels are also written in a binary format.
 The first byte is the label/code block byte, and the following bytes are a 64-bit integer representing the address of the label/code block.
 This means that the real name of a label is the address of the label.
 
-## Types
+### Types
+Types are used to represent the type of a value, or instruction.
+The type byte comes directly after the instruction byte.
+
 The virtual machine supports the following types:
 
 | Type   | Description                  | Opcode byte value |
@@ -299,14 +302,11 @@ The virtual machine supports the following types:
 
 Arrays and structures are not types. They are just a collection of types.
 Array/structure types are represented by a pointer to the first element in the array/structure.
-You must use the `deref` instruction to get the value of the pointer.
 
-Pointers are special. When the virtual machine encounters a pointer, it will push the address of the pointer onto the stack.
-To get the value of a pointer, you must use the `load` instruction.
-To get the type of pointer, you must use the `typeof` instruction.
-The `typeof` instruction will push the type of the pointer onto the stack (i.e. i32 would be 3).
-Null pointers are represented by the value 0.
-The standard library includes a macro for null pointers (`null`).
+Pointers are represented by a 64-bit integer.
+When a pointer is pushed/loaded onto the stack, the address the pointer is pointing to is pushed/loaded onto the stack.
+You must use the `deref` instruction to get the value of an address.
+
 
 ## Code Block
 The code block contains instructions. The code block starts with a code block header (`.code`).
@@ -601,7 +601,7 @@ This section is a list of every instruction in the assembly language along with 
 | noop        | 1      |                                | No operation                                                               |
 | load        | 2      | \<id\>                         | Loads the value of a variable with the id \<id\> onto the top of the stack |
 | store       | 3      | \<id\>                         | Stores the top value on the stack in a variable with the id \<id\>         |
-| push        | 4      | \<value\>                      | Pushes a value onto the stack                                              |
+| push        | 4      | \[type\] \<value\>             | Pushes a value onto the stack                                              |
 | pop         | 5      |                                | Pops a value off the stack                                                 |
 | dup         | 6      |                                | Duplicates the top value on the stack                                      |
 | swap        | 7      |                                | Swaps the top two values on the stack                                      |
