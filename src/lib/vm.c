@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "headers/translator.h"
+#include "../assembler/headers/translator.h"
 
 // NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see LoadBytecode).
 VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
