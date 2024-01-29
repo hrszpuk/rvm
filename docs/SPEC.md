@@ -299,14 +299,11 @@ The virtual machine supports the following types:
 
 Arrays and structures are not types. They are just a collection of types.
 Array/structure types are represented by a pointer to the first element in the array/structure.
-You must use the `deref` instruction to get the value of the pointer.
 
-Pointers are special. When the virtual machine encounters a pointer, it will push the address of the pointer onto the stack.
-To get the value of a pointer, you must use the `load` instruction.
-To get the type of pointer, you must use the `typeof` instruction.
-The `typeof` instruction will push the type of the pointer onto the stack (i.e. i32 would be 3).
-Null pointers are represented by the value 0.
-The standard library includes a macro for null pointers (`null`).
+Pointers are represented by a 64-bit integer.
+When a pointer is pushed/loaded onto the stack, the address the pointer is pointing to is pushed/loaded onto the stack.
+You must use the `deref` instruction to get the value of an address.
+
 
 ## Code Block
 The code block contains instructions. The code block starts with a code block header (`.code`).
