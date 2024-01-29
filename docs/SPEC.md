@@ -43,6 +43,7 @@
   - [rvm assembly generator](#rvm-assembly-generator)
   - [rvm cli](#rvm-cli)
     - [rvm cli commands](#rvm-cli-commands)
+- [Assembly reference](#assembly-reference) 
 
 # Introduction
 RVM is a virtual machine designed to be a simplistic and easy to use virtual machine for programming languages. 
