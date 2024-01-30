@@ -12,6 +12,7 @@
     - [Multithreading API](#multithreading-api)
   - [Block Handler](#block-handler)
   - [Dynamic Library Loading](#dynamic-library-loading)
+  - [Opcode Stream](#opcode-stream)
   - [Error Handler](#error-handler)
   - [Exception Stack](#exception-stack)
 - [Instruction Set](#instruction-set)
@@ -189,6 +190,15 @@ halt
 ```
 
 The ldex library utilies the `dlopen`, `dlsym`, and `dlclose` functions from the `dlfcn.h` header file.
+
+## Opcode Stream
+The opcode stream is an optimisation that will reduce the start up time for the virtual machine to start.
+After the block handler has read `.meta` and `.data` blocks, it will give the necessary start up information to the virtual machine, at the same time the opcode stream will begin reading bytecode into the instruction buffer, and the virtual machine will not hesitate to begin executing them.
+
+This means not all bytecode will be loaded into the buffer before the virtual machine starts executing them.
+This reduces the start up time for the virtual machine to start, but may cause conflicts if a `goto` or `call` instruction references a label that has not been loaded yet.
+
+This means the main execution thread must wait until either the procedure has been loaded or the opcode steam ends and the procedure does not exist (error).
 
 ## Error Handler
 The error handler is used to handle errors that occur during the execution of the virtual machine.
