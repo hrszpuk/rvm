@@ -39,3 +39,16 @@ Lexer* CreateLexerFromFilename(const char* path) {
     return lexer;
 }
 
+// NOTE(hrs): This does not destroy the tokens. It is presumed that the tokens are owned by the parser.
+void DestroyLexer(Lexer* lexer) {
+    if (lexer->file != NULL) {
+        fclose(lexer->file);
+    }
+
+    if (lexer->buffer != NULL) {
+        free(lexer->buffer);
+    }
+
+    free(lexer);
+}
+
