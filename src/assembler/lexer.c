@@ -17,3 +17,25 @@ Lexer* CreateLexer() {
     lexer->column = 1;
     return lexer;
 }
+
+
+Lexer* CreateLexerFromFilename(const char* path) {
+    Lexer* lexer = CreateLexer();
+    lexer->file = fopen(path, "r");
+    lexer->path = path;
+
+    if (lexer->file == NULL) {
+        printf("Error: Could not open file '%s'\n", path);
+        free(lexer);
+        return NULL;
+    }
+
+    lexer->buffer = malloc(sizeof(char));
+    lexer->buffer[0] = '\0';
+
+    lexer->tokens = malloc(sizeof(Token));
+    lexer->tokens[0].type = END_OF_FILE;
+
+    return lexer;
+}
+
