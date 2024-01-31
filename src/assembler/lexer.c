@@ -4,7 +4,9 @@
 
 #include "headers/lexer.h"
 
+#include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
 Lexer* CreateLexer() {
     Lexer* lexer = malloc(sizeof(Lexer));
@@ -62,5 +64,17 @@ void DumpLexer(Lexer* lexer) {
     printf("  Tokens:\n");
     for (int i = 0; lexer->tokens[i].type != END_OF_FILE; i++) {
         printf("    Token %d: %s\n", i, TokenTypeToString[lexer->tokens[i].type]);
+    }
+}
+
+void consume(Lexer* lexer) {
+    lexer->c = fgetc(lexer->file);
+    lexer->column++;
+    lexer->index++;
+
+    if (lexer->c == '\n') {
+        lexer->line++;
+        lexer->column = 0;
+        consume(lexer);
     }
 }
