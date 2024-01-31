@@ -78,3 +78,31 @@ void consume(Lexer* lexer) {
         consume(lexer);
     }
 }
+
+void load(Lexer* lexer) {
+    lexer->buffer = realloc(lexer->buffer, sizeof(char) * (strlen(lexer->buffer) + 2));
+    lexer->buffer[strlen(lexer->buffer) + 1] = '\0';
+    lexer->buffer[strlen(lexer->buffer)] = lexer->c;
+}
+
+void Lex(Lexer* lexer) {
+    while(true) {
+        consume(lexer);
+        if (isalpha(lexer->c)) {
+            // Get identifier/keyword
+        } else if (lexer->c == '.') {
+            // Get identifier (assume .BLOCK or .COMMAND)
+        } else if (isdigit(lexer->c)) {
+            // Get number
+        } else if (lexer->c == '"') {
+            // Get string
+        } else if (lexer->c == '\'') {
+            // Get character
+        } else if (lexer->c == EOF) {
+            // Handle end of file
+            break;
+        } else {
+            // Handle unknown (give to parser anyway)
+        }
+    }
+}
