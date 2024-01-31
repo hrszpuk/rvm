@@ -16,6 +16,7 @@ typedef struct {
     int index;
     int line;
     int column;
+    char c;
 } Lexer;
 
 Lexer* CreateLexer();
