@@ -22,7 +22,9 @@ add_library(rvm_lib STATIC src/lib/stack.c
 add_library(rvm_assembler STATIC src/assembler/translator.c
         src/assembler/headers/translator.h
         src/assembler/lexer.c
-        src/assembler/headers/lexer.h)
+        src/assembler/headers/lexer.h
+        src/assembler/token.c
+        src/assembler/headers/token.h)
 
 set_target_properties(rvm_cli PROPERTIES OUTPUT_NAME "rvm")
 set_target_properties(rvm_lib PROPERTIES OUTPUT_NAME "rvm")
