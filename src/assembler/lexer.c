@@ -52,3 +52,15 @@ void DestroyLexer(Lexer* lexer) {
     free(lexer);
 }
 
+void DumpLexer(Lexer* lexer) {
+    printf("Lexer:\n");
+    printf("  Path: %s\n", lexer->path);
+    printf("  Index: %d\n", lexer->index);
+    printf("  Line: %d\n", lexer->line);
+    printf("  Column: %d\n", lexer->column);
+    printf("  Buffer: %s\n", lexer->buffer);
+    printf("  Tokens:\n");
+    for (int i = 0; lexer->tokens[i].type != END_OF_FILE; i++) {
+        printf("    Token %d: %s\n", i, TokenTypeToString[lexer->tokens[i].type]);
+    }
+}
