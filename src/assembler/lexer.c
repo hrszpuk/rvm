@@ -90,19 +90,29 @@ void Lex(Lexer* lexer) {
         consume(lexer);
         if (isalpha(lexer->c)) {
             // Get identifier/keyword
+            lexIdentifier(lexer);
         } else if (lexer->c == '.') {
             // Get identifier (assume .BLOCK or .COMMAND)
+            lexBlockOrCommand(lexer);
         } else if (isdigit(lexer->c)) {
             // Get number
+            lexNumber(lexer);
         } else if (lexer->c == '"') {
             // Get string
+            lexString(lexer);
         } else if (lexer->c == '\'') {
             // Get character
+            lexCharacter(lexer);
         } else if (lexer->c == EOF) {
             // Handle end of file
+            lexer->Tokens = realloc(lexer->Tokens, sizeof(Token) * (lexer->tokens_size + 1));
+            lexer->Tokens[lexer->tokens_size] = CreateToken(NULL, lexer->line, lexer->column, END_OF_FILE);
+            lexer->tokens_size++;
             break;
         } else {
             // Handle unknown (give to parser anyway)
+            lexUnknown(lexer);
         }
     }
 }
+
