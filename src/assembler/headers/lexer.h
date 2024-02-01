@@ -13,6 +13,7 @@ typedef struct {
     char* buffer;
     char* path;
     Token* tokens;
+    int tokens_size;
     int index;
     int line;
     int column;
