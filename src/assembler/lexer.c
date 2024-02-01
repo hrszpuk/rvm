@@ -8,6 +8,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+void lexIdentifier(Lexer* lexer);
+void lexBlockOrCommand(Lexer* lexer);
+void lexNumber(Lexer* lexer);
+void lexString(Lexer* lexer);
+void lexCharacter(Lexer* lexer);
+void lexUnknown(Lexer* lexer);
+
 Lexer* CreateLexer() {
     Lexer* lexer = malloc(sizeof(Lexer));
     lexer->file = NULL;
