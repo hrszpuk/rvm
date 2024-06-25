@@ -19,6 +19,7 @@ typedef struct {
 
 typedef enum {
     HALT,
+    PAUSE,
     NOOP,
 
     LOAD,

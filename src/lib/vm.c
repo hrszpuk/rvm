@@ -37,7 +37,11 @@ void DestroyVM(VM* vm) {
 void RunVM(VM* vm) {
     vm->state = 0;
 
-    while (vm->state == 0) {
+    while (vm->state == 0 || vm->state == 1) {
+        if (vm->state == 1) {
+            continue;
+        }
+
         if (vm->ip >= vm->buffer->count) {
             vm->state = 2;
             break;
@@ -48,6 +52,10 @@ void RunVM(VM* vm) {
         switch (instruction->opcode) {
             case HALT: {
                 vm->state = 2;
+                break;
+            }
+            case PAUSE: {
+                vm->state = 1;
                 break;
             }
             case NOOP: {
