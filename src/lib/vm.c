@@ -10,7 +10,7 @@
 #include "headers/translator.h"
 
 // NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see LoadBytecode).
-VM* CreateVM(const int stackCapacity, const int bufferCapacity) {
+VM* CreateVM(const int stackCapacity) {
     VM* vm = malloc(sizeof(VM));
     vm->stack = CreateStack(stackCapacity);
     vm->buffer = NULL;

@@ -42,7 +42,7 @@ typedef enum {
     OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
 } Opcode;
 
-VM* CreateVM(const int stackCapacity, const int bufferCapacity);    // Create a new VM with the specified stack and buffer capacity.
+VM* CreateVM(const int stackCapacity);    // Create a new VM with the specified stack and buffer capacity.
 void DestroyVM(VM* vm);     // Destroy the VM and free all memory associated with it.
 void RunVM(VM* vm);         // Set the VM's state to running. (NOTE: This is the default state)
 void PauseVM(VM* vm);       // Pause VM interpretation.
