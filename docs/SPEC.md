@@ -12,6 +12,7 @@
     - [Multithreading API](#multithreading-api)
   - [Block Handler](#block-handler)
   - [Dynamic Library Loading](#dynamic-library-loading)
+  - [Opcode Stream](#opcode-stream)
   - [Error Handler](#error-handler)
   - [Exception Stack](#exception-stack)
 - [Instruction Set](#instruction-set)
@@ -20,7 +21,7 @@
     - [Assembly format](#assembly-format)
   - [Opcode](#opcode)
     - [Opcode format](#opcode-format)
-  - [Types](#types)
+    - [Types](#types)
   - [Code Block](#code-block)
     - [Stack Management](#stack-management)
     - [Arithmetic, Bitwise and Logical Operations](#arithmetic-bitwise-and-logical-operations)
@@ -43,6 +44,7 @@
   - [rvm assembly generator](#rvm-assembly-generator)
   - [rvm cli](#rvm-cli)
     - [rvm cli commands](#rvm-cli-commands)
+- [Assembly reference](#assembly-reference) 
 
 # Introduction
 RVM is a virtual machine designed to be a simplistic and easy to use virtual machine for programming languages. 
@@ -189,6 +191,15 @@ halt
 
 The ldex library utilies the `dlopen`, `dlsym`, and `dlclose` functions from the `dlfcn.h` header file.
 
+## Opcode Stream
+The opcode stream is an optimisation that will reduce the start up time for the virtual machine to start.
+After the block handler has read `.meta` and `.data` blocks, it will give the necessary start up information to the virtual machine, at the same time the opcode stream will begin reading bytecode into the instruction buffer, and the virtual machine will not hesitate to begin executing them.
+
+This means not all bytecode will be loaded into the buffer before the virtual machine starts executing them.
+This reduces the start up time for the virtual machine to start, but may cause conflicts if a `goto` or `call` instruction references a label that has not been loaded yet.
+
+This means the main execution thread must wait until either the procedure has been loaded or the opcode steam ends and the procedure does not exist (error).
+
 ## Error Handler
 The error handler is used to handle errors that occur during the execution of the virtual machine.
 The error handler will set the error flag in r8 and the error code in r9.
@@ -269,7 +280,7 @@ If an opcode requires more than one argument, the arguments will be pushed onto 
 
 Example:
 ```asm
-6312345 ; push 12345 onto the stack
+6312345 ; push i32 12345 onto the stack
 0 ; halt
 ```
 
@@ -277,7 +288,10 @@ Code blocks and labels are also written in a binary format.
 The first byte is the label/code block byte, and the following bytes are a 64-bit integer representing the address of the label/code block.
 This means that the real name of a label is the address of the label.
 
-## Types
+### Types
+Types are used to represent the type of a value, or instruction.
+The type byte comes directly after the instruction byte.
+
 The virtual machine supports the following types:
 
 | Type   | Description                  | Opcode byte value |
@@ -299,14 +313,11 @@ The virtual machine supports the following types:
 
 Arrays and structures are not types. They are just a collection of types.
 Array/structure types are represented by a pointer to the first element in the array/structure.
-You must use the `deref` instruction to get the value of the pointer.
 
-Pointers are special. When the virtual machine encounters a pointer, it will push the address of the pointer onto the stack.
-To get the value of a pointer, you must use the `load` instruction.
-To get the type of pointer, you must use the `typeof` instruction.
-The `typeof` instruction will push the type of the pointer onto the stack (i.e. i32 would be 3).
-Null pointers are represented by the value 0.
-The standard library includes a macro for null pointers (`null`).
+Pointers are represented by a 64-bit integer.
+When a pointer is pushed/loaded onto the stack, the address the pointer is pointing to is pushed/loaded onto the stack.
+You must use the `deref` instruction to get the value of an address.
+
 
 ## Code Block
 The code block contains instructions. The code block starts with a code block header (`.code`).
@@ -601,7 +612,7 @@ This section is a list of every instruction in the assembly language along with 
 | noop        | 1      |                                | No operation                                                               |
 | load        | 2      | \<id\>                         | Loads the value of a variable with the id \<id\> onto the top of the stack |
 | store       | 3      | \<id\>                         | Stores the top value on the stack in a variable with the id \<id\>         |
-| push        | 4      | \<value\>                      | Pushes a value onto the stack                                              |
+| push        | 4      | \[type\] \<value\>             | Pushes a value onto the stack                                              |
 | pop         | 5      |                                | Pops a value off the stack                                                 |
 | dup         | 6      |                                | Duplicates the top value on the stack                                      |
 | swap        | 7      |                                | Swaps the top two values on the stack                                      |
