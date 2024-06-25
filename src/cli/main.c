@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (strcmp(argv[1], "run") == 0) {
-        if (argc < 3) {
+        /*f (argc < 3) {
             printf("Not enough arguments.\n\n");
             printf("%s", helpRun);
             return 1;
@@ -47,18 +47,19 @@ int main(int argc, char** argv) {
         char* buffer = malloc(sizeof(char) * size + 1);
         fread(buffer, sizeof(char), size, file);
         buffer[size] = '\0';
-        fclose(file);
+        fclose(file);*/
 
-        printf("Running quick opcode test\n");
+        Buffer* buf = CreateBuffer(10);
+
         VM* vm = CreateVM(10);
-        BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
-        Buffer* bytecode = Translate(translator);
+        //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
+        //Buffer* bytecode = Translate(translator);
         LoadBytecode(vm, bytecode);
         RunVM(vm);
 
         DestroyVM(vm);
-        free(translator);
-        free(buffer);
+        //free(translator);
+        //free(buffer);
 
     } else if (strcmp(argv[1], "build") == 0) {
         if (argc < 4) {
