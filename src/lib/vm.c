@@ -69,12 +69,21 @@ void RunVM(VM* vm) {
                 PopStack(vm->stack);
                 break;
             }
+            case DUP: {
+                PushStack(vm->stack, TopStack(vm->stack));
+            }
+            case SWAP: {
+                int* a = PopStack(vm->stack);
+                int* b = PopStack(vm->stack);
+                PushStack(vm->stack, b);
+                PushStack(vm->stack, a);
+            }
             case ADD: {
                 int* a = PopStack(vm->stack);
                 int* b = PopStack(vm->stack);
                 *a = *a + *b;
                 PushStack(vm->stack, a);
-                free(a);
+                //free(a);
                 free(b);
                 break;
             }
@@ -101,7 +110,7 @@ void RunVM(VM* vm) {
                 int* b = PopStack(vm->stack);
                 *a = *a * *b;
                 PushStack(vm->stack, a);
-                free(a);
+                //free(a);
                 free(b);
                 break;
             }
@@ -114,8 +123,24 @@ void RunVM(VM* vm) {
                 free(b);
                 break;
             }
+            case INC: {
+                int* a = PopStack(vm->stack);
+                *a += 1;
+                PushStack(vm->stack, a);
+                break;
+            }
+            case DEC: {
+                int* a = PopStack(vm->stack);
+                *a -= 1;
+                PushStack(vm->stack, a);
+                break;
+            }
+            case OUT: {
+                printf("Stack print: %d\n", *((int*)TopStack(vm->stack)));
+                break;
+            }
             default: {
-                printf("Unknown instruction!\n");
+                printf("Unknown instruction! %d\n", wordbyte.instruction);
                 break;
             }
         }

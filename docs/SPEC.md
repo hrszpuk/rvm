@@ -1,11 +1,11 @@
-# Specification for RVM
+# Developer Guide for RVM
 
 ### Table of Contents
 - [Introduction](#introduction)
 - [Architecture](#architecture)
   - [Overview](#overview)
   - [Call Stack](#call-stack)
-  - [Instruction Buffer](#instruction-buffer)
+  - [Instruction InstructionBuffer](#instruction-buffer)
   - [Registers](#registers)
   - [Variable Pool](#variable-pool)
   - [Multi-threading](#multi-threading)
@@ -64,7 +64,7 @@ The call stack is a stack of call frames. Each call frame contains the instructi
 The instruction pointer points to the next instruction to be executed. The base pointer points to the base of the stack frame.
 The stack pointer points to the top of the stack frame. The call stack is used to keep track of the current state of the program.
 
-## Instruction Buffer
+## Instruction InstructionBuffer
 The instruction buffer stores all the instructions in the program.
 This makes it easy to jump to a specific instruction in the program.
 
