@@ -21,15 +21,12 @@ VM* CreateVM(const int stackCapacity) {
 }
 
 // NOTE(hrs): bytecode buffer must contain TranslationResult data
-void LoadBytecode(VM* vm, Buffer* bytecode) {
+void LoadBytecode(VM* vm, InstructionBuffer* bytecode) {
     vm->buffer = bytecode;
 }
 
+// NOTE(hrs) instruction buffer is not free'd in DestroyVM
 void DestroyVM(VM* vm) {
-    for (int i = 0; i < vm->buffer->count; i++) {
-        DestroyInstruction(GetBufferData(vm->buffer, i));
-    }
-    DestroyBuffer(vm->buffer);
     FreeStack(vm->stack);
     free(vm);
 }
@@ -48,8 +45,8 @@ void RunVM(VM* vm) {
         }
 
         // Fetch instruction, apply it, and increment instruction pointer.
-        Instruction* instruction = GetBufferData(vm->buffer, vm->ip);
-        switch (instruction->opcode) {
+        Instruction wordbyte = GetBufferData(vm->buffer, vm->ip);
+        switch (wordbyte.instruction) {
             case HALT: {
                 vm->state = 2;
                 break;
@@ -64,7 +61,7 @@ void RunVM(VM* vm) {
             case PUSH: {
                 // TODO: support other types
                 int* value = malloc(sizeof(int));
-                *value = atoi(instruction->arg);
+                *value = atoi(wordbyte.arg);
                 PushStack(vm->stack, value);
                 break;
             }
@@ -138,9 +135,10 @@ void StopVM(VM* vm) {
 
 void DumpVM(VM* vm) {
     PrintStack(vm->stack);
-    printf("Buffer dump:\n");
+    printf("InstructionBuffer dump:\n");
     for (int i = 0; i < vm->buffer->count; i++) {
-        printf("%d: %p\n", i, GetBufferData(vm->buffer, i));
+        Instruction j = GetBufferData(vm->buffer, i);
+        printf("%d: {%d, %d, %p}\n", i, j.instruction, j.type, j.arg);
     }
     printf("Instruction Pointer: %d\n", vm->ip);
     printf("State: %d\n", vm->state);
