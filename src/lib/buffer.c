@@ -11,7 +11,7 @@ InstructionBuffer* CreateBuffer(const int capacity) {
     InstructionBuffer* buffer = malloc(sizeof(InstructionBuffer));
     buffer->count = 0;
     buffer->capacity = capacity;
-    buffer->instructions = malloc(sizeof(void*) * capacity);
+    buffer->instructions = malloc(sizeof(Instruction) * capacity);
 
     return buffer;
 }
