@@ -11,21 +11,12 @@
 extern const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT]; // see translator.c
 
 typedef struct {
-    unsigned char opcode;
-    char* arg;
-    int type;
-} Instruction;
-
-Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type);
-void DestroyInstruction(Instruction* instruction);
-
-typedef struct {
     char* file_contents;
-    Buffer* instructions;
+    InstructionBuffer* instructions;
 } BytecodeTranslator;
 
 BytecodeTranslator* CreateBytecodeTranslator(char* file_contents);
 void DestroyBytecodeTranslator(BytecodeTranslator* translator);
-Buffer* Translate(BytecodeTranslator* translator);
+InstructionBuffer* Translate(BytecodeTranslator* translator);
 
 #endif //TRANSLATOR_H
