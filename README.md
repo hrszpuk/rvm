@@ -1,8 +1,6 @@
 # rvm
 A simple, stack-based virtual machine for the Bytespace community.
 
-## Goals
-- [ ] High-performance
-- [ ] Well documented
-- [ ] Simplistic
-- [ ] Bindings for many languages
+## Features
+- A simple, stack-based virtual machine
+- First class command line interface and assembler
