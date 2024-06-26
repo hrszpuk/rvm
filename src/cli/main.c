@@ -49,15 +49,19 @@ int main(int argc, char** argv) {
         buffer[size] = '\0';
         fclose(file);*/
 
-        Buffer* buf = CreateBuffer(10);
+        InstructionBuffer* buf = CreateBuffer(10);
+        AddBufferData(buf, (Instruction){0, 0, NULL});
 
         VM* vm = CreateVM(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
-        //Buffer* bytecode = Translate(translator);
-        LoadBytecode(vm, bytecode);
+        //InstructionBuffer* bytecode = Translate(translator);
+        LoadBytecode(vm, buf);
         RunVM(vm);
 
+        DumpVM(vm);
+
         DestroyVM(vm);
+        DestroyBuffer(buf);
         //free(translator);
         //free(buffer);
 
