@@ -50,7 +50,13 @@ int main(int argc, char** argv) {
         fclose(file);*/
 
         InstructionBuffer* buf = CreateBuffer(10);
-        AddBufferData(buf, (Instruction){0, 0, NULL});
+        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
+        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
+        AddBufferData(buf, (Instruction){ADD, 0, NULL});
+        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
+        AddBufferData(buf, (Instruction){MUL, 0, NULL});
+        AddBufferData(buf, (Instruction){OUT, 0, NULL});
+        AddBufferData(buf, (Instruction){HALT, 0, NULL});
 
         VM* vm = CreateVM(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
