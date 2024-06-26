@@ -123,8 +123,24 @@ void RunVM(VM* vm) {
                 free(b);
                 break;
             }
+            case INC: {
+                int* a = PopStack(vm->stack);
+                *a += 1;
+                PushStack(vm->stack, a);
+                break;
+            }
+            case DEC: {
+                int* a = PopStack(vm->stack);
+                *a -= 1;
+                PushStack(vm->stack, a);
+                break;
+            }
+            case OUT: {
+                printf("Stack print: %d\n", *((int*)TopStack(vm->stack)));
+                break;
+            }
             default: {
-                printf("Unknown instruction!\n");
+                printf("Unknown instruction! %d\n", wordbyte.instruction);
                 break;
             }
         }
