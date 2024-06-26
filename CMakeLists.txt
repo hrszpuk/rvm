@@ -13,7 +13,9 @@ add_library(rvm_lib STATIC src/lib/stack.c
         src/lib/buffer.c
         src/lib/headers/buffer.h
         src/lib/vm.c
-        src/lib/headers/vm.h)
+        src/lib/headers/vm.h
+        src/lib/symbol_table.c
+        src/lib/headers/symbol_table.h)
 
 add_library(rvm_assembler STATIC src/assembler/translator.c
         src/assembler/headers/translator.h)
