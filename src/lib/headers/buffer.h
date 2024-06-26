@@ -6,6 +6,12 @@
 #define BUFFER_H
 
 typedef struct {
+    unsigned char instruction;
+    unsigned char type;
+    char* arg;
+} Instruction;
+
+typedef struct {
     int count;
     int capacity;
     void** data;
