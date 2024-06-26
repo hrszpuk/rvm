@@ -83,7 +83,7 @@ void RunVM(VM* vm) {
                 int* b = PopStack(vm->stack);
                 *a = *a + *b;
                 PushStack(vm->stack, a);
-                free(a);
+                //free(a);
                 free(b);
                 break;
             }
@@ -110,7 +110,7 @@ void RunVM(VM* vm) {
                 int* b = PopStack(vm->stack);
                 *a = *a * *b;
                 PushStack(vm->stack, a);
-                free(a);
+                //free(a);
                 free(b);
                 break;
             }
