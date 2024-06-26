@@ -6,24 +6,6 @@
 
 char** split(char* str, char c);
 
-// NOTE(hrs): arg data is copied into the instruction, so it can be freed after the instruction is created.
-Instruction* CreateInstruction(const unsigned char opcode, const char* arg, const int type) {
-    Instruction* instruction = malloc(sizeof(Instruction));
-    instruction->opcode = opcode;
-    instruction->arg = NULL;
-    if (arg != NULL) {
-        instruction->arg = malloc(sizeof(char) * strlen(arg) + 1);
-        strcpy(instruction->arg, arg);
-    }
-    instruction->type = type;
-    return instruction;
-}
-
-void DestroyInstruction(Instruction* instruction) {
-    free(instruction->arg);
-    free(instruction);
-}
-
 BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
     BytecodeTranslator* translator = malloc(sizeof(BytecodeTranslator));
     translator->file_contents = file_contents;
@@ -37,9 +19,9 @@ void DestroyBytecodeTranslator(BytecodeTranslator* translator) {
     free(translator);
 }
 
-Buffer* Translate(BytecodeTranslator* translator) {
+InstructionBuffer* Translate(BytecodeTranslator* translator) {
     char* file_contents = translator->file_contents;
-    Buffer* instructions = translator->instructions;
+    InstructionBuffer* instructions = translator->instructions;
 
     int instruction_count = 0;
     int line_size = 1;
@@ -126,11 +108,11 @@ Buffer* Translate(BytecodeTranslator* translator) {
 
     printf("Found %d instructions:\n", instructions->count);
     for (int i = 0; i < instructions->count; i++) {
-        Instruction* instruction = GetBufferData(instructions, i);
-        if (instruction->arg == NULL) {
-            printf("%d (%d): %s\n", i, instruction->opcode, BytecodeMap[instruction->opcode]);
+        Instruction instruction = GetBufferData(instructions, i);
+        if (instruction.arg == NULL) {
+            printf("%d (%d): %s\n", i, instruction.instruction, BytecodeMap[instruction.instruction]);
         } else {
-            printf("%d (%d): %s %s\n", i, instruction->opcode, BytecodeMap[instruction->opcode], instruction->arg);
+            printf("%d (%d): %s %s\n", i, instruction.instruction, BytecodeMap[instruction.instruction], instruction.arg);
         }
     }
 

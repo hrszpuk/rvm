@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../lib/headers/translator.h"
+#include "../assembler/headers/translator.h"
 #include "../lib/headers/vm.h"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
@@ -33,14 +33,38 @@ int main(int argc, char** argv) {
         printf("%s", helpBasic);
         return 1;
     }
-
     if (strcmp(argv[1], "run") == 0) {
-        if (argc < 3) {
+        /*f (argc < 3) {
             printf("Not enough arguments.\n\n");
             printf("%s", helpRun);
             return 1;
         }
-        printf("Attempting to run \"%s\".\n", argv[2]);
+        printf("Reading file \"%s\".\n", argv[2]);
+        FILE* file = fopen(argv[2], "r");
+        fseek(file, 0, SEEK_END);
+        long size = ftell(file);
+        rewind(file);
+        char* buffer = malloc(sizeof(char) * size + 1);
+        fread(buffer, sizeof(char), size, file);
+        buffer[size] = '\0';
+        fclose(file);*/
+
+        InstructionBuffer* buf = CreateBuffer(10);
+        AddBufferData(buf, (Instruction){0, 0, NULL});
+
+        VM* vm = CreateVM(10);
+        //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
+        //InstructionBuffer* bytecode = Translate(translator);
+        LoadBytecode(vm, buf);
+        RunVM(vm);
+
+        DumpVM(vm);
+
+        DestroyVM(vm);
+        DestroyBuffer(buf);
+        //free(translator);
+        //free(buffer);
+
     } else if (strcmp(argv[1], "build") == 0) {
         if (argc < 4) {
             printf("Building requires at least 2 arguments (rvm files).\n\n");
@@ -55,29 +79,6 @@ int main(int argc, char** argv) {
             return 1;
         }
         printf("Checking \"%s\" for errors.\n", argv[2]);
-    } else if (strcmp(argv[1], "devtest") == 0) {
-        printf("Reading file \"%s\".\n", argv[2]);
-        FILE* file = fopen(argv[2], "r");
-        fseek(file, 0, SEEK_END);
-        long size = ftell(file);
-        rewind(file);
-        char* buffer = malloc(sizeof(char) * size + 1);
-        fread(buffer, sizeof(char), size, file);
-        buffer[size] = '\0';
-        fclose(file);
-
-        printf("Running quick opcode test\n");
-        VM* vm = CreateVM(10, 10);
-        BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
-        Buffer* bytecode = Translate(translator);
-        LoadBytecode(vm, bytecode);
-        RunVM(vm);
-
-        DestroyVM(vm);
-        free(translator);
-        free(buffer);
-
-        return 0;
     } else if (strcmp(argv[1], "help") == 0 || strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
         if (argc < 3) {
             printf("%s", helpBasic);
