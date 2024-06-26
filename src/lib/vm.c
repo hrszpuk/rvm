@@ -40,8 +40,8 @@ void RunVM(VM* vm) {
         }
 
         if (vm->ip >= vm->buffer->count) {
-            vm->state = 2;
-            break;
+            StopVM(vm);
+            return;
         }
 
         // Fetch instruction, apply it, and increment instruction pointer.
@@ -53,6 +53,7 @@ void RunVM(VM* vm) {
             }
             case PAUSE: {
                 vm->state = 1;
+                vm->ip--; // Maintain the same instruction until unpause
                 break;
             }
             case NOOP: {
