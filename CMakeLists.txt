@@ -12,10 +12,6 @@ add_executable(rvm_cli src/cli/main.c)
 add_library(rvm_lib STATIC src/lib/stack.c
         src/lib/buffer.c
         src/lib/headers/buffer.h
-        src/lib/dictionary.c
-        src/lib/headers/dictionary.h
-        src/lib/heap.c
-        src/lib/headers/heap.h
         src/lib/vm.c
         src/lib/headers/vm.h)
 
