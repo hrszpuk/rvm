@@ -16,8 +16,6 @@ typedef struct {
     int scope;
 } Symbol;
 
-Symbol CreateSymbol
-
 typedef struct {
     Symbol* symbols;
     int symbol_count;
