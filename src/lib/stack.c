@@ -31,6 +31,9 @@ void PushStack(Stack* stack, void* data) {
 }
 
 void FreeStack(Stack* stack) {
+    for (int i = 0; i < stack->count; i++) {
+        free(stack->data[i]);
+    }
     free(stack->data);
     free(stack);
 }
