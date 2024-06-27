@@ -5,6 +5,58 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include <bits/stdint-uintn.h>
+
+#define NUMBER_OF_OPCODE 37
+
+typedef enum {
+    HALT,
+    NOOP,
+
+    LOAD,
+    STORE,
+
+    PUSH,
+    POP,
+    DUP,
+    SWAP,
+
+    BR,
+    BRF,
+    BRT,
+    BEQ,
+    BGE,
+    BLE,
+    BLT,
+    BNE,
+
+    ADD,
+    SUB,
+    DIV,
+    MUL,
+    MOD,
+
+    AND,
+    OR,
+    XOR,
+    SHL,
+    SHR,
+    NOT,
+
+    LAND,
+    LOR,
+    NEG,
+
+    CONV,
+
+    EQ,
+    GE,
+    GT,
+    LE,
+    LT,
+    NE,
+} Opcode;
+
 typedef struct {
     unsigned char instruction;
     unsigned char type;

@@ -17,54 +17,6 @@ typedef struct {
     int debug;          // Debug mode: 0 = Off, 1 = On
 } VM;
 
-typedef enum {
-    HALT,
-    NOOP,
-
-    LOAD,
-    STORE,
-
-    PUSH,
-    POP,
-    DUP,
-    SWAP,
-
-    BR,
-    BRF,
-    BRT,
-    BEQ,
-    BGE,
-    BLE,
-    BLT,
-    BNE,
-
-    ADD,
-    SUB,
-    DIV,
-    MUL,
-    MOD,
-
-    AND,
-    OR,
-    XOR,
-    SHL,
-    SHR,
-    NOT,
-
-    LAND,
-    LOR,
-    NEG,
-
-    CONV,
-
-    EQ,
-    GE,
-    GT,
-    LE,
-    LT,
-    NE,
-} Opcode;
-
 VM* CreateVM(int stackCapacity);    // Create a new VM with the specified stack and buffer capacity.
 void DestroyVM(VM* vm);     // Destroy the VM and free all memory associated with it.
 void RunVM(VM* vm);         // Set the VM's state to running. (NOTE: This is the default state)
