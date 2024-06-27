@@ -6,9 +6,8 @@ When reading bytecode, each line represents a single instruction. An instruction
 Example of bytecode shown below. I've place spaces between the hexadecimals, and given each the 0x prefix, to make each value more distinct.
 There are also comments explaining each line.
 ```asm
-0xFF 0xFF 0x1
-0xFF 0xFF 
-0xFF 0xFF 0x2 // program header directive
+0xFF 0x1 // data directive (empty)
+0xFF 0x2 // code directive
 0x4 0x4 0x2 // push 2 (i32)
 0x4 0x4 0xA // push 10 (i32)
 0x11 0x4    // add (i32)
@@ -147,5 +146,4 @@ The following names are reserved by the virtual machine:
 - str
 - os
 - sys
-- gc
 - dll
