@@ -134,3 +134,15 @@ The following names are reserved by the virtual machine:
 - os
 - sys
 - dll
+
+### Example of calling functions from external assemblies
+```asm 
+.meta
+.name "example"
+.extern "io"
+
+.code
+pushi8 97
+[io]out  // output 'a'
+halt
+```
