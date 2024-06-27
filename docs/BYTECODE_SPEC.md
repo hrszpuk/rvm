@@ -109,51 +109,16 @@ Lines containing a directive begin with `0xFF` after which a byte represents the
 
 ### Directive list
 
-| Symbol       | Description | Value      |
-|--------------|-------------|------------|
-| `[metadata]` |             | `0xFF 0x0` |
-| `[data]`     |             | `0xFF 0x1` |
-| `[program]`  |             | `0xFF 0x2` |
-| `.name`      |             | `0xFF 0x3` |
-| `.version`   |             | `0xFF 0x4` |
-| `.extern`    |             | `0xFF 0x5` |
-| `.const`     |             | `0xFF 0x6` |
-
-
-## Headers
-Headers are a special kind of directive that are used to structure the assembly into different sections such as `data` and `program`.
-
-#### Formatting
-Lines containing a header begin with `0xFF 0xFF` and the following bytes represents the header name.
-Only 3 header names are recognised by the virtual machine: `metadata` (`0x0`), `data` (`0x1`), and `program` (`0x2`).
-
-### Metadata header
-The `[metadata]` header contains metadata about the assembly itself or details for pre-requisites for how the assembly should run.
-```asm
-[metadata]
-.name "Program name"
-.version 0.2.0
-.extern someLib
-```
-
-### Data header
-The `[data]` header contains constant data in the assembly. These symbols are automatically loaded into the symbol table upon start up.
-```asm
-[data]
-.const x i32 234
-```
-
-### Program
-The `[program]` header contains the instructions within the assembly.
-```asm
-[program]
-pushi32 100
-store y
-load x
-load y
-addi32
-store z
-```
+| Symbol                         | Description                                                                                       | Value      |
+|--------------------------------|---------------------------------------------------------------------------------------------------|------------|
+| `.meta`                        | Symbolises the start of the metadata block.                                                       | `0xFF 0x0` |
+| `.data`                        | Symbolises the start of the data block.                                                           | `0xFF 0x1` |
+| `.code`                        | Symbolises the start of the code block.                                                           | `0xFF 0x2` |
+| `.name <name>`                 | The name of the modules. This may be used when creating libraries.                                | `0xFF 0x3` |
+| `.version <version>`           | Similar to above. This is used when creating libraries.                                           | `0xFF 0x4` |
+| `.extern <name>`               | Used to externally link to another rvm binary.                                                    | `0xFF 0x5` |
+| `.const <name> <type> <value>` | A constant value declared inside the data block.                                                  | `0xFF 0x6` |
+| `.export <label>`              | A label in the `.code` block. This will make the label available to other binaries via `.extern`. | `0xFF 0x7` |
 
 ## External Assemblies
 External assemblies can be imported using the `.extern` directive within the `[metadata]` header.
