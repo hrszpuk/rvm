@@ -5,8 +5,12 @@
 #ifndef RVM_SYMBOL_TABLE_H
 #define RVM_SYMBOL_TABLE_H
 
+#include <stdint.h>
+
 typedef enum {
-    INT
+    ST_i8, ST_i16, ST_i32, ST_i64,
+    ST_u8, ST_u16, ST_u32, ST_u64,
+    ST_f32, ST_f64
 } SymbolType;
 
 typedef struct {

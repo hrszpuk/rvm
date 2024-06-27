@@ -19,7 +19,6 @@ typedef struct {
 
 typedef enum {
     HALT,
-    PAUSE,
     NOOP,
 
     LOAD,
@@ -35,8 +34,6 @@ typedef enum {
     DIV,
     MUL,
     MOD,
-    INC,
-    DEC,
 
     OUT, // 18 - prints the top of the stack
 
