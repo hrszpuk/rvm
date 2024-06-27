@@ -79,7 +79,26 @@ The type byte represents the type the instruction is operating on. Every type ha
 | `f64`  | `0xA` |
 
 ### Argument
-The argument can be anything but is usually encoded into bytes and decoded when the instruction is loaded.
+The argument can be anything but is encoded into bytes and decoded when the instruction is loaded.
+The type byte is used to tell the virtual machine how to decode the bytes in the right order.
+
+| Type   | Example Value                     | Example Decoded      |
+|--------|-----------------------------------|----------------------|
+| `void` | N/A                               | N/A                  |
+| `i8`   | `0x1`                             | `1`                  |
+| `i16`  | `0xA 0x0`                         | `10`                 |
+| `i32`  | `0x0 0x0 0x0 0x3`                 | `50331648`           |
+| `i64`  | `0x0 0x0 0x0 0x3 0x0 0x0 0x0 0x3` | `216172782114177024` |
+| `u8`   | `0x5`                             | `5`                  |
+| `u16`  | `0x6 0x0`                         | `6`                  |
+| `u32`  | `0x0 0x7 0x0 0x0`                 | `1792`               |
+| `u64`  | `0x0 0x0 0x8 0x0 0x0 0x0 0x0 0x0` | `2048`               |
+| `f32`  | `0x9`                             |                      |
+| `f64`  | `0xA`                             |                      |
+
+NOTE: the spaces between each value in the example value is not present in the binary code.
+
+The byte order used is little-endian.
 
 ## Directives
 Directives provide metadata within the assembly. All directives are prefixed by a dot `.`. 
