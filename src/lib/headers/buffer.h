@@ -57,10 +57,30 @@ typedef enum {
     NE,
 } Opcode;
 
+typedef enum {
+    IT_void,
+    IT_i8, IT_i16, IT_i32, IT_i64,
+    IT_u8, IT_u16, IT_u32, IT_u64,
+    IT_f32, IT_f64
+} InstructionType;
+
+typedef union {
+    int8_t i8;
+    int16_t i16;
+    int32_t i32;
+    int64_t i64;
+    uint8_t u8;
+    uint16_t u16;
+    uint32_t u32;
+    uint64_t u64;
+    float f32;
+    double f64;
+} InstructionArgumentValue;
+
 typedef struct {
-    unsigned char instruction;
-    unsigned char type;
-    char* arg;
+    Opcode instruction;
+    InstructionType type;
+    InstructionArgumentValue arg;
 } Instruction;
 
 typedef struct {
