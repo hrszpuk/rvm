@@ -24,20 +24,45 @@ typedef enum {
     LOAD,
     STORE,
 
-    PUSH, // 7
+    PUSH,
     POP,
-    DUP, // 9
+    DUP,
     SWAP,
 
-    ADD, // 11
+    BR,
+    BRF,
+    BRT,
+    BEQ,
+    BGE,
+    BLE,
+    BLT,
+    BNE,
+
+    ADD,
     SUB,
     DIV,
     MUL,
     MOD,
 
-    OUT, // 18 - prints the top of the stack
+    AND,
+    OR,
+    XOR,
+    SHL,
+    SHR,
+    NOT,
 
-    OPCODE_ENUM_LENGTH  // This isn't a value opcode instruction.
+    LAND,
+    LOR,
+    NEG,
+
+    CONV,
+
+    EQ,
+    GE,
+    GT,
+    LE,
+    LT,
+    NE,
 } Opcode;
 
 VM* CreateVM(int stackCapacity);    // Create a new VM with the specified stack and buffer capacity.
