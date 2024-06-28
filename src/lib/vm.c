@@ -189,9 +189,9 @@ void StopVM(VM* vm) {
 void DumpVM(VM* vm) {
     PrintStack(vm->stack);
     printf("InstructionBuffer dump:\n");
-    for (int i = 0; i < vm->buffer->count; i++) {
+    for (int i = 0; i < vm->ip; i++) {
         Instruction j = GetBufferData(vm->buffer, i);
-        printf("%d: {%d, %d, %p}\n", i, j.instruction, j.type, j.arg);
+        printf("%d: {%d, %d, %d}\n", i, (int)j.instruction, (int)j.type, (int)j.arg.i32);
     }
     printf("Instruction Pointer: %d\n", vm->ip);
     printf("State: %d\n", vm->state);
