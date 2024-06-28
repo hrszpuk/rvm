@@ -120,24 +120,6 @@ void RunVM(VM* vm) {
                 int* b = PopStack(vm->stack);
                 *a = *a % *b;
                 PushStack(vm->stack, a);
-                free(a);
-                free(b);
-                break;
-            }
-            case INC: {
-                int* a = PopStack(vm->stack);
-                *a += 1;
-                PushStack(vm->stack, a);
-                break;
-            }
-            case DEC: {
-                int* a = PopStack(vm->stack);
-                *a -= 1;
-                PushStack(vm->stack, a);
-                break;
-            }
-            case OUT: {
-                printf("Stack print: %d\n", *((int*)TopStack(vm->stack)));
                 break;
             }
             default: {
