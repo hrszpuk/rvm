@@ -68,17 +68,3 @@ void ClearBufferData(InstructionBuffer* buffer) {
     free(buffer->instructions);
     buffer->count = 0;
 }
-
-// NOTE(hrs): arg data is copied into the instruction, so it can be freed after the instruction is created.
-Instruction CreateInstruction(unsigned char opcode, char* arg, unsigned char type) {
-    Instruction instruction = (Instruction){opcode, type, NULL};
-    if (arg != NULL) {
-        instruction.arg = malloc(sizeof(char) * strlen(arg) + 1);
-        strcpy(instruction.arg, arg);
-    }
-    return instruction;
-}
-
-void DestroyInstruction(Instruction instruction) {
-    free(instruction.arg);
-}

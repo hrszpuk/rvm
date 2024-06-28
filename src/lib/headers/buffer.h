@@ -5,7 +5,7 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include <bits/stdint-uintn.h>
+#include <stdint.h>
 
 #define NUMBER_OF_OPCODE 37
 
@@ -98,8 +98,5 @@ void AddBufferData(InstructionBuffer* buffer, Instruction element); // Add data 
 void RemoveBufferData(const InstructionBuffer* buffer, int index); // Remove data from the buffer at the specified index.
 void RemoveAllBufferData(InstructionBuffer* buffer); // Remove all data from the buffer.
 void ClearBufferData(InstructionBuffer* buffer); // Clear the buffer and free the memory associated with it's data.
-
-Instruction CreateInstruction(unsigned char opcode, char* arg, unsigned char type);
-void DestroyInstruction(Instruction instruction);
 
 #endif //BUFFER_H
