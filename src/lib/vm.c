@@ -176,6 +176,58 @@ void RunVM(VM* vm) {
                 printf("Unknown instruction! %d\n", wordbyte.instruction);
                 break;
             }
+            case LOAD:
+                break;
+            case STORE:
+                break;
+            case BR:
+                break;
+            case BRF:
+                break;
+            case BRT:
+                break;
+            case BEQ:
+                break;
+            case BGE:
+                break;
+            case BLE:
+                break;
+            case BLT:
+                break;
+            case BNE:
+                break;
+            case AND:
+                break;
+            case OR:
+                break;
+            case XOR:
+                break;
+            case SHL:
+                break;
+            case SHR:
+                break;
+            case NOT:
+                break;
+            case LAND:
+                break;
+            case LOR:
+                break;
+            case NEG:
+                break;
+            case CONV:
+                break;
+            case EQ:
+                break;
+            case GE:
+                break;
+            case GT:
+                break;
+            case LE:
+                break;
+            case LT:
+                break;
+            case NE:
+                break;
         }
         vm->ip++;
     }

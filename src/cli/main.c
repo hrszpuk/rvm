@@ -40,16 +40,18 @@ int main(int argc, char** argv) {
             return 1;
         }
         printf("Reading file \"%s\".\n", argv[2]);
-        FILE* file = fopen(argv[2], "r");
-        fseek(file, 0, SEEK_END);
-        long size = ftell(file);
-        rewind(file);
-        unsigned char* buffer = malloc(sizeof(char) * size);
-        fread(buffer, sizeof(char), size, file);
-        fclose(file);
+        //FILE* file = fopen(argv[2], "r");
+        //fseek(file, 0, SEEK_END);
+        //long size = ftell(file);
+        //rewind(file);
+        //unsigned char* buffer = malloc(sizeof(char) * size);
+        //fread(buffer, sizeof(char), size, file);
+        //fclose(file);
 
         InstructionBuffer* buf = CreateBuffer(10);
-
+        AddBufferData(buf, (Instruction){PUSH, IT_i32, {.i32 = 8}});
+        AddBufferData(buf, (Instruction){DUP, IT_i32, {}});
+        AddBufferData(buf, (Instruction){ADD, IT_i32, {}});
 
         VM* vm = CreateVM(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
