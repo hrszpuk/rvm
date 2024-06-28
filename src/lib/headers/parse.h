@@ -15,7 +15,7 @@ typedef struct {
     InstructionBuffer* instructions;
 } Parser;
 
-Parser* create_parser(char* buffer, int buffer_size);
+Parser* create_parser(unsigned char* buffer, int buffer_size);
 void destroy_parser(Parser* p);
 void parse(Parser* p);
 void parseLine(Parser* p);

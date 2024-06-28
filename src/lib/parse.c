@@ -4,7 +4,7 @@
 
 #include "parse.h"
 
-Parser* create_parser(char* buffer, int buffer_size) {
+Parser* create_parser(unsigned char* buffer, int buffer_size) {
     Parser* p = malloc(sizeof(Parser));
     p->index = 0;
     p->buffer = buffer;
@@ -19,8 +19,7 @@ void destroy_parser(Parser* p) {
 
 void parse(Parser* p) {
     while (p->index < p->buffer_size) {
-        Instruction instr = CreateInstruction(NOOP, NULL, IT_void);
-
+        Instruction instr;
 
         if (HALT <= p->buffer[p->index] && p->buffer[p->index] < NUMBER_OF_OPCODE) {
 
