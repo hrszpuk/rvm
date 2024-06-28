@@ -5,6 +5,7 @@
 #include "headers/buffer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 InstructionBuffer* CreateBuffer(const int capacity) {

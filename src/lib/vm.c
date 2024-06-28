@@ -183,7 +183,6 @@ void RunVM(VM* vm) {
 
 void StopVM(VM* vm) {
     vm->state = 2;
-    ClearBufferData(vm->buffer);
 }
 
 void DumpVM(VM* vm) {
