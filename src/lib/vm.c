@@ -34,11 +34,7 @@ void DestroyVM(VM* vm) {
 void RunVM(VM* vm) {
     vm->state = 0;
 
-    while (vm->state == 0 || vm->state == 1) {
-        if (vm->state == 1) {
-            continue;
-        }
-
+    while (vm->state == 0) {
         if (vm->ip >= vm->buffer->count) {
             StopVM(vm);
             return;
@@ -55,9 +51,7 @@ void RunVM(VM* vm) {
                 break;
             }
             case PUSH: {
-                // TODO: support other types
-                int* value = malloc(sizeof(int));
-                *value = atoi(wordbyte.arg);
+                StackValue value = (StackValue){wordbyte.type, wordbyte.arg};
                 PushStack(vm->stack, value);
                 break;
             }
