@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+/*
 char** split(char* str, char c);
 
 BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
@@ -208,4 +208,4 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // I/O operations
     "in",
     "out",
-};
+};*/
