@@ -61,12 +61,14 @@ void RunVM(VM* vm) {
             }
             case DUP: {
                 PushStack(vm->stack, TopStack(vm->stack));
+                break;
             }
             case SWAP: {
-                int* a = PopStack(vm->stack);
-                int* b = PopStack(vm->stack);
+                StackValue a = PopStack(vm->stack);
+                StackValue b = PopStack(vm->stack);
                 PushStack(vm->stack, b);
                 PushStack(vm->stack, a);
+                break;
             }
             case ADD: {
                 int* a = PopStack(vm->stack);
