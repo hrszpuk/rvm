@@ -57,14 +57,6 @@ void RemoveBufferData(const InstructionBuffer* buffer, const int index) {
     }
 }
 
-void RemoveAllBufferData(InstructionBuffer* buffer) {
-    buffer->count = 0;
-}
-
 void ClearBufferData(InstructionBuffer* buffer) {
-    for (int i = 0; i < buffer->count; i++) {
-        DestroyInstruction(buffer->instructions[i]);
-    }
-    free(buffer->instructions);
     buffer->count = 0;
 }

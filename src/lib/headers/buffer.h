@@ -96,7 +96,6 @@ Instruction GetBufferData(const InstructionBuffer* buffer, int index); // Get th
 void SetBufferData(const InstructionBuffer* buffer, int index, Instruction element); // Set the data at the specified index.
 void AddBufferData(InstructionBuffer* buffer, Instruction element); // Add data to the end of the buffer.
 void RemoveBufferData(const InstructionBuffer* buffer, int index); // Remove data from the buffer at the specified index.
-void RemoveAllBufferData(InstructionBuffer* buffer); // Remove all data from the buffer.
 void ClearBufferData(InstructionBuffer* buffer); // Clear the buffer and free the memory associated with it's data.
 
 #endif //BUFFER_H
