@@ -51,11 +51,6 @@ void RunVM(VM* vm) {
                 vm->state = 2;
                 break;
             }
-            case PAUSE: {
-                vm->state = 1;
-                vm->ip--; // Maintain the same instruction until unpause
-                break;
-            }
             case NOOP: {
                 break;
             }
