@@ -23,7 +23,7 @@ void DestroyBuffer(InstructionBuffer* buffer) {
 
 Instruction GetBufferData(const InstructionBuffer* buffer, const int index) {
     if (index < 0 || index >= buffer->count) {
-        return (Instruction){0, 0, NULL};
+        return (Instruction){0, 0, {}};
     }
 
     return buffer->instructions[index];
@@ -40,7 +40,7 @@ void SetBufferData(const InstructionBuffer* buffer, const int index, Instruction
 void AddBufferData(InstructionBuffer* buffer, Instruction element) {
     if (buffer->count >= buffer->capacity) {
         buffer->capacity *= 2;
-        buffer->instructions = realloc(buffer->instructions, sizeof(void*) * buffer->capacity);
+        buffer->instructions = realloc(buffer->instructions, sizeof(Instruction) * buffer->capacity);
     }
 
     buffer->instructions[buffer->count] = element;
