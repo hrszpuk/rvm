@@ -285,7 +285,26 @@ void RunVM(VM* vm) {
 
                 PushStack(vm->stack, result);
                 break;
-            case NEG:
+            }
+            case NEG: {
+                StackValue a = PopStack(vm->stack);
+                StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
+
+                switch (a.type) {
+                    case IT_i8:   result.value.i32 = !a.value.i8; break;
+                    case IT_i16:  result.value.i32 = !a.value.i16; break;
+                    case IT_i32:  result.value.i32 = !a.value.i32; break;
+                    case IT_i64:  result.value.i32 = !a.value.i64; break;
+                    case IT_u8:   result.value.i32 = !a.value.u8; break;
+                    case IT_u16:  result.value.i32 = !a.value.u16; break;
+                    case IT_u32:  result.value.i32 = !a.value.u32; break;
+                    case IT_u64:  result.value.i32 = !a.value.u64; break;
+                    case IT_f32:  result.value.i32 = !a.value.f32; break;
+                    case IT_f64:  result.value.i32 = !a.value.f64; break;
+                    default:      fprintf(stderr, "Unsupported type in logical NOT operation\n"); break;
+                }
+
+                PushStack(vm->stack, result);
                 break;
             case CONV:
                 break;
