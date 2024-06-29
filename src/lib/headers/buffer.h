@@ -30,6 +30,7 @@ typedef enum {
     BRT,
     BEQ,
     BGE,
+    BGT,
     BLE,
     BLT,
     BNE,
