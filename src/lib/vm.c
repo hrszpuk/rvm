@@ -195,14 +195,42 @@ void RunVM(VM* vm) {
             case BNE:
                 break;
             case AND:
-                break;
             case OR:
-                break;
             case XOR:
-                break;
             case SHL:
-                break;
-            case SHR:
+            case SHR: {
+                StackValue b = PopStack(vm->stack);
+                StackValue a = PopStack(vm->stack);
+                StackValue result = {IT_i32, {.i32 = 0}};  // Default result for invalid operations
+
+                if (a.type != b.type) {
+                    fprintf(stderr, "Type mismatch in bitwise operation\n");
+                    // Handle error or decide on a strategy for type mismatch
+                    break;
+                }
+
+                #define BITWISE(op) \
+                switch (a.type) { \
+                    case IT_i8:   result.value.i8  = a.value.i8  op b.value.i8; break; \
+                    case IT_i16:  result.value.i16 = a.value.i16 op b.value.i16; break; \
+                    case IT_i32:  result.value.i32 = a.value.i32 op b.value.i32; break; \
+                    case IT_i64:  result.value.i64 = a.value.i64 op b.value.i64; break; \
+                    case IT_u8:   result.value.u8  = a.value.u8  op b.value.u8; break; \
+                    case IT_u16:  result.value.u16 = a.value.u16 op b.value.u16; break; \
+                    case IT_u32:  result.value.u32 = a.value.u32 op b.value.u32; break; \
+                    case IT_u64:  result.value.u64 = a.value.u64 op b.value.u64; break; \
+                    default:      fprintf(stderr, "Unsupported type in bitwise operation\n"); break; \
+                }
+
+                switch (instr.instruction) {
+                    case AND: BITWISE(&); break;
+                    case OR:  BITWISE(|); break;
+                    case XOR: BITWISE(^); break;
+                    case SHL: BITWISE(<<); break;
+                    case SHR: BITWISE(>>); break;
+                }
+
+                PushStack(vm->stack, result);
                 break;
             case NOT:
                 break;
