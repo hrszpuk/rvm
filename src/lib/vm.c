@@ -251,9 +251,39 @@ void RunVM(VM* vm) {
 
                 PushStack(vm->stack, result);
                 break;
+            }
+
             case LAND:
-                break;
-            case LOR:
+            case LOR: {
+                StackValue b = PopStack(vm->stack);
+                StackValue a = PopStack(vm->stack);
+                StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
+
+                if (a.type != b.type) {
+                    fprintf(stderr, "Type mismatch in logical operation\n");
+                    // Handle error or decide on a strategy for type mismatch
+                    break;
+                }
+
+                #define LOGICAL(op) \
+                switch (a.type) { \
+                    case IT_i8:   result.value.i32 = (a.value.i8  op b.value.i8); break; \
+                    case IT_i16:  result.value.i32 = (a.value.i16 op b.value.i16); break; \
+                    case IT_i32:  result.value.i32 = (a.value.i32 op b.value.i32); break; \
+                    case IT_i64:  result.value.i32 = (a.value.i64 op b.value.i64); break; \
+                    case IT_u8:   result.value.i32 = (a.value.u8  op b.value.u8); break; \
+                    case IT_u16:  result.value.i32 = (a.value.u16 op b.value.u16); break; \
+                    case IT_u32:  result.value.i32 = (a.value.u32 op b.value.u32); break; \
+                    case IT_u64:  result.value.i32 = (a.value.u64 op b.value.u64); break; \
+                    default:      fprintf(stderr, "Unsupported type in logical operation\n"); break; \
+                }
+
+                switch (instr.instruction) {
+                    case LAND: LOGICAL(&&); break;
+                    case LOR:  LOGICAL(||); break;
+                }
+
+                PushStack(vm->stack, result);
                 break;
             case NEG:
                 break;
