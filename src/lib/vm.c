@@ -203,9 +203,40 @@ void RunVM(VM* vm) {
             case BLE:
                 break;
             case BLT:
+            case BNE: {
+                StackValue b = PopStack(vm->stack);
+                StackValue a = PopStack(vm->stack);
+
+                bool condition = false;
+                #define BRANCH_COMPARE(op) \
+                switch (a.type) { \
+                    case IT_i8:   condition = (a.value.i8 op b.value.i8); break; \
+                    case IT_i16:  condition = (a.value.i16 op b.value.i16); break; \
+                    case IT_i32:  condition = (a.value.i32 op b.value.i32); break; \
+                    case IT_i64:  condition = (a.value.i64 op b.value.i64); break; \
+                    case IT_u8:   condition = (a.value.u8 op b.value.u8); break; \
+                    case IT_u16:  condition = (a.value.u16 op b.value.u16); break; \
+                    case IT_u32:  condition = (a.value.u32 op b.value.u32); break; \
+                    case IT_u64:  condition = (a.value.u64 op b.value.u64); break; \
+                    case IT_f32:  condition = (a.value.f32 op b.value.f32); break; \
+                    case IT_f64:  condition = (a.value.f64 op b.value.f64); break; \
+                    default:      fprintf(stderr, "Unsupported type in branching operation\n"); break; \
+                }
+
+                switch (instr.instruction) {
+                    case BEQ: BRANCH_COMPARE(==); break;
+                    case BGE: BRANCH_COMPARE(>=); break;
+                    case BLE: BRANCH_COMPARE(<=); break;
+                    case BLT: BRANCH_COMPARE(<); break;
+                    case BNE: BRANCH_COMPARE(!=); break;
+                }
+
+                if (condition) {
+                    vm->ip = instr.arg.i32;
+                }
                 break;
-            case BNE:
-                break;
+            }
+
             case AND:
             case OR:
             case XOR:
