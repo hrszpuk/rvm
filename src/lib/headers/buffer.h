@@ -10,17 +10,21 @@
 #define NUMBER_OF_OPCODE 37
 
 typedef enum {
+    // Misc
     HALT,
     NOOP,
 
+    // Load/Store
     LOAD,
     STORE,
 
+    // Stack Manipulation
     PUSH,
     POP,
     DUP,
     SWAP,
 
+    // Branching
     BR,
     BRF,
     BRT,
@@ -30,12 +34,14 @@ typedef enum {
     BLT,
     BNE,
 
+    // Arithmetic
     ADD,
     SUB,
     DIV,
     MUL,
     MOD,
 
+    // Bitwise
     AND,
     OR,
     XOR,
@@ -43,12 +49,14 @@ typedef enum {
     SHR,
     NOT,
 
+    // Logical
     LAND,
     LOR,
     NEG,
 
-    CONV,
+    CONV, // Conversion (convert between types)
 
+    // Comparison
     EQ,
     GE,
     GT,
