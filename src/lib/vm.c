@@ -178,12 +178,24 @@ void RunVM(VM* vm) {
                 break;
             case STORE:
                 break;
-            case BR:
+            case BR: {
+                vm->ip = instr.arg.i32;
                 break;
-            case BRF:
+            }
+            case BRF: {
+                StackValue a = PopStack(vm->stack);
+                if (a.value.i32 == 0) {
+                    vm->ip = instr.arg.i32;
+                }
                 break;
-            case BRT:
+            }
+            case BRT: {
+                StackValue a = PopStack(vm->stack);
+                if (a.value.i32 != 0) {
+                    vm->ip = instr.arg.i32;
+                }
                 break;
+            }
             case BEQ:
                 break;
             case BGE:
