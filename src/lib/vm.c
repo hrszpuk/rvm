@@ -174,7 +174,7 @@ void RunVM(VM* vm) {
                 printf("Unknown instruction! %d\n", instr.instruction);
                 break;
             }
-            case LOAD:
+            case LOAD: // TODO
                 break;
             case STORE:
                 break;
