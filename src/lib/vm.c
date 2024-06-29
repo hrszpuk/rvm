@@ -306,20 +306,52 @@ void RunVM(VM* vm) {
 
                 PushStack(vm->stack, result);
                 break;
+            }
             case CONV:
                 break;
             case EQ:
-                break;
             case GE:
-                break;
             case GT:
-                break;
             case LE:
-                break;
             case LT:
+            case NE: {
+                StackValue b = PopStack(vm->stack);
+                StackValue a = PopStack(vm->stack);
+                StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
+
+                if (a.type != b.type) {
+                    fprintf(stderr, "Type mismatch in comparison operation\n");
+                    // Handle error or decide on a strategy for type mismatch
+                    break;
+                }
+
+                #define COMPARE(op) \
+                switch (a.type) { \
+                    case IT_i8:   result.value.i32 = (a.value.i8 op b.value.i8); break; \
+                    case IT_i16:  result.value.i32 = (a.value.i16 op b.value.i16); break; \
+                    case IT_i32:  result.value.i32 = (a.value.i32 op b.value.i32); break; \
+                    case IT_i64:  result.value.i32 = (a.value.i64 op b.value.i64); break; \
+                    case IT_u8:   result.value.i32 = (a.value.u8 op b.value.u8); break; \
+                    case IT_u16:  result.value.i32 = (a.value.u16 op b.value.u16); break; \
+                    case IT_u32:  result.value.i32 = (a.value.u32 op b.value.u32); break; \
+                    case IT_u64:  result.value.i32 = (a.value.u64 op b.value.u64); break; \
+                    case IT_f32:  result.value.i32 = (a.value.f32 op b.value.f32); break; \
+                    case IT_f64:  result.value.i32 = (a.value.f64 op b.value.f64); break; \
+                    default:      fprintf(stderr, "Unsupported type in comparison operation\n"); break; \
+                }
+
+                switch (instr.instruction) {
+                    case EQ:  COMPARE(==); break;
+                    case GE:  COMPARE(>=); break;
+                    case GT:  COMPARE(>); break;
+                    case LE:  COMPARE(<=); break;
+                    case LT:  COMPARE(<); break;
+                    case NE:  COMPARE(!=); break;
+                }
+
+                PushStack(vm->stack, result);
                 break;
-            case NE:
-                break;
+            }
         }
         vm->ip++;
     }
