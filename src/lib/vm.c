@@ -307,8 +307,52 @@ void RunVM(VM* vm) {
                 PushStack(vm->stack, result);
                 break;
             }
-            case CONV:
+            case CONV: {
+                StackValue a = PopStack(vm->stack);
+                StackValue result;
+                result.type = instr.type;  // The target type is specified in the instruction
+
+                // Perform conversion based on the target type
+                switch (result.type) {
+                    case IT_i8:
+                        result.value.i8 = (int8_t)a.value.i32;
+                        break;
+                    case IT_i16:
+                        result.value.i16 = (int16_t)a.value.i32;
+                        break;
+                    case IT_i32:
+                        result.value.i32 = (int32_t)a.value.i32;
+                        break;
+                    case IT_i64:
+                        result.value.i64 = (int64_t)a.value.i32;
+                        break;
+                    case IT_u8:
+                        result.value.u8 = (uint8_t)a.value.i32;
+                        break;
+                    case IT_u16:
+                        result.value.u16 = (uint16_t)a.value.i32;
+                        break;
+                    case IT_u32:
+                        result.value.u32 = (uint32_t)a.value.i32;
+                        break;
+                    case IT_u64:
+                        result.value.u64 = (uint64_t)a.value.i32;
+                        break;
+                    case IT_f32:
+                        result.value.f32 = (float)a.value.i32;
+                        break;
+                    case IT_f64:
+                        result.value.f64 = (double)a.value.i32;
+                        break;
+                    default:
+                        fprintf(stderr, "Unsupported conversion type\n");
+                        // Handle error
+                        break;
+                }
+
+                PushStack(vm->stack, result);
                 break;
+            }
             case EQ:
             case GE:
             case GT:
