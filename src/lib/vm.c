@@ -197,11 +197,9 @@ void RunVM(VM* vm) {
                 break;
             }
             case BEQ:
-                break;
             case BGE:
-                break;
+            case BGT:
             case BLE:
-                break;
             case BLT:
             case BNE: {
                 StackValue b = PopStack(vm->stack);
@@ -226,6 +224,7 @@ void RunVM(VM* vm) {
                 switch (instr.instruction) {
                     case BEQ: BRANCH_COMPARE(==); break;
                     case BGE: BRANCH_COMPARE(>=); break;
+                    case BGT: BRANCH_COMPARE(>); break;
                     case BLE: BRANCH_COMPARE(<=); break;
                     case BLT: BRANCH_COMPARE(<); break;
                     case BNE: BRANCH_COMPARE(!=); break;
