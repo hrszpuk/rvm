@@ -10,6 +10,7 @@ Parser* create_parser(unsigned char* buffer, int buffer_size) {
     p->buffer = buffer;
     p->buffer_size = buffer_size;
     p->instructions = CreateBuffer(20);
+    p->error = 0;
     return p;
 }
 
