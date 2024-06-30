@@ -72,6 +72,7 @@ typedef enum {
     IT_u8, IT_u16, IT_u32, IT_u64,
     IT_f32, IT_f64
 } InstructionType;
+#define NUMBER_OF_INSTRUCTION_TYPES 11
 
 typedef union {
     int8_t i8;
