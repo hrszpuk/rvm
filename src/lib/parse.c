@@ -3,6 +3,10 @@
 //
 
 #include "parse.h"
+#include <stdio.h>
+#include <string.h>
+
+InstructionArgumentValue parse_arg(Parser* p, InstructionType type);
 
 Parser* create_parser(unsigned char* buffer, int buffer_size) {
     Parser* p = malloc(sizeof(Parser));
@@ -48,4 +52,107 @@ void parse(Parser* p) {
 
         }
     }
+}
+
+InstructionArgumentValue parse_arg(Parser* p, InstructionType type) {
+    InstructionArgumentValue arg;
+    memset(&arg, 0, sizeof(InstructionArgumentValue));
+
+    // Ensure there are enough bytes in the buffer for each type
+    int remaining_bytes = p->buffer_size - p->index;
+    switch (type) {
+        case IT_i8:
+            if (remaining_bytes >= sizeof(int8_t)) {
+                arg.i8 = (int8_t)p->buffer[p->index];
+                p->index += sizeof(int8_t);
+            }
+            break;
+        case IT_i16:
+            if (remaining_bytes >= sizeof(int16_t)) {
+                arg.i16 = (int16_t)(p->buffer[p->index] | (p->buffer[p->index + 1] << 8));
+                p->index += sizeof(int16_t);
+            }
+            break;
+        case IT_i32:
+            if (remaining_bytes >= sizeof(int32_t)) {
+                arg.i32 = (int32_t)(
+                        p->buffer[p->index] |
+                        (p->buffer[p->index + 1] << 8) |
+                        (p->buffer[p->index + 2] << 16) |
+                        (p->buffer[p->index + 3] << 24));
+                p->index += sizeof(int32_t);
+            }
+            break;
+        case IT_i64:
+            if (remaining_bytes >= sizeof(int64_t)) {
+                arg.i64 = (int64_t)(
+                        (uint64_t)p->buffer[p->index] |
+                        ((uint64_t)p->buffer[p->index + 1] << 8) |
+                        ((uint64_t)p->buffer[p->index + 2] << 16) |
+                        ((uint64_t)p->buffer[p->index + 3] << 24) |
+                        ((uint64_t)p->buffer[p->index + 4] << 32) |
+                        ((uint64_t)p->buffer[p->index + 5] << 40) |
+                        ((uint64_t)p->buffer[p->index + 6] << 48) |
+                        ((uint64_t)p->buffer[p->index + 7] << 56));
+                p->index += sizeof(int64_t);
+            }
+            break;
+        case IT_u8:
+            if (remaining_bytes >= sizeof(uint8_t)) {
+                arg.u8 = (uint8_t)p->buffer[p->index];
+                p->index += sizeof(uint8_t);
+            }
+            break;
+        case IT_u16:
+            if (remaining_bytes >= sizeof(uint16_t)) {
+                arg.u16 = (uint16_t)(p->buffer[p->index] | (p->buffer[p->index + 1] << 8));
+                p->index += sizeof(uint16_t);
+            }
+            break;
+        case IT_u32:
+            if (remaining_bytes >= sizeof(uint32_t)) {
+                arg.u32 = (uint32_t)(
+                        p->buffer[p->index] |
+                        (p->buffer[p->index + 1] << 8) |
+                        (p->buffer[p->index + 2] << 16) |
+                        (p->buffer[p->index + 3] << 24));
+                p->index += sizeof(uint32_t);
+            }
+            break;
+        case IT_u64:
+            if (remaining_bytes >= sizeof(uint64_t)) {
+                arg.u64 = (uint64_t)(
+                        (uint64_t)p->buffer[p->index] |
+                        ((uint64_t)p->buffer[p->index + 1] << 8) |
+                        ((uint64_t)p->buffer[p->index + 2] << 16) |
+                        ((uint64_t)p->buffer[p->index + 3] << 24) |
+                        ((uint64_t)p->buffer[p->index + 4] << 32) |
+                        ((uint64_t)p->buffer[p->index + 5] << 40) |
+                        ((uint64_t)p->buffer[p->index + 6] << 48) |
+                        ((uint64_t)p->buffer[p->index + 7] << 56));
+                p->index += sizeof(uint64_t);
+            }
+            break;
+        case IT_f32:
+            if (remaining_bytes >= sizeof(float)) {
+                uint32_t temp;
+                memcpy(&temp, &p->buffer[p->index], sizeof(float));
+                arg.f32 = *(float*)&temp;
+                p->index += sizeof(float);
+            }
+            break;
+        case IT_f64:
+            if (remaining_bytes >= sizeof(double)) {
+                uint64_t temp;
+                memcpy(&temp, &p->buffer[p->index], sizeof(double));
+                arg.f64 = *(double*)&temp;
+                p->index += sizeof(double);
+            }
+            break;
+        default:
+            // Handle unsupported type case if needed
+            break;
+    }
+
+    return arg;
 }
