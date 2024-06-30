@@ -50,6 +50,11 @@ void parse(Parser* p) {
                 return;
             }
 
+
+        } else {
+            printf("Unknown byte found during parsing! Terminating.");
+            p->error = 1;
+            return;
         }
     }
 }
