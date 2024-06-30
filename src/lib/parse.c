@@ -25,6 +25,11 @@ void parse(Parser* p) {
         if (HALT <= p->buffer[p->index] && p->buffer[p->index] < NUMBER_OF_OPCODE) {
 
         } else if (p->buffer[p->index] == 255) {
+            if(p->index >= p->buffer_size) {
+                printf("Empty directive found during parsing! Terminating.");
+                p->error = 1;
+                return;
+            }
 
         }
     }
