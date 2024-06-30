@@ -10,6 +10,15 @@
 #define NUMBER_OF_OPCODE 37
 
 typedef enum {
+    META,
+    DATA,
+    PROGRAM,
+    CONST,
+    NAME,
+    VERSION
+} Directives;
+
+typedef enum {
     // Misc
     HALT,
     NOOP,
