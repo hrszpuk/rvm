@@ -44,12 +44,28 @@ void parse(Parser* p) {
             instr.arg = parse_arg(p, instr.type);
             AddBufferData(p->instructions, instr);
         } else if (p->buffer[p->index] == 255) {
+            p->index++;
             if(p->index >= p->buffer_size) {
                 printf("Empty directive found during parsing! Terminating.");
                 p->error = 1;
                 return;
             }
-
+            /*switch (p->buffer[p->index]) { // TODO support parsing strings and identifiers
+                case META:
+                case DATA:
+                case PROGRAM: {
+                    instr.instruction = 255;
+                    instr.type = p->buffer[p->index];
+                    AddBufferData(p->instructions, instr);
+                }
+                case CONST:
+                case NAME:
+                case VERSION: {
+                    instr.instruction = 255;
+                    instr.type = p->buffer[p->index];
+                    instr.arg = parse_arg(p, );
+                }
+            }*/
 
         } else {
             printf("Unknown byte found during parsing! Terminating.");
@@ -153,6 +169,18 @@ InstructionArgumentValue parse_arg(Parser* p, InstructionType type) {
                 arg.f64 = *(double*)&temp;
                 p->index += sizeof(double);
             }
+            break;
+        case IT_id: // Assuming IT_identifier is the type for identifiers
+        {
+            int start = p->index;
+            while (p->index < p->buffer_size && p->buffer[p->index] != ' ' && p->buffer[p->index] != '\n') {
+                p->index++;
+            }
+            int len = p->index - start;
+            arg.identifier = malloc(len + 1);
+            memcpy(arg.identifier, &p->buffer[start], len);
+            arg.identifier[len] = '\0'; // Null-terminate the string
+        }
             break;
         default:
             // Handle unsupported type case if needed

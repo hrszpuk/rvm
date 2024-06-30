@@ -94,6 +94,7 @@ typedef union {
     uint64_t u64;
     float f32;
     double f64;
+    char* id;
 } InstructionArgumentValue;
 
 typedef struct {
