@@ -13,6 +13,7 @@ typedef struct {
     unsigned char* buffer;
     int buffer_size;
     InstructionBuffer* instructions;
+    int error;
 } Parser;
 
 Parser* create_parser(unsigned char* buffer, int buffer_size);
