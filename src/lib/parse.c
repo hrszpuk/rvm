@@ -23,7 +23,22 @@ void parse(Parser* p) {
         Instruction instr;
 
         if (HALT <= p->buffer[p->index] && p->buffer[p->index] < NUMBER_OF_OPCODE) {
-
+            // Handle instruction
+            instr.instruction = (Opcode) p->buffer[p->index];
+            p->index++;
+            if(p->index >= p->buffer_size) {
+                instr.type = IT_void;
+                AddBufferData(p->instructions, instr);
+                continue;
+            }
+            instr.type = p->buffer[p->index] % NUMBER_OF_INSTRUCTION_TYPES;
+            p->index++;
+            if(p->index >= p->buffer_size || p->buffer[p->index] == '\n') {
+                AddBufferData(p->instructions, instr);
+                continue;
+            }
+            instr.arg = parse_arg(p, instr.type);
+            AddBufferData(p->instructions, instr);
         } else if (p->buffer[p->index] == 255) {
             if(p->index >= p->buffer_size) {
                 printf("Empty directive found during parsing! Terminating.");
