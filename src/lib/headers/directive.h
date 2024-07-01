@@ -30,8 +30,8 @@ typedef struct {
 DirectiveBuffer* create_directive_buffer(int);
 void destroy_directive_buffer(DirectiveBuffer*);
 
-Directive get_directive(DirectiveBuffer*);
-void add_directive(DirectiveBuffer*);
+Directive get_directive(DirectiveBuffer*, int);
+void add_directive(DirectiveBuffer*, Directive);
 
 
 #endif //RVM_DIRECTIVE_H
