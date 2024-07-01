@@ -21,6 +21,17 @@ typedef struct {
     InstructionArgumentValue argument_value;
 } Directive;
 
+typedef struct {
+    Directive* directives;
+    int count;
+    int capacity;
+} DirectiveBuffer;
+
+DirectiveBuffer* create_directive_buffer(int);
+void destroy_directive_buffer(DirectiveBuffer*);
+
+Directive get_directive(DirectiveBuffer*);
+void add_directive(DirectiveBuffer*);
 
 
 #endif //RVM_DIRECTIVE_H
