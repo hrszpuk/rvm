@@ -7,11 +7,13 @@
 
 #include <stdlib.h>
 #include "buffer.h"
+#include "directive.h"
 
 typedef struct {
     int index;
     unsigned char* buffer;
     int buffer_size;
+    DirectiveBuffer* directives;
     InstructionBuffer* instructions;
     int error;
 } Parser;
