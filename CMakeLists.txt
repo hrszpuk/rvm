@@ -17,7 +17,8 @@ add_library(rvm_lib STATIC src/lib/stack.c # Compile a static library called rvm
         src/lib/symbol_table.c
         src/lib/headers/symbol_table.h
         src/lib/parse.c
-        src/lib/headers/parse.h)
+        src/lib/headers/parse.h
+        src/lib/headers/directive.h)
 
 add_library(rvm_assembler STATIC src/assembler/translator.c # Compile a static library called rvm_lib using ...
         src/assembler/headers/translator.h)
