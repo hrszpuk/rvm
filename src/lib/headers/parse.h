@@ -19,7 +19,7 @@ typedef struct {
 Parser* create_parser(unsigned char* buffer, int buffer_size);
 void destroy_parser(Parser* p);
 void parse(Parser* p);
-void parseLine(Parser* p);
+void parse_line(Parser* p);
 
 
 #endif //RVM_PARSE_H

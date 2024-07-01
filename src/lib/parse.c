@@ -75,6 +75,7 @@ void parse(Parser* p) {
     }
 }
 
+// TODO support variable arguments (load x, store x)... Perhaps check if the instruction requires a variable and use a different parse_id function.
 InstructionArgumentValue parse_arg(Parser* p, InstructionType type) {
     InstructionArgumentValue arg;
     memset(&arg, 0, sizeof(InstructionArgumentValue));
@@ -169,18 +170,6 @@ InstructionArgumentValue parse_arg(Parser* p, InstructionType type) {
                 arg.f64 = *(double*)&temp;
                 p->index += sizeof(double);
             }
-            break;
-        case IT_id: // Assuming IT_identifier is the type for identifiers
-        {
-            int start = p->index;
-            while (p->index < p->buffer_size && p->buffer[p->index] != ' ' && p->buffer[p->index] != '\n') {
-                p->index++;
-            }
-            int len = p->index - start;
-            arg.identifier = malloc(len + 1);
-            memcpy(arg.identifier, &p->buffer[start], len);
-            arg.identifier[len] = '\0'; // Null-terminate the string
-        }
             break;
         default:
             // Handle unsupported type case if needed
