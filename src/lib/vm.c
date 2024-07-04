@@ -7,10 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see LoadBytecode).
-VM* CreateVM(const int stackCapacity) {
+// NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see load_bytecode).
+VM* create_vm(const int capacity) {
     VM* vm = malloc(sizeof(VM));
-    vm->stack = CreateStack(stackCapacity);
+    vm->stack = CreateStack(capacity);
     vm->buffer = NULL;
     vm->ip = 0;
     vm->state = 0;
@@ -19,22 +19,22 @@ VM* CreateVM(const int stackCapacity) {
 }
 
 // NOTE(hrs): bytecode buffer must contain TranslationResult data
-void LoadBytecode(VM* vm, InstructionBuffer* bytecode) {
+void load_bytecode(VM* vm, InstructionBuffer* bytecode) {
     vm->buffer = bytecode;
 }
 
-// NOTE(hrs) instruction buffer is not freed in DestroyVM
-void DestroyVM(VM* vm) {
+// NOTE(hrs) instruction buffer is not freed in destroy_vm
+void destroy_vm(VM* vm) {
     FreeStack(vm->stack);
     free(vm);
 }
 
-void RunVM(VM* vm) {
+void run_vm(VM* vm) {
     vm->state = 0;
 
     while (vm->state == 0) {
         if (vm->ip >= vm->buffer->count) {
-            StopVM(vm);
+            stop_vm(vm);
             return;
         }
 
@@ -443,11 +443,11 @@ void RunVM(VM* vm) {
     }
 }
 
-void StopVM(VM* vm) {
+void stop_vm(VM* vm) {
     vm->state = 2;
 }
 
-void DumpVM(VM* vm) {
+void dump_vm(VM* vm) {
     PrintStack(vm->stack);
     printf("InstructionBuffer dump:\n");
     for (int i = 0; i < vm->ip; i++) {

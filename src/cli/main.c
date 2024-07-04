@@ -53,15 +53,15 @@ int main(int argc, char** argv) {
         AddBufferData(buf, (Instruction){DUP, IT_i32, {}});
         AddBufferData(buf, (Instruction){ADD, IT_i32, {}});
 
-        VM* vm = CreateVM(10);
+        VM* vm = create_vm(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
         //InstructionBuffer* bytecode = Translate(translator);
-        LoadBytecode(vm, buf);
-        RunVM(vm);
+        load_bytecode(vm, buf);
+        run_vm(vm);
 
-        DumpVM(vm);
+        dump_vm(vm);
 
-        DestroyVM(vm);
+        destroy_vm(vm);
         DestroyBuffer(buf);
         //free(translator);
         //free(buffer);
