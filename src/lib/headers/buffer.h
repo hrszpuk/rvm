@@ -100,13 +100,13 @@ typedef struct {
     Instruction* instructions;
 } InstructionBuffer;
 
-InstructionBuffer* CreateBuffer(int capacity); // Create a new buffer with the specified capacity.
-void DestroyBuffer(InstructionBuffer* buffer); // Destroy the buffer and free all memory associated with it.
+InstructionBuffer* create_buffer(int capacity); // Create a new buffer with the specified capacity.
+void destroy_buffer(InstructionBuffer* buffer); // Destroy the buffer and free all memory associated with it.
 
-Instruction GetBufferData(const InstructionBuffer* buffer, int index); // Get the data at the specified index.
-void SetBufferData(const InstructionBuffer* buffer, int index, Instruction element); // Set the data at the specified index.
-void AddBufferData(InstructionBuffer* buffer, Instruction element); // Add data to the end of the buffer.
-void RemoveBufferData(const InstructionBuffer* buffer, int index); // Remove data from the buffer at the specified index.
-void ClearBufferData(InstructionBuffer* buffer); // Clear the buffer and free the memory associated with it's data.
+Instruction get_buffer_data(const InstructionBuffer* buffer, int index); // Get the data at the specified index.
+void set_buffer_data(const InstructionBuffer* buffer, int index, Instruction element); // Set the data at the specified index.
+void add_buffer_data(InstructionBuffer* buffer, Instruction element); // Add data to the end of the buffer.
+void remove_buffer_data(const InstructionBuffer* buffer, int index); // Remove data from the buffer at the specified index.
+void clear_buffer_data(InstructionBuffer* buffer); // Clear the buffer and free the memory associated with it's data.
 
 #endif //BUFFER_H

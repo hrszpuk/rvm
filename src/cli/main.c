@@ -48,10 +48,10 @@ int main(int argc, char** argv) {
         //fread(buffer, sizeof(char), size, file);
         //fclose(file);
 
-        InstructionBuffer* buf = CreateBuffer(10);
-        AddBufferData(buf, (Instruction){PUSH, IT_i32, {.i32 = 8}});
-        AddBufferData(buf, (Instruction){DUP, IT_i32, {}});
-        AddBufferData(buf, (Instruction){ADD, IT_i32, {}});
+        InstructionBuffer* buf = create_buffer(10);
+        add_buffer_data(buf, (Instruction) {PUSH, IT_i32, {.i32 = 8}});
+        add_buffer_data(buf, (Instruction) {DUP, IT_i32, {}});
+        add_buffer_data(buf, (Instruction) {ADD, IT_i32, {}});
 
         VM* vm = create_vm(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
         dump_vm(vm);
 
         destroy_vm(vm);
-        DestroyBuffer(buf);
+        destroy_buffer(buf);
         //free(translator);
         //free(buffer);
 

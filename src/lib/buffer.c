@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-InstructionBuffer* CreateBuffer(const int capacity) {
+InstructionBuffer* create_buffer(const int capacity) {
     InstructionBuffer* buffer = malloc(sizeof(InstructionBuffer));
     buffer->count = 0;
     buffer->capacity = capacity;
@@ -17,12 +17,12 @@ InstructionBuffer* CreateBuffer(const int capacity) {
     return buffer;
 }
 
-void DestroyBuffer(InstructionBuffer* buffer) {
+void destroy_buffer(InstructionBuffer* buffer) {
     free(buffer->instructions);
     free(buffer);
 }
 
-Instruction GetBufferData(const InstructionBuffer* buffer, const int index) {
+Instruction get_buffer_data(const InstructionBuffer* buffer, int index) {
     if (index < 0 || index >= buffer->count) {
         return (Instruction){0, 0, {}};
     }
@@ -30,7 +30,7 @@ Instruction GetBufferData(const InstructionBuffer* buffer, const int index) {
     return buffer->instructions[index];
 }
 
-void SetBufferData(const InstructionBuffer* buffer, const int index, Instruction element) {
+void set_buffer_data(const InstructionBuffer* buffer, int index, Instruction element) {
     if (index < 0 || index >= buffer->count) {
         return;
     }
@@ -38,7 +38,7 @@ void SetBufferData(const InstructionBuffer* buffer, const int index, Instruction
     buffer->instructions[index] = element;
 }
 
-void AddBufferData(InstructionBuffer* buffer, Instruction element) {
+void add_buffer_data(InstructionBuffer* buffer, Instruction element) {
     if (buffer->count >= buffer->capacity) {
         buffer->capacity *= 2;
         buffer->instructions = realloc(buffer->instructions, sizeof(Instruction) * buffer->capacity);
@@ -48,7 +48,7 @@ void AddBufferData(InstructionBuffer* buffer, Instruction element) {
     buffer->count++;
 }
 
-void RemoveBufferData(const InstructionBuffer* buffer, const int index) {
+void remove_buffer_data(const InstructionBuffer* buffer, int index) {
     if (index < 0 || index >= buffer->count) {
         return;
     }
@@ -58,6 +58,6 @@ void RemoveBufferData(const InstructionBuffer* buffer, const int index) {
     }
 }
 
-void ClearBufferData(InstructionBuffer* buffer) {
+void clear_buffer_data(InstructionBuffer* buffer) {
     buffer->count = 0;
 }

@@ -13,7 +13,7 @@ Parser* create_parser(unsigned char* buffer, int buffer_size) {
     p->index = 0;
     p->buffer = buffer;
     p->buffer_size = buffer_size;
-    p->instructions = CreateBuffer(20);
+    p->instructions = create_buffer(20);
     p->directives = create_directive_buffer(10);
     p->error = 0;
     return p;
@@ -33,17 +33,17 @@ void parse(Parser* p) {
             p->index++;
             if(p->index >= p->buffer_size) {
                 instr.type = IT_void;
-                AddBufferData(p->instructions, instr);
+                add_buffer_data(p->instructions, instr);
                 continue;
             }
             instr.type = p->buffer[p->index] % NUMBER_OF_INSTRUCTION_TYPES;
             p->index++;
             if(p->index >= p->buffer_size || p->buffer[p->index] == '\n') {
-                AddBufferData(p->instructions, instr);
+                add_buffer_data(p->instructions, instr);
                 continue;
             }
             instr.arg = parse_arg(p, instr.type);
-            AddBufferData(p->instructions, instr);
+            add_buffer_data(p->instructions, instr);
         } else if (p->buffer[p->index] == 255) {
             p->index++;
             if(p->index >= p->buffer_size) {
@@ -57,7 +57,7 @@ void parse(Parser* p) {
                 case PROGRAM: {
                     instr.instruction = 255;
                     instr.type = p->buffer[p->index];
-                    AddBufferData(p->instructions, instr);
+                    add_buffer_data(p->instructions, instr);
                 }
                 case CONST:
                 case NAME:

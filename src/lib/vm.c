@@ -39,7 +39,7 @@ void run_vm(VM* vm) {
         }
 
         // Fetch instruction, apply it, and increment instruction pointer.
-        Instruction instr = GetBufferData(vm->buffer, vm->ip);
+        Instruction instr = get_buffer_data(vm->buffer, vm->ip);
         switch (instr.instruction) {
             case HALT: {
                 vm->state = 2;
@@ -451,7 +451,7 @@ void dump_vm(VM* vm) {
     PrintStack(vm->stack);
     printf("InstructionBuffer dump:\n");
     for (int i = 0; i < vm->ip; i++) {
-        Instruction j = GetBufferData(vm->buffer, i);
+        Instruction j = get_buffer_data(vm->buffer, i);
         printf("%d: {%d, %d, %d}\n", i, (int)j.instruction, (int)j.type, (int)j.arg.i32);
     }
     printf("Instruction Pointer: %d\n", vm->ip);
