@@ -35,7 +35,7 @@ typedef struct Symbol {
 
 typedef struct {
     Symbol* symbols;
-    int symbol_count;
+    int count;
 } SymbolTable;
 
 #endif //RVM_SYMBOL_TABLE_H
