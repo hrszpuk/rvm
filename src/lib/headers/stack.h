@@ -20,14 +20,14 @@ typedef struct {
     int growthFactor;     // Default to 2 (NOTE: growth rate is always 1 * growthFactor)
 } Stack;
 
-Stack* CreateStack(int capacity);   // Create a stack with a given capacity
-StackValue PopStack(Stack*);             // Pop the top element from the stack
-void PushStack(Stack*, StackValue);      // Push an element to the stack
-void FreeStack(Stack*);             // Free the stack
-void PrintStack(Stack*);            // Print the stack
-void GrowStack(Stack*);             // Grow the stack
-void ClearStack(Stack*);            // Clear the stack
-bool IsEmptyStack(Stack*);          // Check if the stack is empty
-StackValue TopStack(Stack*);             // Get the top element of the stack (without popping)
+Stack* create_stack(int capacity);              // Create a stack with a given capacity
+StackValue pop_stack(Stack* stack);             // Pop the top element from the stack
+void push_stack(Stack* stack, StackValue);      // Push an element to the stack
+void free_stack(Stack* stack);                  // Free the stack
+void print_stack(Stack* stack);                 // Print the stack
+void grow_stack(Stack* stack);                  // Grow the stack
+void clear_stack(Stack* stack);                 // Clear the stack
+bool is_empty_stack(Stack* stack);              // Check if the stack is empty
+StackValue top_stack(Stack* stack);             // Get the top element of the stack (without popping)
 
 #endif //STACK_H

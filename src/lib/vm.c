@@ -10,7 +10,7 @@
 // NOTE(hrs): default buffer is NULL and must be set before running the VM. (Temporary, see load_bytecode).
 VM* create_vm(const int capacity) {
     VM* vm = malloc(sizeof(VM));
-    vm->stack = CreateStack(capacity);
+    vm->stack = create_stack(capacity);
     vm->buffer = NULL;
     vm->ip = 0;
     vm->state = 0;
@@ -25,7 +25,7 @@ void load_bytecode(VM* vm, InstructionBuffer* bytecode) {
 
 // NOTE(hrs) instruction buffer is not freed in destroy_vm
 void destroy_vm(VM* vm) {
-    FreeStack(vm->stack);
+    free_stack(vm->stack);
     free(vm);
 }
 
@@ -50,22 +50,22 @@ void run_vm(VM* vm) {
             }
             case PUSH: {
                 StackValue value = (StackValue){instr.type, instr.arg};
-                PushStack(vm->stack, value);
+                push_stack(vm->stack, value);
                 break;
             }
             case POP: {
-                PopStack(vm->stack);
+                pop_stack(vm->stack);
                 break;
             }
             case DUP: {
-                PushStack(vm->stack, TopStack(vm->stack));
+                push_stack(vm->stack, top_stack(vm->stack));
                 break;
             }
             case SWAP: {
-                StackValue a = PopStack(vm->stack);
-                StackValue b = PopStack(vm->stack);
-                PushStack(vm->stack, b);
-                PushStack(vm->stack, a);
+                StackValue a = pop_stack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                push_stack(vm->stack, b);
+                push_stack(vm->stack, a);
                 break;
             }
             case ADD:
@@ -73,8 +73,8 @@ void run_vm(VM* vm) {
             case MUL:
             case DIV:
             case MOD: {
-                StackValue b = PopStack(vm->stack);
-                StackValue a = PopStack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
 
                 if (a.type != b.type) {
                     fprintf(stderr, "Type mismatch in operation: %d\n", instr.instruction);
@@ -167,7 +167,7 @@ void run_vm(VM* vm) {
                         break;
                 }
 
-                PushStack(vm->stack, a);
+                push_stack(vm->stack, a);
                 break;
             }
             default: {
@@ -183,14 +183,14 @@ void run_vm(VM* vm) {
                 break;
             }
             case BRF: {
-                StackValue a = PopStack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 if (a.value.i32 == 0) {
                     vm->ip = instr.arg.i32;
                 }
                 break;
             }
             case BRT: {
-                StackValue a = PopStack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 if (a.value.i32 != 0) {
                     vm->ip = instr.arg.i32;
                 }
@@ -202,8 +202,8 @@ void run_vm(VM* vm) {
             case BLE:
             case BLT:
             case BNE: {
-                StackValue b = PopStack(vm->stack);
-                StackValue a = PopStack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
 
                 bool condition = false;
                 #define BRANCH_COMPARE(op) \
@@ -241,8 +241,8 @@ void run_vm(VM* vm) {
             case XOR:
             case SHL:
             case SHR: {
-                StackValue b = PopStack(vm->stack);
-                StackValue a = PopStack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result = {IT_i32, {.i32 = 0}};  // Default result for invalid operations
 
                 if (a.type != b.type) {
@@ -272,11 +272,11 @@ void run_vm(VM* vm) {
                     case SHR: BITWISE(>>); break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
             case NOT: {
-                StackValue a = PopStack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result = {IT_i32, {.i32 = 0}};  // Default result for invalid operations
 
                 switch (a.type) {
@@ -291,14 +291,14 @@ void run_vm(VM* vm) {
                     default:      fprintf(stderr, "Unsupported type in NOT operation\n"); break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
 
             case LAND:
             case LOR: {
-                StackValue b = PopStack(vm->stack);
-                StackValue a = PopStack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
 
                 if (a.type != b.type) {
@@ -325,11 +325,11 @@ void run_vm(VM* vm) {
                     case LOR:  LOGICAL(||); break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
             case NEG: {
-                StackValue a = PopStack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
 
                 switch (a.type) {
@@ -346,11 +346,11 @@ void run_vm(VM* vm) {
                     default:      fprintf(stderr, "Unsupported type in logical NOT operation\n"); break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
             case CONV: {
-                StackValue a = PopStack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result;
                 result.type = instr.type;  // The target type is specified in the instruction
 
@@ -392,7 +392,7 @@ void run_vm(VM* vm) {
                         break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
             case EQ:
@@ -401,8 +401,8 @@ void run_vm(VM* vm) {
             case LE:
             case LT:
             case NE: {
-                StackValue b = PopStack(vm->stack);
-                StackValue a = PopStack(vm->stack);
+                StackValue b = pop_stack(vm->stack);
+                StackValue a = pop_stack(vm->stack);
                 StackValue result = {IT_i32, {.i32 = 0}};  // Default to false (0)
 
                 if (a.type != b.type) {
@@ -435,7 +435,7 @@ void run_vm(VM* vm) {
                     case NE:  COMPARE(!=); break;
                 }
 
-                PushStack(vm->stack, result);
+                push_stack(vm->stack, result);
                 break;
             }
         }
@@ -448,7 +448,7 @@ void stop_vm(VM* vm) {
 }
 
 void dump_vm(VM* vm) {
-    PrintStack(vm->stack);
+    print_stack(vm->stack);
     printf("InstructionBuffer dump:\n");
     for (int i = 0; i < vm->ip; i++) {
         Instruction j = get_buffer_data(vm->buffer, i);
