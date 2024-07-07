@@ -16,13 +16,13 @@ Stack* create_stack(int capacity) {
     return stack;
 }
 
-StackValue pop_stack(Stack*) {
+StackValue pop_stack(Stack* stack) {
     StackValue data = top_stack(stack);
     stack->count--;
     return data;
 }
 
-void push_stack(Stack*, StackValue) {
+void push_stack(Stack* stack, StackValue) {
     if (stack->count == stack->capacity) {
         grow_stack(stack);
     }
