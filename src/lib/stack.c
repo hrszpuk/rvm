@@ -22,7 +22,7 @@ StackValue pop_stack(Stack* stack) {
     return data;
 }
 
-void push_stack(Stack* stack, StackValue) {
+void push_stack(Stack* stack, StackValue data) {
     if (stack->count == stack->capacity) {
         grow_stack(stack);
     }
