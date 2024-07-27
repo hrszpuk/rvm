@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+/*
 char** split(char* str, char c);
 
 BytecodeTranslator* CreateBytecodeTranslator(char* file_contents) {
     BytecodeTranslator* translator = malloc(sizeof(BytecodeTranslator));
     translator->file_contents = file_contents;
-    translator->instructions = CreateBuffer(10);
+    translator->instructions = create_buffer(10);
     return translator;
 }
 
 void DestroyBytecodeTranslator(BytecodeTranslator* translator) {
     free(translator->file_contents);
-    DestroyBuffer(translator->instructions);
+    destroy_buffer(translator->instructions);
     free(translator);
 }
 
@@ -77,7 +77,7 @@ InstructionBuffer* Translate(BytecodeTranslator* translator) {
                     // Instruction with one argument
                     for (int j = 0; j < BYTECODE_INSTRUCTION_COUNT; j++) {
                         if (strcmp(tokens[0], BytecodeMap[j]) == 0) {
-                            AddBufferData(instructions, CreateInstruction(j, tokens[1], 1));
+                            add_buffer_data(instructions, CreateInstruction(j, tokens[1], 1));
                             instruction_count++;
                             free(tokens[0]);
                             free(tokens); // NOTE(hrs): tokens[1] is copied into the instruction, so it can be freed here.
@@ -108,7 +108,7 @@ InstructionBuffer* Translate(BytecodeTranslator* translator) {
 
     printf("Found %d instructions:\n", instructions->count);
     for (int i = 0; i < instructions->count; i++) {
-        Instruction instruction = GetBufferData(instructions, i);
+        Instruction instruction = get_buffer_data(instructions, i);
         if (instruction.arg == NULL) {
             printf("%d (%d): %s\n", i, instruction.instruction, BytecodeMap[instruction.instruction]);
         } else {
@@ -208,4 +208,4 @@ const char* BytecodeMap[BYTECODE_INSTRUCTION_COUNT] = {
     // I/O operations
     "in",
     "out",
-};
+};*/

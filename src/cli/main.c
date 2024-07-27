@@ -34,40 +34,35 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (strcmp(argv[1], "run") == 0) {
-        /*f (argc < 3) {
+        if (argc < 3) {
             printf("Not enough arguments.\n\n");
             printf("%s", helpRun);
             return 1;
         }
         printf("Reading file \"%s\".\n", argv[2]);
-        FILE* file = fopen(argv[2], "r");
-        fseek(file, 0, SEEK_END);
-        long size = ftell(file);
-        rewind(file);
-        char* buffer = malloc(sizeof(char) * size + 1);
-        fread(buffer, sizeof(char), size, file);
-        buffer[size] = '\0';
-        fclose(file);*/
+        //FILE* file = fopen(argv[2], "r");
+        //fseek(file, 0, SEEK_END);
+        //long size = ftell(file);
+        //rewind(file);
+        //unsigned char* buffer = malloc(sizeof(char) * size);
+        //fread(buffer, sizeof(char), size, file);
+        //fclose(file);
 
-        InstructionBuffer* buf = CreateBuffer(10);
-        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
-        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
-        AddBufferData(buf, (Instruction){ADD, 0, NULL});
-        AddBufferData(buf, (Instruction){PUSH, 0, "2"});
-        AddBufferData(buf, (Instruction){MUL, 0, NULL});
-        AddBufferData(buf, (Instruction){OUT, 0, NULL});
-        AddBufferData(buf, (Instruction){HALT, 0, NULL});
+        InstructionBuffer* buf = create_buffer(10);
+        add_buffer_data(buf, (Instruction) {PUSH, IT_i32, {.i32 = 8}});
+        add_buffer_data(buf, (Instruction) {DUP, IT_i32, {}});
+        add_buffer_data(buf, (Instruction) {ADD, IT_i32, {}});
 
-        VM* vm = CreateVM(10);
+        VM* vm = create_vm(10);
         //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
         //InstructionBuffer* bytecode = Translate(translator);
-        LoadBytecode(vm, buf);
-        RunVM(vm);
+        load_bytecode(vm, buf);
+        run_vm(vm);
 
-        DumpVM(vm);
+        dump_vm(vm);
 
-        DestroyVM(vm);
-        DestroyBuffer(buf);
+        destroy_vm(vm);
+        destroy_buffer(buf);
         //free(translator);
         //free(buffer);
 

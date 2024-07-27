@@ -12,7 +12,7 @@
 
 ## Sub-projects
 
-### rvm - rvm cli
+### rvmcli - rvm cli
 A cli tool for interacting with the rvm library.
 
 Features:
@@ -37,8 +37,8 @@ Features:
 - API for generating rvm bytecode
 - Option to generate rvm readable bytecode
 
-### assembler - translate from rvm assembly to rvm bytecode
-Does what it says on the tin. This is a library btw you have to use the cli to manually translate shit.
+### libras - translate from rvm assembly to rvm bytecode and vice versa
+Does what it says on the tin. 
 
 ## File extensions
 These are the standard file extensions for rvm files:

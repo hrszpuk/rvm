@@ -5,9 +5,10 @@
 #include "headers/buffer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
-InstructionBuffer* CreateBuffer(const int capacity) {
+InstructionBuffer* create_buffer(const int capacity) {
     InstructionBuffer* buffer = malloc(sizeof(InstructionBuffer));
     buffer->count = 0;
     buffer->capacity = capacity;
@@ -16,20 +17,20 @@ InstructionBuffer* CreateBuffer(const int capacity) {
     return buffer;
 }
 
-void DestroyBuffer(InstructionBuffer* buffer) {
+void destroy_buffer(InstructionBuffer* buffer) {
     free(buffer->instructions);
     free(buffer);
 }
 
-Instruction GetBufferData(const InstructionBuffer* buffer, const int index) {
+Instruction get_buffer_data(const InstructionBuffer* buffer, int index) {
     if (index < 0 || index >= buffer->count) {
-        return (Instruction){0, 0, NULL};
+        return (Instruction){0, 0, {}};
     }
 
     return buffer->instructions[index];
 }
 
-void SetBufferData(const InstructionBuffer* buffer, const int index, Instruction element) {
+void set_buffer_data(const InstructionBuffer* buffer, int index, Instruction element) {
     if (index < 0 || index >= buffer->count) {
         return;
     }
@@ -37,17 +38,17 @@ void SetBufferData(const InstructionBuffer* buffer, const int index, Instruction
     buffer->instructions[index] = element;
 }
 
-void AddBufferData(InstructionBuffer* buffer, Instruction element) {
+void add_buffer_data(InstructionBuffer* buffer, Instruction element) {
     if (buffer->count >= buffer->capacity) {
         buffer->capacity *= 2;
-        buffer->instructions = realloc(buffer->instructions, sizeof(void*) * buffer->capacity);
+        buffer->instructions = realloc(buffer->instructions, sizeof(Instruction) * buffer->capacity);
     }
 
     buffer->instructions[buffer->count] = element;
     buffer->count++;
 }
 
-void RemoveBufferData(const InstructionBuffer* buffer, const int index) {
+void remove_buffer_data(const InstructionBuffer* buffer, int index) {
     if (index < 0 || index >= buffer->count) {
         return;
     }
@@ -57,28 +58,6 @@ void RemoveBufferData(const InstructionBuffer* buffer, const int index) {
     }
 }
 
-void RemoveAllBufferData(InstructionBuffer* buffer) {
+void clear_buffer_data(InstructionBuffer* buffer) {
     buffer->count = 0;
-}
-
-void ClearBufferData(InstructionBuffer* buffer) {
-    for (int i = 0; i < buffer->count; i++) {
-        DestroyInstruction(buffer->instructions[i]);
-    }
-    free(buffer->instructions);
-    buffer->count = 0;
-}
-
-// NOTE(hrs): arg data is copied into the instruction, so it can be freed after the instruction is created.
-Instruction CreateInstruction(unsigned char opcode, char* arg, unsigned char type) {
-    Instruction instruction = (Instruction){opcode, type, NULL};
-    if (arg != NULL) {
-        instruction.arg = malloc(sizeof(char) * strlen(arg) + 1);
-        strcpy(instruction.arg, arg);
-    }
-    return instruction;
-}
-
-void DestroyInstruction(Instruction instruction) {
-    free(instruction.arg);
 }
