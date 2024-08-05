@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../ras/headers/ras.h"
-#include "../librvm"
+#include "../librvm/headers"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
