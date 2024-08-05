@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../assembler/headers/translator.h"
-#include "../lib/headers/vm.h"
+#include "../ras/headers/ras.h"
+#include "../librvm"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
