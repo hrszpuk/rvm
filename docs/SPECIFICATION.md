@@ -34,7 +34,6 @@ Similar to stack memory, the heap size is a parameter to initialising the virtua
 > If the program exceeds the heap capacity the virtual machine will crash.
 
 ## Instruction Set
-
 | Value | Instruction | Example        | Description                                                                     |
 |-------|-------------|----------------|---------------------------------------------------------------------------------|
 | 0     | halt        | `halt`         | Stop the virtual machine.                                                       |
