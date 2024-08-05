@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../ras/headers/ras.h"
-#include "../librvm/headers"
+#include "../librvm/headers/vm.h"
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
@@ -40,31 +40,6 @@ int main(int argc, char** argv) {
             return 1;
         }
         printf("Reading file \"%s\".\n", argv[2]);
-        //FILE* file = fopen(argv[2], "r");
-        //fseek(file, 0, SEEK_END);
-        //long size = ftell(file);
-        //rewind(file);
-        //unsigned char* buffer = malloc(sizeof(char) * size);
-        //fread(buffer, sizeof(char), size, file);
-        //fclose(file);
-
-        InstructionBuffer* buf = create_buffer(10);
-        add_buffer_data(buf, (Instruction) {PUSH, IT_i32, {.i32 = 8}});
-        add_buffer_data(buf, (Instruction) {DUP, IT_i32, {}});
-        add_buffer_data(buf, (Instruction) {ADD, IT_i32, {}});
-
-        VM* vm = create_vm(10);
-        //BytecodeTranslator* translator = CreateBytecodeTranslator(buffer);
-        //InstructionBuffer* bytecode = Translate(translator);
-        load_bytecode(vm, buf);
-        run_vm(vm);
-
-        dump_vm(vm);
-
-        destroy_vm(vm);
-        destroy_buffer(buf);
-        //free(translator);
-        //free(buffer);
 
     } else if (strcmp(argv[1], "build") == 0) {
         if (argc < 4) {
