@@ -7,22 +7,17 @@
 
 const char* helpBasic = "Usage: rvm <command> [arguments]\n\n"
                         "Commands:\n"
-                        "  run   <file> [arguments]  Run a rvm file\n"
-                        "  build <file> [output]     Build a rvm file\n"
-                        "  check <file>              Check a rvm file for errors\n"
-                        "  help  <command>           Display help for a command\n";
+                        "  run   <file> [arguments]                 Run a rvm binary or rvm assembly.\n"
+                        "  assemble <file> [argument]               Translates an assembly (.ras) to binary (.rvm)."
+                        "  build <file> <file> ... [arguments]      Combines multiple binaries together.\n"
+                        "  check <file>                             Check a assembly or binary for errors.\n"
+                        "  help  <command>                          Display help for a command\n";
 
-const char* arguments = "Arguments:\n"
-                        "  -h, --help                Display this help menu\n"
-                        "  -v, --version             Display the version of rvm\n"
-                        "  -d, --debug               Run in debug mode\n"
-                        "  -l, --log                 Log the output to a file\n"
-                        "  -o, --output <file>       Output to a file\n"
-                        "  -i, --input <file>        Input from a file\n"
-                        "  -s, --stdin               Input from stdin\n"
-                        "  -a, --args <args>         Set the arguments\n";
+const char* helpRun = "Usage: rvm run <file> [arguments]\n\n"
+                      "Arguments:\n"
+                      "  --output <file>        Write all stdout to the given file (still outputs to stdout)."
+                      "  --silent               Any writes to stdout are not shown.";
 
-const char* helpRun = "Usage: rvm run <file> [arguments]\n\n";
 const char* helpBuild = "Usage: rvm build <file1> <file2> ... [output]\n\n";
 const char* helpCheck = "Usage: rvm check <file>\n\n";
 const char* helpHelp = "Usage: rvm help <command>\nReplace <command> with run, build, check, or help.\n";
