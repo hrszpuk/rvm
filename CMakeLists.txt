@@ -12,6 +12,7 @@ add_executable(rvm_cli src/rvmcli/main.c) # Compile an executable called rvm_cli
 add_library(rvm_lib STATIC  # Compile a static library called rvm_lib using ...
         src/librvm/vm.c
         src/librvm/headers/vm.h
+        src/librvm/headers/instruction.h
 )
 
 add_library(rvm_assembler STATIC src/ras/ras.c # Compile a static library called rvm_lib using ...
