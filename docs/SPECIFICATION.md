@@ -8,7 +8,7 @@ The project is split into three subprojects: librvm; a C library containing the 
 
 ### Registers
 There are a total of 16 registers. The first 12 registers (r0-r11) are general purpose, this means they can support any unsigned/signed integer as well as floating point values.
-The last 4 registers are reserved for the program counter (r12), the stack pointer (r13), the frame pointer (r14), the status/flag register (r15).
+The last 4 registers are reserved for the program counter (r12), the stack pointer (r13), the frame pointer (r14), and the status/flag register (r15).
 
 ### Memory
 There are two types of memory, stack and heap. The size of both stack and heap memory can be configured through parameters of the virtual machine.
