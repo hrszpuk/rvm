@@ -32,42 +32,73 @@ This memory must be manually allocated and deallocated by the program itself (no
 ### Instruction Encoding
 Instructions are stored in a binary format (.rvm). Each instruction is made up of a series of bytes:
 - **Opcode byte**: Stores the instruction (i.e. `mov`, `add`, etc.).
-- **Type byte**: Stores type information about operands.
+- **Type word**: Stores type information about operands.
 - **Operands**: A variable length encoding of some data/reference.
 
-#### Type byte structure
-The type byte is structured in a way to convey all information necessary to process the instruction's operands.
+#### Type word structure
+The type word is a 16-bit structure used to describe the types of the operands in an instruction.
 
-- **Bits 0-1**: Operand 1 type
-- **Bits 2-3**: Operand 2 type
-- **Bits 4-5**: Operand 3 type
-- **Bits 6-7**: Reserved for size/additional-type information
+- **Bit 0**: Reserved
+- **Bits 1-2**: Operand 1 type
+- **Bits 3-5**: Operand 1 type info
+- **Bits 6-7**: Operand 2 type
+- **Bits 8-10**: Operand 2 type info
+- **Bits 10-11**: Operand 3 type
+- **Bits 12-15**: Operand 3 type info
 
 If an operand is not used in an instruction the bits for that operand will be ignored (i.e. `halt` will ignore the entire type byte.).
+However, the type bits are not required 
 
 #### Operand types encoding
-The operand type bits tell the virtual machine how to read the operand encoding. Without this information, operands may be parsed differently from how they are intended to be.
-- `00` - Register (4-bit ID)
-- `01` - Immediate Value 
-- `10` - Memory address (32-bit ID)
-- `11` - Extended Value
+The operand type bits describe the category
 
-#### Immediate value size encoding
+| Hex   | Name      | Purpose                                                                    |
+|-------|-----------|----------------------------------------------------------------------------|
+| `0x0` | Register  | For references to registers.                                               |
+| `0x1` | Immediate | For using signed/unsigned integer values.                                  |
+| `0x2` | Extended  | For floating point values, floating point registers, and 32-bit addresses. |
+| `0x3` | Reserved  | Reserved for future extensions to the instruction set architecture.        |
+
+
+#### Register value size/type encoding
+When the register type is used, the following values can be specified in the type info bits.
+
+| Hex | Type                    |
+|-----|-------------------------|
+| 0x0 | 8-bit integer           |
+| 0x1 | 16-bit integer          |
+| 0x2 | 32-bit integer          |
+| 0x3 | 64-bit integer          |
+| 0x4 | unsigned 8-bit integer  |
+| 0x5 | unsigned 16-bit integer |
+| 0x6 | unsigned 32-bit integer |
+| 0x7 | unsigned 64-bit integer |
+
+
+#### Immediate value size/type encoding
 When an operand type is an immediate value the size is determined by bits 6-7.
-- `00` - 8-bit integer
-- `01` - 16-bit integer
-- `10` - 32-bit integer
-- `11` - 64-bit integer
 
-#### Extended value type encoding
-When an operand type is an extended value bits 6-7 are for 32-bit and 64-bit floating points.
-- `00` - Reserved/unused
-- `01` - Reserved/unused
-- `10` - 32-bit floating point
-- `11` - 64-bit floating point 
+| Hex | Type                    |      
+|-----|-------------------------|      
+| 0x0 | 8-bit integer           |      
+| 0x1 | 16-bit integer          |      
+| 0x2 | 32-bit integer          |      
+| 0x3 | 64-bit integer          |      
+| 0x4 | unsigned 8-bit integer  |      
+| 0x5 | unsigned 16-bit integer |      
 
->[!NOTE] The split between immediate and extended values means instructions can only operate on operands of the same type.
-> Values of different types must be cast to the same type before being operated on.
+#### Extended value size/type encoding
+When an operand type is an extended value the size is determined by bits 6-7.
+
+| Hex | Type                           |      
+|-----|--------------------------------|      
+| 0x0 | 32-bit floating point          |      
+| 0x1 | 64-vit floating point          |      
+| 0x2 | 32-bit floating point register |      
+| 0x3 | 64-bit floating point register |      
+| 0x4 | 32-bit address                 |         
+
+>[!NOTE] Reserved bits are for future extensions. Using reserved bits will cause the virtual machine to crash.
 
 ### Instruction List
 | Value | Instruction | Example          | Description (of example)                                                                          |
