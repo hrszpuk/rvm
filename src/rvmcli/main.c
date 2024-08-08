@@ -29,16 +29,17 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (strcmp(argv[1], "run") == 0) {
-        uint8_t *program = malloc(sizeof(uint8_t) * 3);
-        program[0] = program[1] = NOOP;
-        program[2] = HALT;
+        InstructionBuffer *buffer = buffer_init(10);
+        buffer_add(buffer, NOOP, 0, NULL);
+        buffer_add(buffer, NOOP, 0, NULL);
+        buffer_add(buffer, HALT, 0, NULL);
 
-        VM *rvm = init_vm(1024, 256, 512);
-        load_program(rvm, program, 3);
-        run(rvm);
+        VM *rvm = vm_init(256, 512);
+        vm_load(rvm, buffer);
+        vm_run(rvm);
 
-        free_vm(rvm);
-        free(program);
+        vm_free(rvm);
+        buffer_free(buffer);
     }
     return 0;
 }
