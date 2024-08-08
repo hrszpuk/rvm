@@ -12,14 +12,14 @@
 
 typedef struct {
     Instruction *buffer;
-    Instruction current;
-    size_t size;
-    LabelMap labels;
+    size_t length;
+    size_t capacity;
 } InstructionBuffer;
 
-InstructionBuffer buffer_init();
+InstructionBuffer *buffer_init(size_t capacity);
 void buffer_free(InstructionBuffer *buffer);
-void buffer_load(Instruction *instructions, size_t size);
-void buffer_add(Instruction instruction);
+void buffer_load(InstructionBuffer *buffer, Instruction *instructions, size_t size);
+void buffer_add(InstructionBuffer *buffer, Opcode, uint8_t, int8_t *);
+void buffer_resize(InstructionBuffer *buffer, size_t new_capacity);
 
 #endif //INSTRUCTION_BUFFER_H
