@@ -18,4 +18,7 @@ typedef struct {
     size_t capacity;
 } LabelMap;
 
+LabelMap label_map_init(size_t capacity);
+void label_map_free(LabelMap);
+
 #endif //LABEL_MAP_H
