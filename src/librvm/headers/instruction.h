@@ -5,6 +5,7 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
+#include <stdint.h>
 
 typedef enum {
     HALT    = 0x00,
@@ -28,7 +29,7 @@ typedef enum {
 typedef struct {
     Opcode opcode;
     uint8_t type;
-    uint8_t *operands;
+    int8_t *operands;
 } Instruction;
 
 #endif //INSTRUCTION_H
