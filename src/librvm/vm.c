@@ -6,37 +6,70 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 
 VM *init_vm(size_t memory_size, size_t stack_size, size_t heap_size) {
-    VM *vm = malloc(sizeof vm);
+    VM *vm = malloc(sizeof(VM));
     if (vm == NULL) {
         fprintf(stderr, "Failed to allocate memory for VM.\n");
         exit(1);
     }
 
-    vm->memory = malloc(sizeof(char) * memory_size);
+
+    vm->memory_size = memory_size;
+    vm->memory = malloc(memory_size);
     if (vm->memory == NULL) {
         fprintf(stderr, "Failed to allocate memory for VM memory.\n");
         free(vm);
         exit(1);
     }
 
+    // Program is stored before the stack btw
+    size_t program_size = memory_size - stack_size - heap_size;
 
+    // Stack starts at (program_size + stack_size - 1) and grows downward
+    vm->stack_size = stack_size;
+    vm->stack_base = vm->memory + program_size + stack_size - 1;
+    vm->sp = vm->stack_base;
+
+    // Heap starts at program_size and grows upward
+    vm->heap_size = heap_size;
+    vm->heap_base = vm->memory + program_size;
+
+    memset(vm->reg, 0, sizeof(Register)*NUM_GP_REGS);
+    vm->pc = vm->memory;
 
     return vm;
 }
 
 
 void free_vm(VM *vm) {
-
+    if(vm) {
+        if(vm->memory) free(vm->memory);
+        free(vm);
+    }
 }
 
 
 void load_program(VM *vm, uint8_t *program, size_t size) {
+    if (size > vm->memory_size - vm->stack_size - vm->heap_size) {
+        fprintf(stderr, "Not enough available memory for program size.\n");
+        exit(1);
+    }
 
+    memcpy(vm->memory, program, size);
+    vm->pc = vm->memory;
 }
 
 
-void run(VM *vm, const uint8_t *program, size_t program_size) {
-
+void run(VM *vm) {
+    while (vm->pc < vm->memory + (vm->memory_size - vm->stack_size - vm->heap_size)) {
+        switch (*vm->pc) {
+            case HALT: return;
+            case NOOP: printf("No operation."); break;
+            default: break;
+        }
+        vm->pc++;
+    }
 }

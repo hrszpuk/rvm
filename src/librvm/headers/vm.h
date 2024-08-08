@@ -4,8 +4,12 @@
 
 #ifndef VM_H
 #define VM_H
+
 #include <stddef.h>
 #include <stdint.h>
+
+#include "instruction.h"
+#include "instruction_buffer.h"
 
 #define NUM_GP_REGS 12
 
@@ -20,8 +24,8 @@ typedef union {
 
 typedef struct {
     Register reg[NUM_GP_REGS];
-    uint32_t *pc;
-    uint32_t *sp;
+    uint8_t *pc;
+    uint8_t *sp;
 
     uint8_t *memory;
     uint8_t *stack_base;
@@ -35,6 +39,7 @@ typedef struct {
 VM *init_vm(size_t memory_size, size_t stack_size, size_t heap_size);
 void free_vm(VM *vm);
 void load_program(VM *vm, uint8_t *program, size_t size);
-void run(VM *vm, const uint8_t *program, size_t program_size);
+void load_program_from_buffer(VM *vm, InstructionBuffer buffer);
+void run(VM *vm);
 
 #endif //VM_H
