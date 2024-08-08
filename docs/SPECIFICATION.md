@@ -76,7 +76,7 @@ When the register type is used, the following values can be specified in the typ
 
 
 #### Immediate value size/type encoding
-When an operand type is an immediate value the size is determined by bits 6-7.
+When an operand type is an immediate value, the following values can be specified in the type info bits.
 
 | Hex | Type                    |      
 |-----|-------------------------|      
@@ -88,7 +88,7 @@ When an operand type is an immediate value the size is determined by bits 6-7.
 | 0x5 | unsigned 16-bit integer |      
 
 #### Extended value size/type encoding
-When an operand type is an extended value the size is determined by bits 6-7.
+When an operand type is an extended value, the following values can be specified in the type info bits.       
 
 | Hex | Type                           |      
 |-----|--------------------------------|      

@@ -31,8 +31,8 @@ void buffer_add(InstructionBuffer *buffer, Opcode opcode, uint8_t type, int8_t *
 
     if (buffer->length+1 >= buffer->capacity) buffer_resize(buffer, buffer->capacity * 2);
 
-    buffer->length++;
     buffer->buffer[buffer->length] = (Instruction){opcode, type, operands};
+    buffer->length++;
 }
 
 void buffer_resize(InstructionBuffer *buffer, size_t new_capacity) {
