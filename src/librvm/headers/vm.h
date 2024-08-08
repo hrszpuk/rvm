@@ -36,10 +36,9 @@ typedef struct {
     size_t heap_size;
 } VM;
 
-VM *init_vm(size_t memory_size, size_t stack_size, size_t heap_size);
-void free_vm(VM *vm);
-void load_program(VM *vm, uint8_t *program, size_t size);
-void load_program_from_buffer(VM *vm, InstructionBuffer buffer);
-void run(VM *vm);
+VM *vm_init(size_t stack_size, size_t heap_size);
+void vm_free(VM *vm);
+void vm_load(VM *vm, InstructionBuffer *buffer);
+void vm_run(VM *vm);
 
 #endif //VM_H
