@@ -36,7 +36,7 @@ VM *vm_init(size_t stack_size, size_t heap_size) {
     vm->heap_base = vm->memory + program_size;
 
     memset(vm->reg, 0, sizeof(Register)*NUM_GP_REGS);
-    vm->pc = vm->memory;
+    vm->pc = 0;
 
     return vm;
 }
@@ -50,15 +50,17 @@ void vm_free(VM *vm) {
 }
 
 
-void vm_load(VM *vm, InstructionBuffer *buffer) {
-
+void vm_mount(VM *vm, InstructionBuffer *buffer) {
+    if (vm && buffer) {
+        vm->buffer = buffer;
+    }
 }
 
 
 void vm_run(VM *vm) {
-    while (vm->pc < vm->memory + (vm->memory_size - vm->stack_size - vm->heap_size)) {
-        switch (*vm->pc) {
-            case HALT: return;
+    while (vm->pc < vm->buffer->length) {
+        switch (vm->buffer->buffer[vm->pc].opcode) {
+            case HALT: printf("Halting."); return;
             case NOOP: printf("No operation."); break;
             default: break;
         }

@@ -24,7 +24,7 @@ typedef union {
 
 typedef struct {
     Register reg[NUM_GP_REGS];
-    uint8_t *pc;
+    uint32_t pc;
     uint8_t *sp;
 
     uint8_t *memory;
@@ -34,11 +34,13 @@ typedef struct {
     size_t memory_size;
     size_t stack_size;
     size_t heap_size;
+
+    InstructionBuffer *buffer;
 } VM;
 
 VM *vm_init(size_t stack_size, size_t heap_size);
 void vm_free(VM *vm);
-void vm_load(VM *vm, InstructionBuffer *buffer);
+void vm_mount(VM *vm, InstructionBuffer *buffer);
 void vm_run(VM *vm);
 
 #endif //VM_H

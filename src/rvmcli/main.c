@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
         buffer_add(buffer, HALT, 0, NULL);
 
         VM *rvm = vm_init(256, 512);
-        vm_load(rvm, buffer);
+        vm_mount(rvm, buffer);
         vm_run(rvm);
 
         vm_free(rvm);
