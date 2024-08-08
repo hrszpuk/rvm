@@ -29,50 +29,16 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (strcmp(argv[1], "run") == 0) {
-        if (argc < 3) {
-            printf("Not enough arguments.\n\n");
-            printf("%s", helpRun);
-            return 1;
-        }
-        printf("Reading file \"%s\".\n", argv[2]);
+        uint8_t *program = malloc(sizeof(uint8_t) * 3);
+        program[0] = program[1] = NOOP;
+        program[2] = HALT;
 
-    } else if (strcmp(argv[1], "build") == 0) {
-        if (argc < 4) {
-            printf("Building requires at least 2 arguments (rvm files).\n\n");
-            printf("%s", helpBuild);
-            return 1;
-        }
-        printf("Building \"%s\".\n", argv[2]);
-    } else if (strcmp(argv[1], "check") == 0) {
-        if (argc < 3) {
-            printf("Checking requires at least 1 argument.\n\n");
-            printf("%s", helpCheck);
-            return 1;
-        }
-        printf("Checking \"%s\" for errors.\n", argv[2]);
-    } else if (strcmp(argv[1], "help") == 0 || strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
-        if (argc < 3) {
-            printf("%s", helpBasic);
-            return 1;
-        }
-        if (strcmp(argv[2], "run") == 0) {
-            printf("%s%s", helpRun, arguments);
-        } else if (strcmp(argv[2], "build") == 0) {
-            printf("%s%s", helpBuild, arguments);
-        } else if (strcmp(argv[2], "check") == 0) {
-            printf("%s%s", helpCheck, arguments);
-        } else if (strcmp(argv[2], "help") == 0) {
-            printf("%s%s", helpHelp, arguments);
-        } else {
-            printf("Invalid command \"%s\".\n", argv[2]);
-            printf("Usage: rvm help <command>\nReplace <command> with run, build, check, or help.\n");
-            return 1;
-        }
-    } else {
-        printf("Invalid command \"%s\".\n\n", argv[1]);
-        printf("%s", helpBasic);
-        return 1;
+        VM *rvm = init_vm(1024, 256, 512);
+        load_program(rvm, program, 3);
+        run(rvm);
+
+        free_vm(rvm);
+        free(program);
     }
-
     return 0;
 }

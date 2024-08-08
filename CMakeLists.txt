@@ -13,12 +13,14 @@ add_library(rvm_lib STATIC  # Compile a static library called rvm_lib using ...
         src/librvm/vm.c
         src/librvm/headers/vm.h
         src/librvm/headers/instruction.h
+        src/librvm/headers/instruction_buffer.h
+        src/librvm/headers/label_map.h
 )
 
 add_library(rvm_assembler STATIC src/ras/ras.c # Compile a static library called rvm_lib using ...
         src/ras/headers/ras.h)
 
-set_target_properties(rvm_cli PROPERTIES OUTPUT_NAME "rvm") # Set the output name to "rvm"
+set_target_properties(rvm_cli PROPERTIES OUTPUT_NAME "rvmcli") # Set the output name to "rvm"
 set_target_properties(rvm_lib PROPERTIES OUTPUT_NAME "rvm") # Set the output name to "rvm"
 
 target_include_directories(rvm_lib PUBLIC src/librvm/headers src/ras/headers)  # Include the header files when building the library
