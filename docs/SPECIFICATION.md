@@ -86,5 +86,11 @@ When an operand type is an extended value bits 6-7 are for 32-bit and 64-bit flo
 | 0xB   | alloc       | `alloc r0, 10`   | Allocate 10 bytes and store the first address in register 0.                                      |
 | 0xC   | free        | `free r0, 10`    | Free 10 bytes starting at the address stored in register 0.                                       |
 
+## Instruction Buffer
+The instruction buffer loads, stores, and manages instructions/labels on the virtual machine.
+Bytecode instructions are not stored in memory but a separate region called the instruction buffer.
+The advantages of using this data structure is increased flexibility and better debugging support.
 
-
+### Label Map
+The label map is a hashmap of the label values to absolute/offset addresses within the code.
+The instruction buffer will complete a single pass of the bytecode to fill the label map before the virtual machine begins executing.
