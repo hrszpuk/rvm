@@ -15,6 +15,7 @@ add_library(rvm_lib STATIC  # Compile a static library called rvm_lib using ...
         src/librvm/headers/instruction.h
         src/librvm/headers/instruction_buffer.h
         src/librvm/headers/label_map.h
+        src/librvm/instruction_buffer.c
 )
 
 add_library(rvm_assembler STATIC src/ras/ras.c # Compile a static library called rvm_lib using ...
