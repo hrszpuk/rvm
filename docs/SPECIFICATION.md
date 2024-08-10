@@ -112,10 +112,10 @@ When an operand type is an extended value, the following values can be specified
 | 0x6   | pop         | `pop r0`         | Pop value on top of stack into register 0.                                                        |
 | 0x7   | add         | `add r0, r1, r2` | Add the value in register 1 with the value in register 2 and store the result in register 0.      |
 | 0x8   | sub         | `sub r0, r1, r2` | Subtract the value in register 1 with the value in register 2 and store the result in register 0. |
-| 0x9   | mul         | `mul r0, r1, r2` | Multiply the value in register 1 with the value in register 2 and store the result in register 0. |
-| 0xA   | div         | `div r0, r1, r2` | Divide the value in register 1 with the value in register 2 and store the result in register 0.   |
-| 0xB   | alloc       | `alloc r0, 10`   | Allocate 10 bytes and store the first address in register 0.                                      |
-| 0xC   | free        | `free r0, 10`    | Free 10 bytes starting at the address stored in register 0.                                       |
+| 0xA   | mul         | `mul r0, r1, r2` | Multiply the value in register 1 with the value in register 2 and store the result in register 0. |
+| 0xB   | div         | `div r0, r1, r2` | Divide the value in register 1 with the value in register 2 and store the result in register 0.   |
+| 0xC   | alloc       | `alloc r0, 10`   | Allocate 10 bytes and store the first address in register 0.                                      |
+| 0xD   | free        | `free r0, 10`    | Free 10 bytes starting at the address stored in register 0.                                       |
 
 ## Instruction Buffer
 The instruction buffer loads, stores, and manages instructions/labels on the virtual machine.
