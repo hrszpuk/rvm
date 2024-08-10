@@ -5,6 +5,7 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
+#include <stddef.h>
 #include <stdint.h>
 
 typedef enum {
@@ -28,8 +29,10 @@ typedef enum {
 
 typedef struct {
     Opcode opcode;
-    uint8_t type;
-    int8_t *operands;
+    uint16_t type;
+    int8_t *operands[3];
 } Instruction;
+
+Instruction parse_instruction(uint8_t *data, size_t size);
 
 #endif //INSTRUCTION_H
