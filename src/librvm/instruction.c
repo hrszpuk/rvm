@@ -6,7 +6,8 @@
 
 Instruction parse_instruction(uint8_t *bytes, size_t length) {
     if (length < 3) { // At least 1 byte for opcode and 2 bytes for type_word
-        return NULL;
+        fprintf(stderr, "Not enough bytes to decode instruction");
+        exit(1);
     }
 
     Instruction instr;
