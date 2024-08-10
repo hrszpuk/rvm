@@ -29,10 +29,10 @@ typedef enum {
 
 typedef struct {
     Opcode opcode;
-    uint16_t type;
-    int8_t *operands[3];
+    uint16_t type_word;
+    uint8_t *operands[3];
 } Instruction;
 
-Instruction parse_instruction(uint8_t *data, size_t size);
+Instruction parse_instruction(uint8_t *, size_t);
 
 #endif //INSTRUCTION_H
