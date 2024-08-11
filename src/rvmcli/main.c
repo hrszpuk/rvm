@@ -38,6 +38,9 @@ int main(int argc, char** argv) {
         vm_mount(rvm, buffer);
         vm_run(rvm);
 
+        Instruction i = parse_instruction("\0\0\0", 3);
+        printf("Opcode: %d", i.opcode);
+
         vm_free(rvm);
         buffer_free(buffer);
     }
